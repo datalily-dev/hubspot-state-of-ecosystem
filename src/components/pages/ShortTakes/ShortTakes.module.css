@@ -1,0 +1,32 @@
+.page {
+  background-color: var(--color-orange);
+  color: var(--color-cream);
+  justify-content: center;
+  align-items: center;
+}
+
+.inner {
+  padding: var(--space-16) var(--page-gutter);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.label {
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-cream);
+  opacity: 0.8;
+  margin-bottom: var(--space-4);
+}
+
+.heading {
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  margin-bottom: var(--space-8);
+}
+
+.filterInfo {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-4);
+}

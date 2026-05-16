@@ -1,0 +1,35 @@
+{
+  "partnerTypes": [
+    { "id": "technology", "label": "Technology Partner" },
+    { "id": "solutions",  "label": "Solutions Partner"  }
+  ],
+  "segments": [
+    { "id": "smb",       "label": "SMB"       },
+    { "id": "upmarket",  "label": "Upmarket"  }
+  ],
+  "regions": [
+    { "id": "nam",   "label": "NAM"   },
+    { "id": "emea",  "label": "EMEA"  },
+    { "id": "japac", "label": "JAPAC" },
+    { "id": "latam", "label": "LATAM" }
+  ],
+  "filterIds": [
+    "global",
+    "technology",
+    "solutions",
+    "solutions-smb",
+    "solutions-upmarket",
+    "solutions-nam",
+    "solutions-emea",
+    "solutions-japac",
+    "solutions-latam",
+    "solutions-smb-nam",
+    "solutions-smb-emea",
+    "solutions-smb-japac",
+    "solutions-smb-latam",
+    "solutions-upmarket-nam",
+    "solutions-upmarket-emea",
+    "solutions-upmarket-japac",
+    "solutions-upmarket-latam"
+  ]
+}

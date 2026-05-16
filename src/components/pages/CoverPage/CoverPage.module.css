@@ -1,0 +1,267 @@
+/* ─── Cover page shell ─── */
+.cover {
+  background-color: var(--color-teal-dark);
+  color: var(--color-cream);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── Top navigation ─── */
+.nav {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--page-gutter);
+  flex-shrink: 0;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Text placeholder — swap for <img> once SVG asset arrives */
+.logoText {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--color-orange);
+  letter-spacing: -0.03em;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.menuBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-cream);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.menuBtn:hover {
+  color: var(--color-orange);
+}
+
+.learnMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem var(--space-5);
+  background: var(--color-orange);
+  color: var(--color-cream);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  transition: background var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.learnMoreBtn:hover {
+  background: var(--color-orange-dark);
+}
+
+/* ─── Two-column body ─── */
+.body {
+  position: relative;
+  z-index: var(--z-raised);
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  padding: var(--space-10) var(--page-gutter);
+  gap: clamp(var(--space-10), 5vw, var(--space-20));
+}
+
+/* ─── Left column ─── */
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.reportLabel {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-orange);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  font-weight: 700;
+  color: var(--color-cream);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+}
+
+.intro {
+  font-family: var(--font-sans);
+  font-size: clamp(var(--text-base), 1.3vw, var(--text-lg));
+  color: var(--color-cream);
+  line-height: var(--leading-relaxed);
+  max-width: 38ch;
+  opacity: 0.9;
+}
+
+.customizeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-orange);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  min-height: 44px;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.customizeBtn:hover {
+  background: var(--color-orange-dark);
+}
+
+/* ─── Column separator ─── */
+.colDivider {
+  width: 1px;
+  height: 55vh;
+  background: rgba(248, 245, 238, 0.18);
+  align-self: center;
+}
+
+/* ─── Right column — stats ─── */
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+.statBlock {
+  padding: var(--space-6) 0;
+}
+
+.statDivider {
+  border: none;
+  border-top: 1px solid rgba(248, 245, 238, 0.18);
+  margin: 0 0 var(--space-6);
+}
+
+.statValue {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1em;
+  margin-bottom: var(--space-2);
+}
+
+.statNumber {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 700;
+  color: var(--color-orange);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+}
+
+.statSuffix {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--color-orange);
+  line-height: 1;
+}
+
+/* "Top" in "Top 10" — lighter weight, smaller */
+.statPrefix {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 3rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-orange);
+  line-height: 1;
+  margin-right: 0.15em;
+}
+
+.statLabel {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-cream);
+  line-height: var(--leading-snug);
+  max-width: 30ch;
+  opacity: 0.9;
+}
+
+/* ─── Bottom bar ─── */
+.bottomBar {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5) var(--page-gutter);
+  flex-shrink: 0;
+}
+
+.pagePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(248, 245, 238, 0.1);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+}
+
+.dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: rgba(248, 245, 238, 0.35);
+  flex-shrink: 0;
+}
+
+.dotActive {
+  display: block;
+  width: 18px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-orange);
+  flex-shrink: 0;
+}
+
+.nextBtn {
+  position: absolute;
+  right: var(--page-gutter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(248, 245, 238, 0.3);
+  color: var(--color-cream);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.nextBtn:hover {
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+  background: rgba(255, 72, 0, 0.08);
+}

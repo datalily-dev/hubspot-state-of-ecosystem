@@ -1,0 +1,90 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgb(4 39 41 / 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.modal {
+  background: var(--color-cream);
+  color: var(--color-neutral);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+.title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-6);
+  color: var(--color-teal-dark);
+}
+
+.fieldset {
+  border: none;
+  margin-bottom: var(--space-6);
+}
+
+.legend {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-teal);
+  margin-bottom: var(--space-3);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-base);
+  cursor: pointer;
+  padding: var(--space-2) 0;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.btnConfirm {
+  background: var(--color-orange);
+  color: var(--color-cream);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  transition: background var(--duration-base) var(--ease-base);
+}
+
+.btnConfirm:hover {
+  background: var(--color-orange-dark);
+}
+
+.btnReset {
+  background: transparent;
+  color: var(--color-teal);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  border: 2px solid var(--color-teal);
+  transition: background var(--duration-base) var(--ease-base);
+}
+
+.btnReset:hover {
+  background: var(--color-teal);
+  color: var(--color-cream);
+}
+
+.btnClose {
+  margin-left: auto;
+  color: var(--color-teal);
+  font-size: var(--text-lg);
+  padding: var(--space-2);
+}
