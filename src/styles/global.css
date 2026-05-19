@@ -92,11 +92,12 @@ ol {
 }
 
 /* ─── Fade-in animation utilities ─── */
-@keyframes fadeUp {
+@keyframes fade-up {
   from {
     opacity: 0;
     transform: translate3d(0, 12px, 0);
   }
+
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -109,7 +110,7 @@ ol {
 }
 
 .fadeUp.isVisible {
-  animation: fadeUp 700ms var(--ease-out) forwards;
+  animation: fade-up 700ms var(--ease-out) forwards;
   animation-delay: var(--fade-delay, 0ms);
   will-change: opacity, transform;
 }

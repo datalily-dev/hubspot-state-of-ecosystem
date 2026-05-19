@@ -34,23 +34,11 @@
   border: 1px solid rgba(248, 245, 238, 0.12);
 }
 
-.dark .tab:hover {
-  background: rgba(248, 245, 238, 0.12);
-}
-
 /* ─── Light variant (cream backgrounds) ─── */
 .light .tab {
   background: transparent;
   color: var(--color-teal-dark);
   border: 1px solid rgba(4, 39, 41, 0.18);
-}
-
-.light .tab:hover {
-  background: rgba(4, 39, 41, 0.06);
-}
-
-.tabActive:hover {
-  background: var(--color-orange-dark);
 }
 
 /* ─── Bar variant (Short Takes — Figma interaction/tabs) ─── */
@@ -67,14 +55,27 @@
   line-height: var(--leading-snug);
 }
 
+.bar .tab {
+  background: var(--color-teal-hover);
+  color: var(--color-sage);
+}
+
 .bar .tabActive {
   background: var(--color-orange);
   color: var(--color-cream);
 }
 
-.bar .tab {
-  background: var(--color-teal-hover);
-  color: var(--color-sage);
+/* ─── Hover states (grouped after base rules for specificity order) ─── */
+.tabActive:hover {
+  background: var(--color-orange-dark);
+}
+
+.dark .tab:hover {
+  background: rgba(248, 245, 238, 0.12);
+}
+
+.light .tab:hover {
+  background: rgba(4, 39, 41, 0.06);
 }
 
 .bar .tab:hover {

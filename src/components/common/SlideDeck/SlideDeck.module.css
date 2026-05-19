@@ -10,6 +10,7 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
+
   /* `clip` (not `hidden`) so the deck is NOT a scroll container. With
      `overflow: hidden` the browser would still set `scrollLeft` on the deck
      when navigating to an in-page anchor (e.g. clicking a `<a href="#foreword">`
@@ -35,6 +36,7 @@
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
+
   /* `none` (not `contain`) suppresses iOS Safari's rubber-band bounce at the
      top/bottom edges of each slide's scroller. With `contain` the inner
      scroller still rubber-banded at its own edges, producing a visible tug
@@ -42,13 +44,16 @@
      perceived this as a "bounce" between pages. `none` also prevents the
      scroll from chaining out to the (locked) document. */
   overscroll-behavior: none;
+
   /* Anchor scrolls (hash navigation, focus-into-view) land above the
      floating PageNav instead of being hidden behind it. */
   scroll-padding-bottom: var(--page-nav-overlay-height);
+
   /* Each slide carries its own page background so the area beneath
      PageShell (where the PageNav footer lives) blends seamlessly with
      the page itself — no cream strip behind a teal page, etc. */
   background-color: var(--page-bg-color, var(--color-cream));
+
   /* Default: only the active slide is visible. Non-active slides sit at
      opacity 0 so the viewport never shows two background colors at once
      during steady state. The 'push' transition (mode='slide') re-enables
@@ -108,7 +113,7 @@
    sits above Safari/Chrome's collapsible browser chrome instead of behind
    it. `100dvh` shrinks as the URL bar reveals, keeping the bottom controls
    visible. Desktop browsers treat dvh as identical to vh — no visual change. */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .slide {
     height: 100dvh;
   }

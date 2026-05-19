@@ -4,42 +4,39 @@
   inset: 0;
   z-index: var(--z-modal);
   background: rgb(4 39 41 / 0.78);
-  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-6);
-  animation: overlayIn var(--duration-base) var(--ease-out);
+  animation: overlay-in var(--duration-base) var(--ease-out);
 }
 
-@keyframes overlayIn {
+@keyframes overlay-in {
   from {
     opacity: 0;
-    -webkit-backdrop-filter: blur(0);
     backdrop-filter: blur(0);
   }
+
   to {
     opacity: 1;
-    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
   }
 }
 
 .overlayClosing {
-  animation: overlayOut var(--duration-slow) var(--ease-in) forwards;
+  animation: overlay-out var(--duration-slow) var(--ease-in) forwards;
   pointer-events: none;
 }
 
-@keyframes overlayOut {
+@keyframes overlay-out {
   from {
     opacity: 1;
-    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
   }
+
   to {
     opacity: 0;
-    -webkit-backdrop-filter: blur(0);
     backdrop-filter: blur(0);
   }
 }
@@ -58,25 +55,39 @@
   width: 100%;
   max-width: 633px;
   box-shadow: 0 20px 60px rgb(4 39 41 / 0.35);
-  animation: modalIn var(--duration-base) var(--ease-out);
+  animation: modal-in var(--duration-base) var(--ease-out);
 }
 
 .modal:focus {
   outline: none;
 }
 
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(8px) scale(0.985); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .modalClosing {
-  animation: modalOut var(--duration-slow) var(--ease-in) forwards;
+  animation: modal-out var(--duration-slow) var(--ease-in) forwards;
 }
 
-@keyframes modalOut {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to   { opacity: 0; transform: translateY(8px) scale(0.985); }
+@keyframes modal-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
 }
 
 /* ── Close (top-right, orange) ── */
@@ -215,7 +226,7 @@
 }
 
 /* ── Mobile tightening ── */
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .modal {
     padding: var(--space-6) var(--space-5) var(--space-8);
     gap: var(--space-5);

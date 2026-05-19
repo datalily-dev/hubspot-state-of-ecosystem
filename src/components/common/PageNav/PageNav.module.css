@@ -96,7 +96,7 @@
 }
 
 .arrowBtn:hover {
-  background-color: color-mix(in srgb, var(--color-enabled) 15%, var(--page-ground));
+  background-color: color-mix(in sRGB, var(--color-enabled) 15%, var(--page-ground));
 }
 
 .arrowBtn:focus-visible {
@@ -141,7 +141,7 @@
 }
 
 .homeBtn:hover {
-  background-color: color-mix(in srgb, var(--color-enabled) 15%, var(--page-ground));
+  background-color: color-mix(in sRGB, var(--color-enabled) 15%, var(--page-ground));
 }
 
 .homeBtn:focus-visible {

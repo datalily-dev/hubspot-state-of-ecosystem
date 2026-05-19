@@ -1,6 +1,7 @@
 /* Figma Insider Insights artboard (2193:2527) — 1440 frame reference */
 .page {
   position: relative;
+
   --insider-w: var(--content-vw);
   --insider-offset-x: calc((100vw - var(--insider-w)) / 2);
   background-color: var(--color-cream);
@@ -81,6 +82,7 @@
   z-index: var(--z-raised);
   flex: 1;
   width: 100%;
+
   /* Figma content y=110; PageShell already reserves 72+32=104px */
   padding-top: calc(var(--insider-w) * 6 / 1440);
   padding-left: var(--page-gutter);
@@ -104,6 +106,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+
   /* Figma title width 704 px in 1440 frame, left-aligned to outer column */
   max-width: calc(var(--insider-w) * 704 / 1440);
 }
@@ -139,6 +142,7 @@
   width: 100%;
   max-width: calc(var(--insider-w) * 898 / 1440);
   aspect-ratio: 898 / 503;
+
   /* Subtle teal/orange tint so the placeholder reads as "video goes here". */
   background:
     radial-gradient(
@@ -160,6 +164,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
+
   /* Figma gap between "attribuiton" containers is 48px. Each attribuiton
      also has 48px gap between its content row and divider, so the visual
      rhythm between successive content rows is 48 + 1 + 48 ≈ 97px. */
@@ -355,7 +360,7 @@
 }
 
 /* ─── Responsive ─── */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   /* Reflow gradients off content-driven mobile height instead of the
      1440-frame absolute coordinates. */
   .gradientBWrap {
@@ -416,7 +421,7 @@
    • Video widens to 20px page-edge padding.
    • Headshot moves inline next to the byline (desktop avatar hidden).
    • 32px above and below each dividing line between stories. */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .article {
     padding-left: 20px;
     padding-right: 20px;

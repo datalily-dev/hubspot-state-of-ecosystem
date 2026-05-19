@@ -1,6 +1,7 @@
 /* ─── Cover page shell ─── */
 .cover {
   position: relative;
+
   /* Figma Cover artboard (2192:5803) — positions scale from 1440×900 */
   --cover-w: var(--content-vw);
   --cover-offset-x: calc((100vw - var(--cover-w)) / 2);
@@ -8,6 +9,7 @@
   color: var(--color-cream);
   display: flex;
   flex-direction: column;
+
   /* `overflow-x: clip` prevents any horizontal escape (the slide itself
      also enforces `overflow-x: hidden` as a backstop). `.gradients`
      carries its own `overflow: hidden`, so the gradient art is still
@@ -92,6 +94,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: var(--space-6);
+
   /* Figma site-title: 180px from viewport edge at 1440px */
   padding-left: clamp(
     var(--space-4),
@@ -133,6 +136,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   /* Figma content (2252:2307) — 24px between button and filter/selects */
   gap: var(--space-6);
 }
@@ -203,6 +207,7 @@
 /* ─── Column separator (Figma 2192:5806 — teal-hover @ 58.33% + 16px) ─── */
 .colDivider {
   position: absolute;
+
   /* Draw above the sticky PageNav footer (z-index var(--z-raised)) so the
      line continues unbroken through the bottom bar, matching the full-
      artboard divider in Figma. The line's horizontal position (~59% of
@@ -285,7 +290,7 @@
   max-width: 21.875rem; /* 350px */
 }
 
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .body {
     grid-template-columns: 1fr;
     gap: var(--space-8);
@@ -326,7 +331,7 @@
 /* Mobile (QA): explicit type sizes for the hero so the page hits the
    spec'd headline / number / suffix rhythm on phones. Scoped to
    `max-width: 640px` so the desktop clamp curves are untouched. */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .headline {
     font-size: 3.625rem; /* 58px */
   }
@@ -355,7 +360,7 @@
    viewport. The reduction is small enough that the visual hierarchy holds
    while the page-level chrome (top nav, page nav) tightens in parallel
    (see tokens.css and PageNav.module.css max-height: 920px). */
-@media (max-height: 920px) {
+@media (height <= 920px) {
   .right {
     padding-top: 0;
   }
@@ -365,7 +370,7 @@
   }
 }
 
-@media (max-height: 760px) {
+@media (height <= 760px) {
   .left {
     gap: var(--space-4);
   }

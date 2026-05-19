@@ -1,6 +1,7 @@
 /* Figma Short Takes artboard (2193:1609) — 1440×900 reference */
 .page {
   position: relative;
+
   --st-w: var(--content-vw);
   background-color: var(--color-teal-dark);
   color: var(--color-cream);
@@ -76,6 +77,7 @@
   z-index: var(--z-raised);
   flex: 1;
   width: 100%;
+
   /* Figma global margin @ 180px from the 1440 artboard edge (2193:1636) */
   padding-left: max(
     var(--space-4),
@@ -154,10 +156,12 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
   /* Figma 2193:1614 — 50px between quote, divider, and next quote */
   gap: calc(var(--st-w) * 50 / 1440);
   width: 100%;
   max-width: calc(var(--st-w) * 1080 / 1440);
+
   /* Shared container so every .quoteFooter flips to its stacked layout at
      the same width — keeps the audio pills aligned across all quotes
      instead of each one wrapping individually based on byline length. */
@@ -311,7 +315,7 @@
   background: rgba(248, 245, 238, 0.18);
 }
 
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .quote {
     max-width: none;
     margin-inline: 0;
@@ -360,7 +364,7 @@
 /* Short-viewport tightening (≤920px tall): tighten the quote rhythm so more
    of the 3-quote list sits above the fold at 1440×900 laptops. Pairs with
    tokens.css and SlideDeck.module.css's matching chrome reductions. */
-@media (max-height: 920px) {
+@media (height <= 920px) {
   .body {
     padding-bottom: var(--space-6);
   }

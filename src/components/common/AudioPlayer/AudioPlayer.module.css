@@ -19,38 +19,13 @@
   min-width: 168px;
 }
 
-.player:hover:not(:disabled) {
-  background: var(--color-orange-dark);
-}
-
 .player:disabled {
   cursor: default;
   opacity: 0.85;
 }
 
-/* Compact variant — used on Insider Insights story rows. Same anatomy, just
-   smaller padding, smaller bubble, and a tighter min-width to fit alongside
-   the story copy. */
-.playerSm {
-  padding: 3px 14px 3px 3px;
-  height: 36px;
-  min-width: 140px;
-  font-size: var(--text-xs);
-  gap: var(--space-2);
-}
-
-.playerSm .iconBubble {
-  width: 30px;
-  height: 30px;
-}
-
-.playerSm .wavesIdle {
-  width: 28px;
-  height: 16px;
-}
-
-.playerSm .waves {
-  height: 16px;
+.player:hover:not(:disabled) {
+  background: var(--color-orange-dark);
 }
 
 .iconBubble {
@@ -96,16 +71,41 @@
   flex-shrink: 0;
 }
 
+/* Compact variant — used on Insider Insights story rows. Same anatomy, just
+   smaller padding, smaller bubble, and a tighter min-width to fit alongside
+   the story copy. */
+.playerSm {
+  padding: 3px 14px 3px 3px;
+  height: 36px;
+  min-width: 140px;
+  font-size: var(--text-xs);
+  gap: var(--space-2);
+}
+
+.playerSm .iconBubble {
+  width: 30px;
+  height: 30px;
+}
+
+.playerSm .wavesIdle {
+  width: 28px;
+  height: 16px;
+}
+
+.playerSm .waves {
+  height: 16px;
+}
+
 .wave {
   display: inline-block;
   width: 2px;
   background: var(--color-cream);
   border-radius: 2px;
-  animation: waveBounce 900ms ease-in-out infinite;
+  animation: wave-bounce 900ms ease-in-out infinite;
   height: 30%;
 }
 
-@keyframes waveBounce {
+@keyframes wave-bounce {
   0%, 100% { height: 22%; }
   25%      { height: 80%; }
   50%      { height: 45%; }

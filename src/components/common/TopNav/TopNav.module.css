@@ -15,9 +15,11 @@
   width: 100%;
   background-color: transparent;
   pointer-events: none;
+
   /* New stacking context so the ::before background layer can sit behind
      children at z-index 0 without bleeding into the rest of the deck. */
   isolation: isolate;
+
   /* Text color is set inline from the active slide's `variant` (light/dark).
      Easing it over the slide transition window avoids a hard color flip
      across the still-visible outgoing slide — e.g. cream text suddenly
@@ -81,6 +83,7 @@
 }
 
 /* ─── Filter indicator pill ─── */
+
 /* Color inherits from the page so the label stays legible on both
    light (teal-dark text) and dark (cream text) page backgrounds. */
 .filterIndicator {
@@ -160,7 +163,7 @@
   background: var(--color-orange-dark);
 }
 
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .filterIndicator,
   .menuBtn span {
     display: none;

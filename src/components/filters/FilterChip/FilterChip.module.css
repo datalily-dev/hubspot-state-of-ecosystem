@@ -20,7 +20,7 @@
 }
 
 /* Unselected hover — must not mimic .selected or deselect looks broken */
-.chip:hover:not(:disabled):not(.selected) {
+.chip:hover:not(:disabled, .selected) {
   background: rgb(4 39 41 / 0.08);
   color: var(--color-teal-dark);
   border-color: var(--color-teal-dark);

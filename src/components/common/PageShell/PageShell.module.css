@@ -1,6 +1,7 @@
 .page {
   position: relative;
   width: 100%;
+
   /* Reserve room at the top for the persistent floating TopNav. This is
      in-flow padding (not a sticky overlay), so on long pages it scrolls
      with the content — the nav simply floats over whatever scrolls past
@@ -8,6 +9,7 @@
      included inside min-height so short pages still fit in one viewport. */
   padding-top: calc(var(--top-nav-height) + var(--content-top-clearance));
   min-height: 100vh;
+
   /* Prevent the sticky floating PageNav (which overlays the bottom
      --page-nav-overlay-height of the viewport) from covering page content
      when scrolled to the bottom of a tall page. */

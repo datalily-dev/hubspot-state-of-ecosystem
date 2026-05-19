@@ -1,6 +1,7 @@
 /* Figma Growth artboard (2296:2736) — 1440×1408 Mid-Market reference */
 .page {
   position: relative;
+
   --gw: var(--content-vw);
   background-color: var(--color-teal-dark);
   color: var(--color-cream);
@@ -15,6 +16,7 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
+
   /* Blob B is anchored at y=715/1440 with a ~1785/1440 height, which extends
      well past the page's natural bottom. Without clipping here, that overflow
      inflates the document scroll height (the page only clips overflow-x). */
@@ -72,6 +74,7 @@
   z-index: var(--z-raised);
   flex: 1;
   width: 100%;
+
   /* Figma title @ left=180 from the 1440 artboard (global margin token). */
   padding-left: max(
     var(--space-4),
@@ -86,6 +89,7 @@
 
 .container {
   width: 100%;
+
   /* Figma content frame: 1079px @ x=180 in a 1440 artboard. */
   max-width: calc(var(--gw) * 1080 / 1440);
 }
@@ -261,12 +265,12 @@
   width: calc(var(--gw) * 127 / 1440);
   height: 100%;
   overflow: hidden;
-  mask-image: url('../../../assets/growth/cta-photo-mask.svg');
-  mask-size: 100% 100%;
-  mask-repeat: no-repeat;
   -webkit-mask-image: url('../../../assets/growth/cta-photo-mask.svg');
   -webkit-mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
+  mask-image: url('../../../assets/growth/cta-photo-mask.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 
 /* Figma 2316:3214 — 248×169 photo at (-7, -3), rotated 180° + flipped Y. */
@@ -363,8 +367,8 @@
 }
 
 .ctaCardTall .ctaPhotoFrame {
-  mask-image: url('../../../assets/growth/cta-photo-mask-agentic.svg');
   -webkit-mask-image: url('../../../assets/growth/cta-photo-mask-agentic.svg');
+  mask-image: url('../../../assets/growth/cta-photo-mask-agentic.svg');
 }
 
 .ctaCardTall .ctaPhotoInner {
@@ -384,6 +388,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+
   /* Figma right-col chart frame is 532px wide and 719px tall; spreading
      content top-bottom places the source line at the bottom of the column. */
   flex: 1;
@@ -501,22 +506,24 @@
 }
 
 /* ─── Entrance & tab-switch animations ─── */
-@keyframes fadeUp {
+@keyframes growth-fade-up {
   from {
     opacity: 0;
     transform: translateY(18px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes slideIn {
+@keyframes growth-slide-in {
   from {
     opacity: 0;
     transform: translateY(14px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -525,13 +532,13 @@
 
 .animFadeUp {
   opacity: 0;
-  animation: fadeUp 650ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: growth-fade-up 650ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: var(--anim-delay, 0ms);
 }
 
 .animSlideIn {
   opacity: 0;
-  animation: slideIn 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: growth-slide-in 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: var(--anim-delay, 0ms);
 }
 
@@ -545,7 +552,7 @@
 }
 
 /* ─── Responsive ─── */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .body {
     padding-left: var(--page-gutter);
   }
@@ -604,7 +611,7 @@
      stretch closer to the viewport edges.
    • Tabs → content gap = 30px.
    • CTA card: 32px top spacer, image removed (mid-market + agentic). */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .body {
     padding-left: 20px;
     padding-right: 20px;
@@ -655,7 +662,7 @@
 }
 
 /* Short-viewport tightening (≤920px tall) — pairs with tokens.css. */
-@media (max-height: 920px) {
+@media (height <= 920px) {
   .body {
     padding-bottom: var(--space-6);
   }

@@ -3,5 +3,20 @@
   "ignoreFiles": [
     "dist/**/*.css",
     "node_modules/**/*.css"
-  ]
+  ],
+  "rules": {
+    "scss/operator-no-newline-after": null,
+    "media-feature-range-notation": null,
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "ignoreProperties": [
+          "box-decoration-break",
+          "mask-image",
+          "mask-size",
+          "mask-repeat"
+        ]
+      }
+    ]
+  }
 }

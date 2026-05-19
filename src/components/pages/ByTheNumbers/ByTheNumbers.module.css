@@ -1,6 +1,7 @@
 /* Figma By the Numbers artboard (2194:2341) — 1440×900 reference */
 .page {
   position: relative;
+
   --btn-w: var(--content-vw);
   --btn-offset-x: calc((100vw - var(--btn-w)) / 2);
   background-color: var(--color-cream);
@@ -88,6 +89,7 @@
 
 .container {
   width: 100%;
+
   /* Figma content column: x=180 to x=1260 (1080px in a 1440 frame) */
   max-width: calc(var(--btn-w) * 1080 / 1440);
 }
@@ -97,6 +99,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+
   /* PageShell already reserves 72+32=104px above; Figma title is at y=110 */
   padding-top: calc(var(--btn-w) * 6 / 1440);
   margin-bottom: clamp(var(--space-3), calc(var(--btn-w) * 38 / 1440), 2.5vh);
@@ -241,10 +244,6 @@
   flex-direction: column;
 }
 
-.value_compact .cardValueLine {
-  line-height: calc(52 / 56);
-}
-
 /* Bottom-row two-line stat (1–12 months) */
 .value_multiline.size_sm {
   padding-top: min(calc(var(--btn-w) * 26 / 1440), 2vh);
@@ -259,6 +258,10 @@
 
 .cardValueLine {
   display: block;
+}
+
+.value_compact .cardValueLine {
+  line-height: calc(52 / 56);
 }
 
 .value_multiline .cardValueLine {
@@ -389,7 +392,7 @@
 }
 
 /* ─── Responsive — collapse to 2 cols, then 1 col on small screens ─── */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .rowTop,
   .rowBottom {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -429,7 +432,7 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (width <= 560px) {
   .rowTop,
   .rowBottom {
     grid-template-columns: 1fr;
@@ -438,7 +441,7 @@
 
 /* Mobile (QA): tighten heading to 2 lines, drop the partner carousel,
    space the orange cards consistently, and left-align card copy. */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   /* Full-bleed container on phone widths for the page title. */
   .container {
     max-width: none;

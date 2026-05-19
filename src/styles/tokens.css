@@ -61,15 +61,18 @@
 
   /* ─── Layout ─── */
   --max-content-width: 1280px;
+
   /* Single source of truth for the centered content column on wide screens.
      The gutter token below uses this to grow side padding past viewport caps,
      keeping TopNav, page bodies, and PageNav aligned to the same edges. */
   --content-max-width: 1440px;
+
   /* Use this in place of `vw` for any layout/font-size scaling that should
      stop growing past the content column. Above --content-max-width the
      value is constant, so wide screens render the same proportions as
      1440px instead of stretching fonts into adjacent columns. */
   --content-vw:        min(100vw, var(--content-max-width));
+
   /* On viewports <= --content-max-width, the clamp side wins (unchanged from
      before). On wider viewports, the second arg grows so content stays a
      centered 1440px column instead of stretching edge-to-edge. */
@@ -77,9 +80,11 @@
     clamp(1rem, 5vw, 4rem),
     calc((100vw - var(--content-max-width)) / 2)
   );
+
   /* Reserves matches TopNav: 18px top + 18px bottom + 36px logo = 72px.
      Every page reserves the same in-flow top padding regardless of slide. */
   --top-nav-height:    4.5rem; /* 72px */
+
   /* Breathing room between the floating TopNav and the first line of page
      content so headings never collide with the nav's right-side buttons.
      Tightens on shorter viewports so single-viewport pages still fit at
@@ -115,7 +120,7 @@
    (NavigationPage, ByTheNumbers, ShortTakes, ForewordPage) compensate
    automatically — content stays at its original y-coordinate while the
    reserved padding shrinks. */
-@media (max-height: 920px) {
+@media (height <= 920px) {
   :root {
     --content-top-clearance: var(--space-4); /* 32px → 16px */
   }
@@ -124,7 +129,7 @@
 /* Mobile typography step-down (QA): every place that uses `--text-lg`
    for body text — eyebrows, hero label, button labels, etc. — drops from
    18px to 16px so dense copy fits within the narrow viewport. */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   :root {
     --text-lg: 1rem; /* 18px → 16px on mobile */
   }
