@@ -17,10 +17,47 @@ const VIEW_TABS = [
  * — orange active pill + dark-teal inactive pill with sage text), and the
  * stacked bar + table when `chart.data` includes `years` and `series`.
  *
- * @param {{ chart: { title: string, source?: string, sourceHref?: string, data?: object } }} props
+ * @param {{ chart: { title: string, source?: string, sourceLinkText?: string, sourceHref?: string, data?: object } }} props
  */
+function renderChartSource(source, sourceHref, sourceLinkText) {
+  if (!sourceHref) return source;
+
+  const linkText = sourceLinkText?.trim();
+  if (!linkText || !source.includes(linkText)) {
+    return (
+      <a
+        href={sourceHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.chartSourceLink}
+      >
+        {source}
+      </a>
+    );
+  }
+
+  const linkIndex = source.indexOf(linkText);
+  const before = source.slice(0, linkIndex);
+  const after = source.slice(linkIndex + linkText.length);
+
+  return (
+    <>
+      {before}
+      <a
+        href={sourceHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.chartSourceLink}
+      >
+        {linkText}
+      </a>
+      {after}
+    </>
+  );
+}
+
 export default function ChartPanel({ chart }) {
-  const { title, source, sourceHref, data } = chart;
+  const { title, source, sourceLinkText, sourceHref, data } = chart;
   const [view, setView] = useState('chart');
   const regionId = useId();
   const showStackedViz = validateStackedData(data);
@@ -82,18 +119,7 @@ export default function ChartPanel({ chart }) {
 
       {source && (
         <p className={styles.chartSource}>
-          {sourceHref ? (
-            <a
-              href={sourceHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.chartSourceLink}
-            >
-              {source}
-            </a>
-          ) : (
-            source
-          )}
+          {renderChartSource(source, sourceHref, sourceLinkText)}
         </p>
       )}
     </section>

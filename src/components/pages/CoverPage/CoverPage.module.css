@@ -9,12 +9,9 @@
   display: flex;
   flex-direction: column;
   /* `overflow-x: clip` prevents any horizontal escape (the slide itself
-     also enforces `overflow-x: hidden` as a backstop). `overflow-y: visible`
-     lets the full-bleed column divider extend past .cover's bottom edge
-     (by --page-nav-overlay-height) into the sticky PageNav footer area,
-     matching Figma 2192:5806 where the line runs the full artboard height.
-     `.gradients` carries its own `overflow: hidden`, so the gradient art
-     is still contained. */
+     also enforces `overflow-x: hidden` as a backstop). `.gradients`
+     carries its own `overflow: hidden`, so the gradient art is still
+     contained. */
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -136,7 +133,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-1);
+  /* Figma content (2252:2307) — 24px between button and filter/selects */
+  gap: var(--space-6);
 }
 
 .customizeBtn {
@@ -195,8 +193,8 @@
 
 .activeFiltersDot {
   display: inline-block;
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: var(--radius-full);
   background: var(--color-orange);
   flex-shrink: 0;
@@ -322,6 +320,33 @@
     top: -500px;
     width: 105%;
     aspect-ratio: 1308.155 / 1232.028;
+  }
+}
+
+/* Mobile (QA): explicit type sizes for the hero so the page hits the
+   spec'd headline / number / suffix rhythm on phones. Scoped to
+   `max-width: 640px` so the desktop clamp curves are untouched. */
+@media (max-width: 640px) {
+  .headline {
+    font-size: 3.625rem; /* 58px */
+  }
+
+  .reportLabel {
+    font-size: 1rem; /* 16px */
+  }
+
+  .customizeGroup {
+    gap: var(--space-4); /* 24px → 16px */
+  }
+
+  .statNumber,
+  .statPrefixSymbol {
+    font-size: 5.625rem; /* 90px */
+  }
+
+  .statSuffix,
+  .statPrefixWord {
+    font-size: 3.125rem; /* 50px */
   }
 }
 

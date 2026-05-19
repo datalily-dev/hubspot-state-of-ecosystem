@@ -1,0 +1,158 @@
+/* ─── Themed Dropdown (combobox + listbox) ───────────────────────────────
+   Replaces the native <select> so the picker matches the page theme on
+   mobile (iOS Safari otherwise renders its own picker UI). The `bar`
+   variant mirrors the dark teal "bar" tab style used on Growth/Short Takes
+   so the dropdown reads as a continuation of the tab control collapsed
+   into a single row. */
+
+.root {
+  position: relative;
+  width: 100%;
+  z-index: 30;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(248, 245, 238, 0.18);
+  background: #0c4d51;
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.trigger:hover {
+  background: #0e565a;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
+}
+
+.triggerLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.caret {
+  flex: none;
+  margin-left: 12px;
+  color: var(--color-cream);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.caretOpen {
+  transform: rotate(180deg);
+}
+
+/* ─── Listbox panel ─────────────────────────────────────────────────── */
+.list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #0c4d51;
+  border: 1px solid rgba(248, 245, 238, 0.18);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(4, 39, 41, 0.32);
+  z-index: 1000;
+  max-height: 60vh;
+  overflow-y: auto;
+  outline: none;
+  animation: dropdownOpen var(--duration-fast) var(--ease-out);
+}
+
+@keyframes dropdownOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  color: var(--color-sage);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.option + .option {
+  margin-top: 2px;
+}
+
+.optionLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.optionActive {
+  background: rgba(248, 245, 238, 0.08);
+  color: var(--color-cream);
+}
+
+.optionSelected,
+.optionSelected.optionActive {
+  background: var(--color-orange);
+  color: var(--color-cream);
+}
+
+.check {
+  flex: none;
+  color: currentColor;
+}
+
+/* ─── Flush variant ──────────────────────────────────────────────────
+   Edge-to-edge band: square corners and only the top hairline border
+   remains on both the trigger and the open list panel. Used by Growth's
+   mobile dropdown which extends to the viewport edges. */
+.flush .trigger {
+  border: none;
+  border-radius: 0;
+}
+
+.flush .list {
+  border: none;
+  border-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list {
+    animation: none;
+  }
+  .caret {
+    transition: none;
+  }
+}

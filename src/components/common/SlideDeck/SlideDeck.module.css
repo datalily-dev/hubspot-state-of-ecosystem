@@ -1,14 +1,9 @@
 .deck {
-  /* Reserve vertical room at the bottom of every slide for the per-slide
-     PageNav footer so page content can sit above it without overlap.
-     PageShell reads this variable to subtract from its own min-height so
-     non-overflow pages still fit in a single viewport, and to add
-     padding-bottom so tall pages clear the sticky nav at the bottom of
-     the viewport. */
-  /* bar padding 16px × 2 (--space-4) + 44px control height = 76px.
-     The bar padding tightens at heights ≤ 920px (see PageNav.module.css)
-     to reclaim vertical room for single-viewport pages; this token follows
-     so PageShell's reserved bottom padding tracks the actual bar height. */
+  /* Visual height of the PageNav bar (16px padding × 2 + 44px control).
+     Used to pull the floating footer out of layout flow (negative margin)
+     and to pad anchor-scroll targets so they don't land behind the bar.
+     The bar paints only its pill and arrow buttons — the rest is fully
+     transparent — so page content stays visible behind the floating nav. */
   --page-nav-overlay-height: calc(var(--space-4) * 2 + 44px);
 
   position: fixed;
@@ -26,13 +21,6 @@
   outline: none;
 }
 
-@media (max-height: 920px) {
-  .deck {
-    /* 12px × 2 (--space-3) + 44px = 68px */
-    --page-nav-overlay-height: calc(var(--space-3) * 2 + 44px);
-  }
-}
-
 .track {
   display: flex;
   flex-direction: row;
@@ -47,10 +35,15 @@
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  /* Anchor scrolls (hash navigation, focus-into-view) land above the sticky
-     PageNav footer instead of being hidden behind it. */
+  /* `none` (not `contain`) suppresses iOS Safari's rubber-band bounce at the
+     top/bottom edges of each slide's scroller. With `contain` the inner
+     scroller still rubber-banded at its own edges, producing a visible tug
+     immediately before the slide-advance animation fired — the user
+     perceived this as a "bounce" between pages. `none` also prevents the
+     scroll from chaining out to the (locked) document. */
+  overscroll-behavior: none;
+  /* Anchor scrolls (hash navigation, focus-into-view) land above the
+     floating PageNav instead of being hidden behind it. */
   scroll-padding-bottom: var(--page-nav-overlay-height);
   /* Each slide carries its own page background so the area beneath
      PageShell (where the PageNav footer lives) blends seamlessly with
@@ -89,15 +82,38 @@
   transition: opacity var(--fade-half-ms, 220ms) var(--ease-out);
 }
 
-/* PageNav pinned to the bottom of each slide's scroll container so the
-   dot pill and arrow controls remain available without scrolling to the
-   end of long pages. Sticky (not fixed) so it scopes to the slide it
-   belongs to — only the active slide is visible (others sit at opacity 0),
-   so exactly one nav is ever shown. PageShell reserves padding-bottom of
-   --page-nav-overlay-height so page content never ends underneath it. */
+/* PageNav floats over content at the bottom of the viewport — it does NOT
+   reserve layout space. Implementation:
+     • `position: sticky; bottom: 0` keeps the bar pinned to the slide's
+       viewport bottom as page content scrolls beneath it. Sticky (not
+       fixed) so it scopes to its own slide — non-active slides sit at
+       opacity 0, so exactly one nav is ever visible.
+     • `margin-top: -<bar height>` pulls the footer out of flow so it
+       overlays the bottom of the page content instead of pushing it up
+       or extending the slide's scroll height.
+   The bar background is transparent (only the pill and arrow buttons
+   paint), and `pointer-events: none` on the bar lets clicks pass through
+   the empty regions to content underneath; pill and arrows re-enable
+   `pointer-events: auto` so the controls still receive input. */
 .pageNavFooter {
   position: sticky;
   bottom: 0;
   flex-shrink: 0;
   z-index: var(--z-raised);
+  margin-top: calc(-1 * var(--page-nav-overlay-height));
+  pointer-events: none;
+}
+
+/* Mobile (QA): slide sized to the dynamic viewport so the floating PageNav
+   sits above Safari/Chrome's collapsible browser chrome instead of behind
+   it. `100dvh` shrinks as the URL bar reveals, keeping the bottom controls
+   visible. Desktop browsers treat dvh as identical to vh — no visual change. */
+@media (max-width: 640px) {
+  .slide {
+    height: 100dvh;
+  }
+
+  .pageNavFooter {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
 }

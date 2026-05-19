@@ -8,18 +8,13 @@
   overflow-x: clip;
 }
 
-/* ─── Decorative background gradients (Figma 2192:6021, 2192:6022) ───
-   Extend below the PageShell section so the blob shapes fill the area
-   reserved for the PageNav footer instead of clipping at PageShell's
-   border. The sticky PageNav sits opaque on top of this area; the
-   extension still matters because PageShell's reserved bottom padding
-   for clearance gets painted by the gradient. */
+/* ─── Decorative background gradients (Figma 2192:6021, 2192:6022) ─── */
 .gradients {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;

@@ -7,17 +7,11 @@
      underneath it. With global box-sizing: border-box, this padding is
      included inside min-height so short pages still fit in one viewport. */
   padding-top: calc(var(--top-nav-height) + var(--content-top-clearance));
-  /* Reserve the PageNav footer's height at the bottom in two complementary
-     ways:
-       • `min-height` keeps short pages fitting in a single viewport — the
-         page (with its bottom padding baked in via border-box) plus the
-         sticky PageNav footer that follows it sum to exactly 100vh, so the
-         slide doesn't need to scroll just to reveal the nav.
-       • `padding-bottom` guarantees that the last line of content on tall,
-         scrollable pages clears the sticky PageNav at the bottom of the
-         viewport — content never sits visually crammed against the nav. */
-  min-height: calc(100vh - var(--page-nav-overlay-height, 92px));
-  padding-bottom: var(--page-nav-overlay-height, 92px);
+  min-height: 100vh;
+  /* Prevent the sticky floating PageNav (which overlays the bottom
+     --page-nav-overlay-height of the viewport) from covering page content
+     when scrolled to the bottom of a tall page. */
+  padding-bottom: calc(var(--page-nav-overlay-height) / 2);
   display: flex;
   flex-direction: column;
 }

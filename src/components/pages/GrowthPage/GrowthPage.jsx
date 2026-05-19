@@ -1,6 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import PageShell from '../../common/PageShell/PageShell';
+import { useSlideDeck } from '../../../context/SlideDeckContext';
 import Tabs from '../../common/Tabs/Tabs';
+import Dropdown from '../../common/Dropdown/Dropdown';
 import ChartPanel from './ChartPanel';
 import growthContent from '../../../data/static-pages/growth.json';
 import gradientA from '../../../assets/growth/gradient-a.svg';
@@ -73,11 +75,22 @@ function CtaCard({ cta, image, variant = 'default' }) {
  * Layout reference: Figma 2296:2736 (1440×1408 artboard for Mid-Market tab).
  */
 export default function GrowthPage() {
+  const { activeAnchor } = useSlideDeck();
   const { label, heading, tabs } = growthContent;
   const [activeTabId, setActiveTabId] = useState(tabs[0].id);
   const [animKey, setAnimKey] = useState(0);
+  const prevAnchorRef = useRef(activeAnchor);
   const tabDefs = tabs.map((t) => ({ id: t.id, label: t.tabLabel }));
   const active = tabs.find((t) => t.id === activeTabId) || tabs[0];
+
+  // SlideDeck keeps all pages mounted; remount chart/content animations when
+  // navigating back to this slide (tab changes already bump animKey below).
+  useEffect(() => {
+    if (activeAnchor === 'growth' && prevAnchorRef.current !== 'growth') {
+      setAnimKey((k) => k + 1);
+    }
+    prevAnchorRef.current = activeAnchor;
+  }, [activeAnchor]);
 
   const handleTabChange = useCallback((id) => {
     setActiveTabId(id);
@@ -127,6 +140,19 @@ export default function GrowthPage() {
                 variant="bar"
                 className={styles.tabs}
               />
+              {/* Mobile (QA): themed dropdown replaces the row of tabs on
+                  phones — hidden at desktop via CSS so the existing tab bar
+                  remains the source of truth above the mobile breakpoint. */}
+              <div className={styles.tabSelectWrap}>
+                <Dropdown
+                  options={tabDefs}
+                  value={activeTabId}
+                  onChange={handleTabChange}
+                  ariaLabel="Growth focus area"
+                  variant="bar"
+                  flush
+                />
+              </div>
             </div>
             <div className={styles.tabDivider} aria-hidden="true" />
           </div>

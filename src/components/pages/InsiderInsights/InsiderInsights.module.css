@@ -10,18 +10,13 @@
 
 /* ─── Decorative background gradients (Figma 2193:2528, 2193:2529) ───
    Two soft orange blob shapes at 5% opacity. B sits in the upper-left
-   (rotated -116°), A in the lower-right (y-flipped, rotated -43.69°).
-   Reuses the same viewBox-only SVGs as Vision/Foreword so height:auto on
-   the inner <img> resolves correctly.
-
-   Extends past PageShell's bottom edge so the lower blob keeps reading
-   into the sticky PageNav footer area instead of clipping. */
+   (rotated -116°), A in the lower-right (y-flipped, rotated -43.69°). */
 .gradients {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -124,12 +119,11 @@
   margin: 0;
 }
 
-/* Figma 2193:2546 — text/2xl/book, 44/52, color teal-dark */
 .heading {
   font-family: var(--font-sans);
-  font-size: clamp(1.75rem, calc(var(--insider-w) * 44 / 1440), 2.75rem);
+  font-size: 2rem; /* 32px */
   font-weight: 400;
-  line-height: 1.1818; /* 52 / 44 */
+  line-height: 1.25;
   color: var(--color-teal-dark);
   letter-spacing: 0;
   margin: 0;
@@ -275,9 +269,34 @@
   margin: 0 auto;
 }
 
-/* Orange swirl avatar placeholder. The Figma uses a custom 160×160 image
-   asset; we approximate with a layered orange radial/conic gradient until
-   the real artwork is supplied. */
+.avatar {
+  width: clamp(96px, calc(var(--insider-w) * 160 / 1440), 160px);
+  height: clamp(96px, calc(var(--insider-w) * 160 / 1440), 160px);
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* Two avatar slots (desktop left, mobile inline with byline). Default
+   visibility is set here and flipped inside the mobile media query so the
+   correct copy shows up at each breakpoint without duplicating layout. */
+.avatarDesktop {
+  display: block;
+}
+
+.avatarMobile {
+  display: none;
+}
+
+.bylineWithAvatar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* Orange swirl avatar placeholder when no headshot is available. */
 .orb {
   width: clamp(96px, calc(var(--insider-w) * 160 / 1440), 160px);
   aspect-ratio: 1;
@@ -311,11 +330,34 @@
   gap: var(--space-3);
 }
 
+/* Figma 2349:2541 — tag pills above headline */
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e3e3e3;
+  background: #fff;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: calc(22 / 14);
+  color: var(--color-teal-dark);
+  white-space: nowrap;
+}
+
 /* Figma 2194:2473 — text/xl/book, 28/36 */
 .storyHeadline {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: clamp(1.25rem, calc(var(--insider-w) * 28 / 1440), 1.75rem);
+  font-size: 24px;
   line-height: 1.2857;
   color: var(--color-teal-dark);
   margin: 0;
@@ -424,7 +466,8 @@
   }
 
   .heading {
-    font-size: clamp(1.75rem, 6.5vw, 2.25rem);
+    font-size: 2rem; /* 32px */
+    line-height: 1.25;
   }
 
   .story {
@@ -434,8 +477,10 @@
     max-width: none;
   }
 
+  .avatar,
   .orb {
     width: 96px;
+    height: 96px;
   }
 
   .bylineRow {
@@ -451,5 +496,53 @@
   .bylineName {
     font-size: 1.375rem; /* 22px */
     line-height: 1.2727;
+  }
+}
+
+/* Mobile (QA) ────────────────────────────────────────────────────────
+   • Video widens to 20px page-edge padding.
+   • Headshot moves inline next to the byline (desktop avatar hidden).
+   • 32px above and below each dividing line between stories. */
+@media (max-width: 640px) {
+  .article {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .videoContainer,
+  .videoThumb {
+    max-width: none;
+  }
+
+  /* Swap which avatar slot is visible. */
+  .avatarDesktop {
+    display: none;
+  }
+
+  .avatarMobile {
+    display: block;
+    width: 48px;
+    height: 48px;
+  }
+
+  .avatarMobile.orb {
+    width: 48px;
+    aspect-ratio: 1;
+  }
+
+  .bylineWithAvatar {
+    gap: var(--space-3);
+  }
+
+  /* Extra breathing room between the video hero and the first story tag. */
+  .outer {
+    gap: 40px;
+  }
+
+  /* 32px above and below the divider — both the inter-story gap and the
+     intra-story gap (between story content and its trailing divider). */
+  .stories,
+  .storyItem {
+    gap: 32px;
   }
 }

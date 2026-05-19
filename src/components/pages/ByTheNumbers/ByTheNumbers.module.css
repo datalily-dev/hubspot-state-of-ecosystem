@@ -10,20 +10,13 @@
 
 /* ─── Decorative background gradients (Figma 2194:2342, 2194:2343) ───
    Two soft orange blob shapes. A: upper-right, rotated and y-flipped.
-   B: lower-left, rotated 160°. Same SVG art used elsewhere on the site;
-   here we shift origin and rotation to match the Figma frame.
-
-   Extend the gradient layer past PageShell's bottom so blobs continue
-   into the area reserved for the sticky PageNav footer. Without this
-   extension the lower-left blob clips at the PageShell boundary and the
-   cream area below the last card reads as flat / un-tinted while it
-   scrolls past underneath the sticky nav. */
+   B: lower-left, rotated 160°. */
 .gradients {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -119,9 +112,9 @@
 
 .heading {
   font-family: var(--font-sans);
-  font-size: clamp(1.875rem, calc(var(--btn-w) * 44 / 1440), 2.75rem);
+  font-size: 2rem; /* 32px */
   font-weight: 400;
-  line-height: 1.1818; /* 52px / 44px */
+  line-height: 1.25;
   color: var(--color-teal-dark);
   letter-spacing: 0;
 }
@@ -141,6 +134,11 @@
 /* Bottom row card widths from Figma: 290 / 290 / 260 / 210 */
 .rowBottom {
   grid-template-columns: 290fr 290fr 260fr 210fr;
+}
+
+/* Filtered views — three stat cards (Figma 2405:2913: 310 / 400 / 350) */
+.rowBottomThree {
+  grid-template-columns: 310fr 400fr 350fr;
 }
 
 /* ─── Card base ─── */
@@ -182,44 +180,23 @@
   padding-bottom: min(calc(var(--btn-w) * 34 / 1440), 2.5vh);
 }
 
-.cardIcon {
-  position: absolute;
-  top: calc(var(--btn-w) * 18 / 1440);
-  right: calc(var(--btn-w) * 18 / 1440);
-  width: 30px;
-  height: 30px;
-  color: var(--color-cream);
-  display: block;
-}
-
-.cardIcon svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* Stat value text (HubSpot Serif Medium, varies by card size) */
+/* Stat value text (HubSpot Serif Medium — Figma 2405:2913) */
 .cardValue {
   font-family: var(--font-display);
   font-weight: 500;
-  line-height: 1.12; /* Figma 8xl line-height 112px on 100px font ≈ 1.12 */
   letter-spacing: -0.01em;
   color: var(--color-cream);
   margin: 0;
-  /* Push value to top of available space inside lg cards (after padding) */
-  margin-top: auto;
-  margin-bottom: auto;
 }
 
 .size_lg .cardValue {
-  /* $42B card uses 130px; 300K uses 100px. Use the larger of the two for
-     hero cards so they read as the strongest element on the page. */
-  font-size: clamp(3.5rem, calc(var(--btn-w) * 110 / 1440), 8.125rem);
-  margin: 0;
+  font-size: clamp(3.5rem, calc(var(--btn-w) * 130 / 1440), 8.125rem);
+  line-height: calc(112 / 130);
 }
 
 .size_md .cardValue {
   font-size: clamp(2.5rem, calc(var(--btn-w) * 80 / 1440), 5rem);
-  margin: 0;
+  line-height: calc(112 / 80);
   padding: calc(var(--btn-w) * 8 / 1440) 0 calc(var(--btn-w) * 16 / 1440);
   border-bottom: 1px solid var(--color-cream);
   width: 100%;
@@ -228,7 +205,64 @@
 
 .size_sm .cardValue {
   font-size: clamp(2.25rem, calc(var(--btn-w) * 100 / 1440), 6.25rem);
-  margin: 0;
+  line-height: calc(112 / 100);
+}
+
+/* Top-right feature stat (e.g. 300K) */
+.value_feature.size_lg {
+  padding-top: min(calc(var(--btn-w) * 104 / 1440), 5.5vh);
+}
+
+.value_feature .cardValue {
+  font-size: clamp(3rem, calc(var(--btn-w) * 100 / 1440), 6.25rem);
+  line-height: calc(86 / 100);
+}
+
+/* Top-right compact currency stat (e.g. $11.9B) */
+.value_feature-compact.size_lg {
+  padding-top: min(calc(var(--btn-w) * 104 / 1440), 5.5vh);
+}
+
+.value_feature-compact .cardValue {
+  font-size: clamp(2.75rem, calc(var(--btn-w) * 92 / 1440), 5.75rem);
+  line-height: calc(86 / 92);
+}
+
+/* Bottom-row long-value stat (e.g. $10K–$500K) */
+.value_compact.size_sm {
+  padding-top: min(calc(var(--btn-w) * 26 / 1440), 2vh);
+  align-items: flex-start;
+}
+
+.value_compact .cardValue {
+  font-size: clamp(1.75rem, calc(var(--btn-w) * 56 / 1440), 3.5rem);
+  line-height: calc(52 / 56);
+  display: flex;
+  flex-direction: column;
+}
+
+.value_compact .cardValueLine {
+  line-height: calc(52 / 56);
+}
+
+/* Bottom-row two-line stat (1–12 months) */
+.value_multiline.size_sm {
+  padding-top: min(calc(var(--btn-w) * 26 / 1440), 2vh);
+  align-items: flex-start;
+}
+
+.value_multiline .cardValue {
+  font-size: clamp(1.75rem, calc(var(--btn-w) * 56 / 1440), 3.5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardValueLine {
+  display: block;
+}
+
+.value_multiline .cardValueLine {
+  line-height: calc(48 / 56);
 }
 
 .cardDescription {
@@ -256,24 +290,68 @@
   opacity: 0.85;
 }
 
-/* ─── Image card (Figma 2329:5670) ─── */
-/* Acts as a viewport for the PartnerCarousel — full-bleed photos with
-   their "HEAR FROM PARTNERS / <name>" label + dark scrim baked into the
-   JPG. When the assets are swapped for clean headshots, add back
-   .imageScrim + .imageContent overlay styles for HTML text. */
+/* ─── Image card (Figma 2329:5670 + *-desktop partner frames) ─── */
 .cardImage {
   padding: 0;
-  background: #1a1a1a;
+  background: var(--color-magenta);
   min-height: min(calc(var(--btn-w) * 232 / 1440), 20vh);
+  border-radius: 20px;
 }
 
-.imagePhoto {
+.slidePanel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.slideVisual {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 0;
+}
+
+/* Bottom scrim — #1A1A1A at base fading to transparent ~40% up */
+.slideScrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40%;
+  background: linear-gradient(to top, #1a1a1a 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.slideCaption {
+  position: absolute;
+  left: 7.62%;
+  right: 7.62%;
+  bottom: calc(var(--btn-w) * 14 / 1440);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.slideEyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-cream);
+  margin: 0 0 2px;
+}
+
+.slideName {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.4118;
+  color: var(--color-cream);
+  margin: 0;
 }
 
 /* ─── Partner carousel slides ───
@@ -331,9 +409,19 @@
     padding-bottom: var(--space-6);
   }
 
-  .size_lg .cardValue,
-  .size_sm .cardValue {
+  .size_lg .cardValue {
     font-size: clamp(3rem, 12vw, 5.5rem);
+  }
+
+  .value_feature .cardValue,
+  .value_feature-compact .cardValue {
+    font-size: clamp(2.5rem, 10vw, 4.5rem);
+  }
+
+  .size_sm .cardValue,
+  .value_compact .cardValue,
+  .value_multiline .cardValue {
+    font-size: clamp(2rem, 10vw, 4rem);
   }
 
   .size_md .cardValue {
@@ -345,5 +433,79 @@
   .rowTop,
   .rowBottom {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile (QA): tighten heading to 2 lines, drop the partner carousel,
+   space the orange cards consistently, and left-align card copy. */
+@media (max-width: 640px) {
+  /* Full-bleed container on phone widths for the page title. */
+  .container {
+    max-width: none;
+  }
+
+  .heading {
+    font-size: 2rem; /* 32px */
+    line-height: 1.25;
+  }
+
+  /* "Hide the hear from partners slider on mobile" */
+  .cardImage {
+    display: none;
+  }
+
+  /* Single-column stack — 10px between every orange stat card. */
+  .rowTop,
+  .rowBottom {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .rowTop {
+    margin-bottom: 10px;
+  }
+
+  .rowBottom {
+    margin-bottom: 0;
+  }
+
+  /* "Remove min-height of orange blocks on mobile only" */
+  .card,
+  .size_lg,
+  .size_md,
+  .size_sm {
+    min-height: 0;
+  }
+
+  /* Uniform padding on all stat cards — fluid desktop padding-top on
+     value_compact / value_multiline / value_feature variants collapses
+     to ~8px on phone widths and fights the 900px tablet rules. */
+  .card:not(.cardImage),
+  .size_lg,
+  .size_md,
+  .size_sm,
+  .value_compact.size_sm,
+  .value_multiline.size_sm,
+  .value_feature.size_lg,
+  .value_feature-compact.size_lg {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  /* "Left align all text inside the orange blocks on mobile" — the
+     middle hero card centers value+description on desktop; flatten that. */
+  .size_md {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .size_md .cardValue {
+    width: auto;
+    padding: 0 0 var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .value_compact.size_sm,
+  .value_multiline.size_sm {
+    align-items: flex-start;
   }
 }

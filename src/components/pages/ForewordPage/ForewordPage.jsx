@@ -4,17 +4,17 @@ import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/foreword/gradient-a.svg';
 import gradientB from '../../../assets/foreword/gradient-b.svg';
 import forewordVideo from '../../../assets/foreword/video.jpg';
-import zackKassAvatar from '../../../assets/foreword/zack-kass.jpg';
+import forewordVideoSrc from '../../../assets/foreword/HubSpot-Video-Placeholder.mp4';
+import zackKassAvatar from '../../../assets/foreword/zack-kass.webp';
 import playButton from '../../../assets/foreword/play-button.svg';
 import styles from './ForewordPage.module.css';
 
 /**
  * Foreword video source.
- * Set to a video URL to enable playback (MP4 / HLS).
  * For YouTube or Vimeo, swap the <video> element below for an <iframe>
  * using the platform's embed URL.
  */
-const FOREWORD_VIDEO_SRC = '';
+const FOREWORD_VIDEO_SRC = forewordVideoSrc;
 
 /** Page 3 — Foreword. Letter from Zack Kass. STATIC. */
 export default function ForewordPage() {
@@ -162,10 +162,6 @@ export default function ForewordPage() {
             <p>This report is for the people who will close it.</p>
           </div>
 
-          {/*
-           * ZACK KASS PHOTO: replace src/assets/foreword/zack-kass.jpg with the
-           * real 80×80 headshot before delivery. The current file is a placeholder.
-           */}
           <figure className={styles.byline}>
             <img
               className={styles.avatar}

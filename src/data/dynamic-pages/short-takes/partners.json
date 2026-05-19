@@ -3,23 +3,23 @@
   "heading": "Perspectives from current partners",
 
   "byFilterId": {
-    "global":                   ["brendan-ittelson", "scott-chancellor", "scott-harrison"],
-    "technology":               ["camiel-freriks-strategic", "michelle-okeeffe-roadmap", "stuart-toledo-community", "adam-bleibtreu-innovate"],
-    "solutions":                ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm", "michelle-miller-trust"],
+    "global":                   ["camiel-freriks-strategic", "brendan-ittelson", "michelle-okeeffe-roadmap", "stuart-toledo-community", "scott-harrison", "adam-bleibtreu-innovate", "scott-chancellor"],
+    "technology":               ["brendan-ittelson", "scott-chancellor", "scott-harrison"],
+    "solutions":                ["camiel-freriks-strategic", "michelle-okeeffe-roadmap", "stuart-toledo-community", "adam-bleibtreu-innovate"],
     "solutions-smb":            "Content coming soon — copy pending from client.",
     "solutions-upmarket":       "Content coming soon — copy pending from client.",
-    "solutions-nam":            ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
-    "solutions-emea":           ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
-    "solutions-japac":          ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
-    "solutions-latam":          ["adam-bleibtreu-innovate", "justine-gaignard-overwhelm", "michelle-miller-trust"],
-    "solutions-smb-nam":        ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
-    "solutions-smb-emea":       ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
-    "solutions-smb-japac":      ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
-    "solutions-smb-latam":      ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm"],
-    "solutions-upmarket-nam":   ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
-    "solutions-upmarket-emea":  ["michelle-okeeffe-roadmap"],
-    "solutions-upmarket-japac": ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
-    "solutions-upmarket-latam": "Content coming soon — copy pending from client."
+    "solutions-nam":            ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm", "michelle-miller-trust"],
+    "solutions-emea":           ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-japac":          ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
+    "solutions-latam":          ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
+    "solutions-smb-nam":        ["adam-bleibtreu-innovate", "justine-gaignard-overwhelm", "michelle-miller-trust"],
+    "solutions-smb-emea":       ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-smb-japac":      ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
+    "solutions-smb-latam":      ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
+    "solutions-upmarket-nam":   ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm"],
+    "solutions-upmarket-emea":  ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-upmarket-japac": ["michelle-okeeffe-roadmap"],
+    "solutions-upmarket-latam": ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"]
   },
 
   "library": {

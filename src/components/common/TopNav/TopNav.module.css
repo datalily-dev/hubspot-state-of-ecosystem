@@ -15,13 +15,50 @@
   width: 100%;
   background-color: transparent;
   pointer-events: none;
+  /* New stacking context so the ::before background layer can sit behind
+     children at z-index 0 without bleeding into the rest of the deck. */
+  isolation: isolate;
+  /* Text color is set inline from the active slide's `variant` (light/dark).
+     Easing it over the slide transition window avoids a hard color flip
+     across the still-visible outgoing slide — e.g. cream text suddenly
+     painting over a cream page during a light → dark page change. */
+  transition: color 500ms var(--ease-out, ease-out);
+}
+
+/* Slide-background-colored layer that fades in once the active slide has
+   scrolled past the top, so menu/CTA text never overlays page content.
+   `--top-nav-bg` is set inline from the active slide's theme.
+
+   `background-color` is transitioned at the same cadence as SlideDeck's push
+   animation (500ms) so when the active slide flips the nav's bg color blends
+   smoothly from the outgoing page's palette to the incoming one instead of
+   snapping mid-transition — which previously painted (e.g.) a cream strip
+   over the still-visible teal outgoing slide for ~500ms. */
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--top-nav-bg, transparent);
+  opacity: 0;
+  transition:
+    opacity var(--duration-base, 200ms) var(--ease-out, ease-out),
+    background-color 500ms var(--ease-out, ease-out);
+  pointer-events: none;
+}
+
+.nav[data-scrolled="true"]::before {
+  opacity: 1;
 }
 
 /* Re-enable interaction on the actual interactive children — the bar itself
    stays click-through so the user can interact with content positioned in the
-   reserved padding zone (rare, but defensive). */
+   reserved padding zone (rare, but defensive). Children sit above the
+   ::before background layer. */
 .nav > * {
   pointer-events: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .logo {

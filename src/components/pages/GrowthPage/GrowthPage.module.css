@@ -9,15 +9,16 @@
 
 /* ─── Decorative background gradients (Figma 2296:2737 / 2296:2738) ───
    Same orange blob shape used on Vision (5% opacity on dark teal). One
-   sits off the upper-right corner, the other off the lower-left, giving
-   the slide its subtle radial wash. Pattern follows ShortTakes / Vision. */
+   sits off the upper-right corner, the other off the lower-left. */
 .gradients {
   position: absolute;
   inset: 0;
-  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
+  /* Blob B is anchored at y=715/1440 with a ~1785/1440 height, which extends
+     well past the page's natural bottom. Without clipping here, that overflow
+     inflates the document scroll height (the page only clips overflow-x). */
+  overflow: clip;
 }
 
 .gradientAWrap,
@@ -109,12 +110,11 @@
   margin: 0;
 }
 
-/* Figma 2296:2804 — text/2xl/book, 44/52 */
 .heading {
   font-family: var(--font-sans);
-  font-size: clamp(1.875rem, calc(var(--gw) * 44 / 1440), 2.75rem);
+  font-size: 2rem; /* 32px */
   font-weight: 400;
-  line-height: 1.1818; /* 52/44 */
+  line-height: 1.25;
   color: var(--color-cream);
   letter-spacing: 0;
   margin: 0;
@@ -122,6 +122,8 @@
 
 /* ─── Tabs (Figma 2296:2795 — full-bleed divider, tabs at content margin) ─── */
 .tabSection {
+  position: relative;
+  z-index: 5;
   margin-bottom: calc(var(--gw) * 40 / 1440);
 }
 
@@ -131,6 +133,15 @@
 
 .tabs {
   margin: 0;
+}
+
+/* Mobile-only dropdown (hidden on desktop). Toggled into view by the
+   @media (max-width: 640px) block at the bottom of this file. The themed
+   Dropdown component handles its own visuals — this wrapper only controls
+   show/hide and width. */
+.tabSelectWrap {
+  display: none;
+  width: 100%;
 }
 
 .tabDivider {
@@ -542,6 +553,7 @@
   .columns {
     grid-template-columns: 1fr;
     row-gap: var(--space-8);
+    padding-top: 32px;
   }
 
   .divider {
@@ -554,7 +566,7 @@
   }
 
   .heading {
-    font-size: clamp(1.875rem, 7vw, 2.5rem);
+    font-size: 2rem; /* 32px */
   }
 
   .ctaCard {
@@ -582,6 +594,63 @@
     left: -96px;
     top: 1px;
     width: 260px;
+  }
+}
+
+/* Mobile (QA) ────────────────────────────────────────────────────────
+   • 3-line heading (lift desktop max-width, drop font slightly).
+   • Tab row → dropdown swap (hide tab bar, show <select>).
+   • Body padding pulls in to a 20px page edge so the chart and copy
+     stretch closer to the viewport edges.
+   • Tabs → content gap = 30px.
+   • CTA card: 32px top spacer, image removed (mid-market + agentic). */
+@media (max-width: 640px) {
+  .body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .container {
+    max-width: none;
+  }
+
+  .header {
+    max-width: none;
+  }
+
+  .heading {
+    font-size: 2rem; /* 32px */
+    line-height: 1.25;
+    padding-bottom: 24px;
+  }
+
+  .tabRow .tabs {
+    display: none;
+  }
+
+  .tabSelectWrap {
+    display: block;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    box-sizing: border-box;
+  }
+
+  .tabSection {
+    margin-bottom: 30px;
+  }
+
+  .ctaCard {
+    margin-top: 32px;
+    padding-left: var(--space-5);
+  }
+
+  .ctaPhotoFrame,
+  .ctaPhotoPlaceholder {
+    display: none;
+  }
+
+  .ctaBody {
+    width: 100%;
   }
 }
 

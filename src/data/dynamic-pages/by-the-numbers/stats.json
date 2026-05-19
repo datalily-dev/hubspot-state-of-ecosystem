@@ -4,22 +4,22 @@
 
   "byFilterId": {
     "global":                   ["stat-42b", "stat-top10", "stat-300k", "stat-63", "stat-3m", "stat-16", "stat-image"],
-    "technology":               ["stat-42b", "stat-top10", "stat-30b-isv", "stat-95-installed", "stat-3m", "stat-16", "stat-image"],
-    "solutions":                ["stat-42b", "stat-top10", "stat-119b-services", "stat-7k-partners", "stat-10k-500k-spend", "stat-1-12-months", "stat-image"],
-    "solutions-smb":            ["stat-42b", "stat-309b-smb", "stat-86b-emea-smb", "stat-5b-japac-smb", "stat-24b-latam-smb", "stat-139b-nam-smb", "stat-image"],
-    "solutions-upmarket":       ["stat-11b-mid", "stat-41-deals", "stat-16", "stat-5x-seats", "stat-79-elite-ai", "stat-10k-500k-spend", "stat-image"],
-    "solutions-nam":            ["stat-42b", "stat-top10", "stat-196b-nam", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services", "stat-image"],
-    "solutions-emea":           ["stat-42b", "stat-top10", "stat-122b-emea", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services", "stat-image"],
-    "solutions-japac":          ["stat-42b", "stat-top10", "stat-71b-japac", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services", "stat-image"],
-    "solutions-latam":          ["stat-42b", "stat-top10", "stat-35b-latam", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services", "stat-image"],
-    "solutions-smb-nam":        ["stat-42b", "stat-top10", "stat-196b-nam", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services", "stat-image"],
-    "solutions-smb-emea":       ["stat-42b", "stat-top10", "stat-122b-emea", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services", "stat-image"],
-    "solutions-smb-japac":      ["stat-42b", "stat-top10", "stat-71b-japac", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services", "stat-image"],
-    "solutions-smb-latam":      ["stat-42b", "stat-top10", "stat-35b-latam", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services", "stat-image"],
-    "solutions-upmarket-nam":   ["stat-42b", "stat-top10", "stat-196b-nam", "stat-11b-mid", "stat-41-deals", "stat-92-ai-services", "stat-image"],
-    "solutions-upmarket-emea":  ["stat-42b", "stat-top10", "stat-122b-emea", "stat-11b-mid", "stat-41-deals", "stat-10k-500k-spend", "stat-image"],
-    "solutions-upmarket-japac": ["stat-42b", "stat-top10", "stat-71b-japac", "stat-11b-mid", "stat-41-deals", "stat-10k-500k-spend", "stat-image"],
-    "solutions-upmarket-latam": ["stat-42b", "stat-top10", "stat-35b-latam", "stat-11b-mid", "stat-41-deals", "stat-92-ai-services", "stat-image"]
+    "technology":               ["stat-42b", "stat-top10", "stat-30b-isv", "stat-95-installed", "stat-3m", "stat-16"],
+    "solutions":                ["stat-42b", "stat-top10", "stat-119b-services", "stat-7k-partners", "stat-10k-500k-spend", "stat-1-12-months"],
+    "solutions-smb":            ["stat-42b", "stat-309b-smb", "stat-86b-emea-smb", "stat-5b-japac-smb", "stat-24b-latam-smb", "stat-139b-nam-smb"],
+    "solutions-upmarket":       ["stat-11b-mid", "stat-41-deals", "stat-16", "stat-5x-seats", "stat-79-elite-ai", "stat-10k-500k-spend"],
+    "solutions-nam":            ["stat-42b", "stat-top10", "stat-196b-nam", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services"],
+    "solutions-emea":           ["stat-42b", "stat-top10", "stat-122b-emea", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services"],
+    "solutions-japac":          ["stat-42b", "stat-top10", "stat-71b-japac", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services"],
+    "solutions-latam":          ["stat-42b", "stat-top10", "stat-35b-latam", "stat-10k-500k-spend", "stat-63", "stat-92-ai-services"],
+    "solutions-smb-nam":        ["stat-42b", "stat-top10", "stat-196b-nam", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services"],
+    "solutions-smb-emea":       ["stat-42b", "stat-top10", "stat-122b-emea", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services"],
+    "solutions-smb-japac":      ["stat-42b", "stat-top10", "stat-71b-japac", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services"],
+    "solutions-smb-latam":      ["stat-42b", "stat-top10", "stat-35b-latam", "stat-309b-smb", "stat-10k-500k-spend", "stat-92-ai-services"],
+    "solutions-upmarket-nam":   ["stat-42b", "stat-top10", "stat-196b-nam", "stat-11b-mid", "stat-41-deals", "stat-92-ai-services"],
+    "solutions-upmarket-emea":  ["stat-42b", "stat-top10", "stat-122b-emea", "stat-11b-mid", "stat-41-deals", "stat-10k-500k-spend"],
+    "solutions-upmarket-japac": ["stat-42b", "stat-top10", "stat-71b-japac", "stat-11b-mid", "stat-41-deals", "stat-10k-500k-spend"],
+    "solutions-upmarket-latam": ["stat-42b", "stat-top10", "stat-35b-latam", "stat-11b-mid", "stat-41-deals", "stat-92-ai-services"]
   },
 
   "library": {
@@ -56,7 +56,7 @@
     },
     "stat-image": {
       "value": "Hear from partners",
-      "description": "Aircall"
+      "description": "Partner spotlight carousel"
     },
 
     "stat-30b-isv": {
@@ -72,7 +72,7 @@
     },
 
     "stat-119b-services": {
-      "icon": "target",
+      "icon": "sparkle",
       "value": "$11.9B",
       "description": "Services opportunity by 2030",
       "linkText": "according to IDC",
@@ -83,11 +83,14 @@
       "description": "Solutions partners globally"
     },
     "stat-10k-500k-spend": {
+      "icon": "arrow",
       "value": "$10K–$500K",
+      "valueLines": ["$10K–", "$500K"],
       "description": "is the annual client implementation and services spend range as reported by partners"
     },
     "stat-1-12-months": {
       "value": "1–12 months",
+      "valueLines": ["1–12 ", "months"],
       "description": "Project lengths vary, with strong client retention and ongoing retainers as reported by partners"
     },
 

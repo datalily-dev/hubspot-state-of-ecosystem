@@ -15,7 +15,7 @@ export function useFilterState(initialFilters = INITIAL_FILTERS) {
   }, []);
 
   const setPendingSegment = useCallback((segment) => {
-    setPendingFilters((prev) => ({ ...prev, segment, region: null }));
+    setPendingFilters((prev) => ({ ...prev, segment }));
   }, []);
 
   const setPendingRegion = useCallback((region) => {

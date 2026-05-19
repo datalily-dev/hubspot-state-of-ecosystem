@@ -108,7 +108,7 @@
 }
 
 /* Short-viewport tightening: at common laptop heights (e.g. 1440×900),
-   reclaim ~24px of vertical chrome so single-viewport pages fit without a
+   reclaim ~16px of vertical chrome so single-viewport pages fit without a
    scrollbar. Pages with absolute Figma positions that subtract these tokens
    (NavigationPage, ByTheNumbers, ShortTakes, ForewordPage) compensate
    automatically — content stays at its original y-coordinate while the
@@ -116,5 +116,14 @@
 @media (max-height: 920px) {
   :root {
     --content-top-clearance: var(--space-4); /* 32px → 16px */
+  }
+}
+
+/* Mobile typography step-down (QA): every place that uses `--text-lg`
+   for body text — eyebrows, hero label, button labels, etc. — drops from
+   18px to 16px so dense copy fits within the narrow viewport. */
+@media (max-width: 640px) {
+  :root {
+    --text-lg: 1rem; /* 18px → 16px on mobile */
   }
 }

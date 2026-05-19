@@ -10,18 +10,13 @@
 
 /* ─── Decorative background gradients (Figma 2193:1824, 2193:1825) ───
    Two soft orange blob shapes at 5% opacity. B sits in the upper-left
-   (rotated and y-flipped), A in the lower-right (rotated -160°).
-   Same SVG-via-<img> pattern as Foreword and By the Numbers — viewBox-only
-   SVGs (no width/height 100%) so height:auto on the img resolves correctly.
-
-   Extend past PageShell's bottom so the lower blob keeps reading into the
-   sticky PageNav footer area instead of clipping. */
+   (rotated and y-flipped), A in the lower-right (rotated -160°). */
 .gradients {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -165,7 +160,7 @@
   display: block;
 }
 
-/* Thumbnail placeholder — shown while no video src is active */
+/* Thumbnail — shown while no video src is active (Figma 2193:1835) */
 .videoThumb {
   position: relative;
   display: block;
@@ -176,19 +171,7 @@
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
-  /* Subtle teal/orange placeholder hint behind the play button so the
-     thumbnail reads as "video goes here" without baked-in imagery. */
-  background:
-    radial-gradient(
-      circle at 50% 55%,
-      rgba(255, 158, 121, 0.35) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      135deg,
-      var(--color-teal) 0%,
-      var(--color-teal-dark) 100%
-    );
+  background: var(--color-teal-dark);
 }
 
 .videoThumb:focus-visible {
@@ -235,22 +218,6 @@
 
 .videoThumb:hover .playButton {
   transform: translate(-50%, -50%) scale(1.06);
-}
-
-/* Optional caption shown beneath the placeholder when no asset is set */
-.videoPlaceholderLabel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12px;
-  text-align: center;
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-cream);
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 /* ─── Body (Figma 2193:1834 — text/md/book, 18/24) ─── */
@@ -305,8 +272,6 @@
   border-radius: var(--radius-full);
   object-fit: cover;
   flex-shrink: 0;
-  /* Placeholder gradient — replace with a real headshot when available. */
-  background: linear-gradient(135deg, var(--color-magenta), var(--color-orange));
   display: block;
 }
 

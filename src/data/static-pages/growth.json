@@ -20,6 +20,7 @@
       "chart": {
         "title": "HubSpot Ecosystem Opportunity by Company Size",
         "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceLinkText": "Source: IDC White Paper, sponsored by HubSpot",
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],
@@ -61,6 +62,7 @@
       "chart": {
         "title": "HubSpot Ecosystem Opportunity by Focus",
         "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceLinkText": "Source: IDC White Paper, sponsored by HubSpot",
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],
@@ -99,6 +101,7 @@
       "chart": {
         "title": "HubSpot Ecosystem Opportunity by Hub",
         "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceLinkText": "Source: IDC White Paper, sponsored by HubSpot",
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],
@@ -157,6 +160,7 @@
       "chart": {
         "title": "HubSpot Ecosystem Opportunity by Region",
         "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceLinkText": "Source: IDC White Paper, sponsored by HubSpot",
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],

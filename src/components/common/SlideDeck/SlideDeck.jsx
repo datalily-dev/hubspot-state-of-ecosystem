@@ -251,6 +251,7 @@ export default function SlideDeck({
         seatScroll();
         isAnimating.current = false;
         resetEdgeIntent();
+        deckRef.current?.focus({ preventScroll: true });
         return;
       }
 
@@ -274,6 +275,7 @@ export default function SlideDeck({
           setTransitionMode(null);
           isAnimating.current = false;
           resetEdgeIntent();
+          deckRef.current?.focus({ preventScroll: true });
         }, SLIDE_MS);
 
         fadeTimers.current.push(finish);
@@ -301,12 +303,18 @@ export default function SlideDeck({
         setTransitionMode(null);
         isAnimating.current = false;
         resetEdgeIntent();
+        deckRef.current?.focus({ preventScroll: true });
       }, FADE_HALF_MS * 2);
 
       fadeTimers.current.push(swap, finish);
     },
     [anchors, clearFadeTimers, resetEdgeIntent, total],
   );
+
+  // Focus the deck on mount so arrow-key navigation works immediately.
+  useEffect(() => {
+    deckRef.current?.focus({ preventScroll: true });
+  }, []);
 
   // Keep deck in sync with hash changes (anchor clicks, back/forward).
   useEffect(() => {
@@ -315,6 +323,8 @@ export default function SlideDeck({
       if (next !== activeIndex) {
         goTo(next, { updateHash: false });
       }
+      // Re-focus the deck so arrow keys keep working after anchor-link clicks.
+      deckRef.current?.focus({ preventScroll: true });
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
@@ -529,7 +539,7 @@ export default function SlideDeck({
             className={styles.slide}
             style={{ '--page-bg-color': bgColors[i] || 'var(--color-cream)' }}
             data-active={i === activeIndex}
-            aria-hidden={i !== activeIndex}
+            inert={i !== activeIndex}
           >
             {cloneElement(child)}
             {/* Per-slide PageNav anchored to the very bottom of the page

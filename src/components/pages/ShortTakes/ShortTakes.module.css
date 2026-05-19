@@ -8,19 +8,13 @@
 }
 
 /* ─── Decorative background gradients (Figma 2193:1610, 2193:1611) ───
-   Sage-tinted blobs at 5% opacity. Same SVG-via-<img> + rotate pattern as
-   Cover, Foreword, and By the Numbers — viewBox-only SVGs (no width/height
-   100%) so height:auto on the img resolves correctly.
-
-   Extend past PageShell's bottom so blobs continue into the area
-   reserved for the sticky PageNav footer (otherwise they clip at the
-   PageShell boundary as content scrolls past underneath the nav). */
+   Sage-tinted blobs at 5% opacity. */
 .gradients {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -119,9 +113,9 @@
 
 .heading {
   font-family: var(--font-sans);
-  font-size: clamp(1.875rem, calc(var(--st-w) * 44 / 1440), 2.75rem);
+  font-size: 2rem; /* 32px */
   font-weight: 400;
-  line-height: 1.1818;
+  line-height: 1.25;
   color: var(--color-cream);
   letter-spacing: 0;
   margin: 0;
@@ -145,10 +139,12 @@
 .tabDivider {
   height: 1px;
   margin-top: 0;
+  margin-bottom: 32px;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   background: rgba(248, 245, 238, 0.18);
   border: none;
+  
 }
 
 /* ─── Quote list (Figma 2193:1614 — 1080px column, quotes inset 184px) ───
@@ -162,6 +158,11 @@
   gap: calc(var(--st-w) * 50 / 1440);
   width: 100%;
   max-width: calc(var(--st-w) * 1080 / 1440);
+  /* Shared container so every .quoteFooter flips to its stacked layout at
+     the same width — keeps the audio pills aligned across all quotes
+     instead of each one wrapping individually based on byline length. */
+  container-type: inline-size;
+  container-name: short-takes-quotes;
 }
 
 .placeholder {
@@ -216,8 +217,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
   gap: var(--space-4);
+}
+
+/* Stack the audio pill below the byline in lockstep across every quote.
+   Threshold picked so the longest byline (e.g. "Vice President, ISV
+   Partnerships, DocuSign") still fits inline above it. */
+@container short-takes-quotes (max-width: 640px) {
+  .quoteFooter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .byline {
@@ -302,14 +312,48 @@
 }
 
 @media (max-width: 640px) {
-  .quoteFooter {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   .quote {
     max-width: none;
     margin-inline: 0;
+  }
+
+  .container,
+  .quotes {
+    max-width: none;
+  }
+
+  .quotes {
+    gap: 0;
+  }
+
+  .quoteDivider {
+    margin-block: 32px;
+  }
+
+  /* Mobile (QA) ─────────────────────────────────────────────────
+     • Heading collapses to 2 lines by lifting the desktop max-width.
+     • 24px between headline and tab row.
+     • 32px above and below the dividing line under the tabs.
+     • Body padding pulls in to the standard 20px page edge. */
+  .body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .heading {
+    max-width: none;
+    font-size: 2rem; /* 32px */
+    line-height: 1.25;
+    padding-bottom: 24px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .tabSection {
+    display: flex;
+    flex-direction: column;
   }
 }
 

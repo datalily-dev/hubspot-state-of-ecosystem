@@ -81,12 +81,37 @@ function sizeForPosition(id, index) {
   return 'sm';
 }
 
+/** Figma 2405:2913 — per-stat value typography when size class alone isn't enough. */
+const VALUE_VARIANT_BY_STAT_ID = {
+  'stat-300k': 'feature',
+  'stat-119b-services': 'feature-compact',
+  'stat-30b-isv': 'feature-compact',
+  'stat-309b-smb': 'feature-compact',
+  'stat-86b-emea-smb': 'feature-compact',
+  'stat-5b-japac-smb': 'feature-compact',
+  'stat-24b-latam-smb': 'feature-compact',
+  'stat-139b-nam-smb': 'feature-compact',
+  'stat-196b-nam': 'feature-compact',
+  'stat-122b-emea': 'feature-compact',
+  'stat-71b-japac': 'feature-compact',
+  'stat-35b-latam': 'feature-compact',
+  'stat-11b-mid': 'feature-compact',
+  'stat-10k-500k-spend': 'compact',
+  'stat-1-12-months': 'multiline',
+};
+
 function resolveStats(statIds) {
   return statIds
     .map((id, index) => {
       const entry = statsData.library[id];
       if (!entry) return null;
-      return { id, size: sizeForPosition(id, index), ...entry };
+      const valueVariant = VALUE_VARIANT_BY_STAT_ID[id];
+      return {
+        id,
+        size: sizeForPosition(id, index),
+        ...(valueVariant ? { valueVariant } : {}),
+        ...entry,
+      };
     })
     .filter(Boolean);
 }

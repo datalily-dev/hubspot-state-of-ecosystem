@@ -3,7 +3,9 @@ import PageShell from '../../common/PageShell/PageShell';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/vision/gradient-a.svg';
 import gradientB from '../../../assets/vision/gradient-b.svg';
-import angieOdowdAvatar from '../../../assets/vision/angie-odowd.jpg';
+import angieOdowdAvatar from '../../../assets/vision/angie-odowd.webp';
+import visionVideo from '../../../assets/vision/video.jpg';
+import visionVideoSrc from '../../../assets/foreword/HubSpot-Video-Placeholder.mp4';
 import playButton from '../../../assets/foreword/play-button.svg';
 import styles from './VisionPage.module.css';
 
@@ -13,16 +15,7 @@ import styles from './VisionPage.module.css';
  * For YouTube or Vimeo, swap the <video> element below for an <iframe>
  * using the platform's embed URL.
  */
-const VISION_VIDEO_SRC = '';
-
-/**
- * Vision video poster image (placeholder thumbnail).
- * Drop a JPG into src/assets/vision/ and import it here when artwork is
- * available — until then the CSS placeholder reads as "video goes here".
- */
-const VISION_VIDEO_POSTER = '';
-
-const ANGIE_AVATAR_SRC = angieOdowdAvatar;
+const VISION_VIDEO_SRC = visionVideoSrc;
 
 /**
  * Page 6 — Vision.
@@ -31,8 +24,6 @@ const ANGIE_AVATAR_SRC = angieOdowdAvatar;
  */
 export default function VisionPage() {
   const [playing, setPlaying] = useState(false);
-
-  const showPlayer = Boolean(VISION_VIDEO_SRC) && playing;
 
   return (
     <PageShell id="vision" className={styles.page}>
@@ -60,7 +51,7 @@ export default function VisionPage() {
 
           <p className={styles.subhead}>When partners thrive, customers win.</p>
 
-          {showPlayer ? (
+          {VISION_VIDEO_SRC && playing ? (
             <div className={styles.videoContainer} role="region" aria-label="Vision video">
               <video
                 className={styles.videoPlayer}
@@ -68,7 +59,7 @@ export default function VisionPage() {
                 autoPlay
                 playsInline
                 src={VISION_VIDEO_SRC}
-                {...(VISION_VIDEO_POSTER ? { poster: VISION_VIDEO_POSTER } : {})}
+                poster={visionVideo}
               />
             </div>
           ) : (
@@ -78,15 +69,13 @@ export default function VisionPage() {
               aria-label="Play vision video from Angie O'Dowd"
               {...(VISION_VIDEO_SRC ? { onClick: () => setPlaying(true) } : {})}
             >
-              {VISION_VIDEO_POSTER && (
-                <img
-                  className={styles.videoPhoto}
-                  src={VISION_VIDEO_POSTER}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
+              <img
+                className={styles.videoPhoto}
+                src={visionVideo}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
               <span className={styles.videoShadow} aria-hidden="true" />
               <img
                 className={styles.playButton}
@@ -96,11 +85,6 @@ export default function VisionPage() {
                 height={78}
                 aria-hidden="true"
               />
-              {!VISION_VIDEO_POSTER && (
-                <span className={styles.videoPlaceholderLabel}>
-                  Video placeholder
-                </span>
-              )}
             </button>
           )}
 
@@ -163,23 +147,19 @@ export default function VisionPage() {
           </div>
 
           <figure className={styles.byline}>
-            {ANGIE_AVATAR_SRC ? (
-              <img
-                className={styles.avatar}
-                src={ANGIE_AVATAR_SRC}
-                alt="Angie O'Dowd"
-                width={80}
-                height={80}
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <span className={styles.avatar} aria-hidden="true" />
-            )}
+            <img
+              className={styles.avatar}
+              src={angieOdowdAvatar}
+              alt="Angie O'Dowd"
+              width={80}
+              height={80}
+              loading="lazy"
+              decoding="async"
+            />
             <figcaption className={styles.bylineText}>
               <span className={styles.bylineName}>
                 <a
-                  href="https://www.linkedin.com/in/angieodowd"
+                  href="https://www.linkedin.com/in/angiemarie/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.bylineNameLink}
@@ -187,7 +167,7 @@ export default function VisionPage() {
                   Angie O&rsquo;Dowd
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/angieodowd"
+                  href="https://www.linkedin.com/in/angiemarie/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.linkedInLink}
