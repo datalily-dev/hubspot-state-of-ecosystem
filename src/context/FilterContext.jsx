@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useCallback } from 'react';
 import { useFilterState } from '../hooks/useFilterState';
 import { useUrlState } from '../hooks/useUrlState';
-import { buildFilterId } from '../utils/url';
+import { buildFilterId, buildFilterSummary } from '../utils/url';
 
 const FilterContext = createContext(null);
 
@@ -31,12 +31,19 @@ export function FilterProvider({ children }) {
   }, [confirmPending, setUrlFilters, pendingFilters]);
 
   const filterId = useMemo(() => buildFilterId(confirmedFilters), [confirmedFilters]);
+  const filterSummary = useMemo(
+    () => buildFilterSummary(confirmedFilters),
+    [confirmedFilters],
+  );
+  const hasActiveFilters = Boolean(confirmedFilters.partnerType);
 
   const value = useMemo(
     () => ({
       pendingFilters,
       confirmedFilters,
       filterId,
+      filterSummary,
+      hasActiveFilters,
       setPendingPartnerType,
       setPendingSegment,
       setPendingRegion,
@@ -48,6 +55,8 @@ export function FilterProvider({ children }) {
       pendingFilters,
       confirmedFilters,
       filterId,
+      filterSummary,
+      hasActiveFilters,
       setPendingPartnerType,
       setPendingSegment,
       setPendingRegion,
@@ -61,8 +70,9 @@ export function FilterProvider({ children }) {
 }
 
 /**
- * @returns {{ pendingFilters, confirmedFilters, filterId, setPendingPartnerType,
- *   setPendingSegment, setPendingRegion, confirmFilters, openModal, resetFilters }}
+ * @returns {{ pendingFilters, confirmedFilters, filterId, filterSummary,
+ *   hasActiveFilters, setPendingPartnerType, setPendingSegment, setPendingRegion,
+ *   confirmFilters, openModal, resetFilters }}
  */
 export function useFilters() {
   const ctx = useContext(FilterContext);

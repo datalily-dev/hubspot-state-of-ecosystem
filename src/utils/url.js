@@ -43,3 +43,27 @@ export function buildFilterId({ partnerType, segment, region }) {
   }
   return 'global';
 }
+
+const PARTNER_LABELS = {
+  technology: 'Technology partner',
+  solutions: 'Solutions partner',
+};
+const SEGMENT_LABELS = { smb: 'SMB', upmarket: 'Upmarket' };
+const REGION_LABELS = { nam: 'NAM', emea: 'EMEA', japac: 'JAPAC', latam: 'LATAM' };
+
+/**
+ * Builds the human-readable summary shown on the cover page after a user
+ * applies filters (e.g. "Solutions partner / SMB / EMEA").
+ * Returns an empty string when no filters are applied.
+ * @param {{ partnerType: string|null, segment: string|null, region: string|null }} filters
+ * @returns {string}
+ */
+export function buildFilterSummary({ partnerType, segment, region }) {
+  if (!partnerType) return '';
+  const parts = [PARTNER_LABELS[partnerType]];
+  if (partnerType === 'solutions') {
+    if (segment) parts.push(SEGMENT_LABELS[segment]);
+    if (region) parts.push(REGION_LABELS[region]);
+  }
+  return parts.filter(Boolean).join(' / ');
+}

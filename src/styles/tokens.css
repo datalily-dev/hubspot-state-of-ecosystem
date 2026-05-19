@@ -26,6 +26,8 @@
   --text-4xl:  2.25rem;    /* 36px */
   --text-5xl:  3rem;       /* 48px */
   --text-6xl:  3.75rem;    /* 60px */
+  --text-7xl:  4.5rem;     /* 72px */
+  --text-8xl:  6rem;       /* 96px */
   --leading-tight:  1.2;
   --leading-snug:   1.375;
   --leading-normal: 1.5;
