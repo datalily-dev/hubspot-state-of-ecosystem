@@ -1,19 +1,48 @@
+import { useState } from 'react';
 import PageShell from '../../common/PageShell/PageShell';
-import PlayIcon from '../../../assets/icon/play.svg?react';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
+import gradientA from '../../../assets/foreword/gradient-a.svg';
+import gradientB from '../../../assets/foreword/gradient-b.svg';
+import forewordVideo from '../../../assets/foreword/video.jpg';
+import zackKassAvatar from '../../../assets/foreword/zack-kass.jpg';
+import playButton from '../../../assets/foreword/play-button.svg';
 import styles from './ForewordPage.module.css';
+
+/**
+ * Foreword video source.
+ * Set to a video URL to enable playback (MP4 / HLS).
+ * For YouTube or Vimeo, swap the <video> element below for an <iframe>
+ * using the platform's embed URL.
+ */
+const FOREWORD_VIDEO_SRC = '';
 
 /** Page 3 — Foreword. Letter from Zack Kass. STATIC. */
 export default function ForewordPage() {
+  const [playing, setPlaying] = useState(false);
+
   return (
     <PageShell id="foreword" className={styles.page}>
+      <div className={styles.gradients} aria-hidden="true">
+        <div className={styles.gradientBWrap}>
+          <div className={styles.gradientBRotate}>
+            <img className={styles.gradientB} src={gradientB} alt="" />
+          </div>
+        </div>
+        <div className={styles.gradientAWrap}>
+          <div className={styles.gradientARotate}>
+            <img className={styles.gradientA} src={gradientA} alt="" />
+          </div>
+        </div>
+      </div>
+
       <article className={styles.article}>
         <div className={styles.container}>
-          <p className={styles.eyebrow}>Foreword</p>
-
-          <h1 className={styles.headline}>
-            Partners will define the agentic era. The AI giants already know it.
-          </h1>
+          <header className={styles.intro}>
+            <p className={styles.eyebrow}>Foreword</p>
+            <h1 className={styles.headline}>
+              Partners will define the agentic era. The AI giants already know it.
+            </h1>
+          </header>
 
           <div className={styles.body}>
             <p>The internet is being rebuilt.</p>
@@ -33,17 +62,43 @@ export default function ForewordPage() {
             <p>And so the center of gravity shifts.</p>
           </div>
 
-          {/* ── Video thumbnail ── */}
-          <button
-            type="button"
-            className={styles.videoThumb}
-            aria-label="Play foreword video"
-          >
-            <span className={styles.videoImage} aria-hidden="true" />
-            <span className={styles.playButton} aria-hidden="true">
-              <PlayIcon className={styles.playIcon} focusable="false" />
-            </span>
-          </button>
+          {FOREWORD_VIDEO_SRC && playing ? (
+            <div className={styles.videoContainer} role="region" aria-label="Foreword video">
+              {/* Native video — swap for <iframe> if using YouTube / Vimeo */}
+              <video
+                className={styles.videoPlayer}
+                controls
+                autoPlay
+                playsInline
+                src={FOREWORD_VIDEO_SRC}
+                poster={forewordVideo}
+              />
+            </div>
+          ) : (
+            <button
+              type="button"
+              className={styles.videoThumb}
+              aria-label="Play foreword video"
+              {...(FOREWORD_VIDEO_SRC ? { onClick: () => setPlaying(true) } : {})}
+            >
+              <img
+                className={styles.videoPhoto}
+                src={forewordVideo}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span className={styles.videoShadow} aria-hidden="true" />
+              <img
+                className={styles.playButton}
+                src={playButton}
+                alt=""
+                width={78}
+                height={78}
+                aria-hidden="true"
+              />
+            </button>
+          )}
 
           <div className={styles.body}>
             <p>
@@ -107,12 +162,30 @@ export default function ForewordPage() {
             <p>This report is for the people who will close it.</p>
           </div>
 
-          {/* ── Author byline ── */}
+          {/*
+           * ZACK KASS PHOTO: replace src/assets/foreword/zack-kass.jpg with the
+           * real 80×80 headshot before delivery. The current file is a placeholder.
+           */}
           <figure className={styles.byline}>
-            <span className={styles.avatar} aria-hidden="true" />
+            <img
+              className={styles.avatar}
+              src={zackKassAvatar}
+              alt="Zack Kass"
+              width={80}
+              height={80}
+              loading="lazy"
+              decoding="async"
+            />
             <figcaption className={styles.bylineText}>
               <span className={styles.bylineName}>
-                Zack Kass
+                <a
+                  href="https://www.linkedin.com/in/zackkass"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.bylineNameLink}
+                >
+                  Zack Kass
+                </a>
                 <a
                   href="https://www.linkedin.com/in/zackkass"
                   target="_blank"

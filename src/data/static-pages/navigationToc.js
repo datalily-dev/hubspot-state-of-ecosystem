@@ -4,13 +4,13 @@ export const NAVIGATION_TOC = [
     label: 'Foreword',
     href: '#foreword',
     title: 'A letter from Zack Kass, OpenAI',
-    description: 'Global AI Advisory and former head of GTM at Open AI',
+    description: 'Global AI Advisory and former head of\nGTM at Open AI',
   },
   {
     label: 'By the Numbers',
     href: '#by-the-numbers',
     title: 'HubSpot’s ecosystem at a glance',
-    description: 'Get a glimpse at partner growth',
+    description: 'Get glimpse at partner growth',
   },
   {
     label: 'Short Takes',

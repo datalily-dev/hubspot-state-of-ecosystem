@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="button/play">
+<rect width="78" height="78" rx="39" fill="var(--fill-0, #FF4800)"/>
+<path id="icon" d="M51.4941 37.6575L35.949 20.5578C35.4553 20.0148 34.7121 19.8492 34.0664 20.1455C33.4214 20.4401 33 21.1325 33 21.9012V56.1006C33 56.8685 33.4214 57.5617 34.0664 57.8555C34.2804 57.9529 34.5048 58 34.7269 58C35.1771 58 35.6191 57.8068 35.949 57.4448L51.4941 40.3443C52.1686 39.6024 52.1686 38.3994 51.4941 37.6575Z" fill="var(--fill-0, #F8F5EE)"/>
+</g>
+</svg>

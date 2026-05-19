@@ -124,24 +124,34 @@
   box-shadow: 0 0 0 2px var(--color-cream), 0 0 0 4px var(--color-orange);
 }
 
-/* ─── Light variant (cream backgrounds) ─── */
+/* ─── Light variant (cream backgrounds — Figma controls/enabled #FA9E79) ─── */
 .light .pill {
-  border: 1px solid var(--color-orange);
+  border: 1px solid var(--color-enabled);
   background: transparent;
+  padding: 10px 16px;
 }
 
 .light .dot {
-  border: 1.5px solid rgba(255, 72, 0, 0.45);
+  border: 1.5px solid rgb(250 158 121 / 0.45);
   background: transparent;
 }
 
 .light .dot:hover {
-  border-color: var(--color-orange);
+  border-color: var(--color-enabled);
 }
 
 .light .dotActive {
   background: var(--color-orange);
   border: 1.5px solid var(--color-orange);
+}
+
+.light .arrowBtn {
+  border-color: var(--color-enabled);
+  color: var(--color-orange);
+}
+
+.light .arrowBtn:hover {
+  background: rgb(250 158 121 / 0.12);
 }
 
 /* ─── Dark variant (cover page) ─── */

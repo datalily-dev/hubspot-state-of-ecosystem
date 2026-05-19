@@ -1,56 +1,145 @@
+/* Figma Foreword artboard (2192:6020) — 1440×2138 reference */
 .page {
   position: relative;
+  --foreword-w: var(--content-vw);
+  --foreword-offset-x: calc((100vw - var(--foreword-w)) / 2);
   background-color: var(--color-cream);
   color: var(--color-teal-dark);
   overflow-x: clip;
-  /* Allow tall content; min-height 100vh is set by PageShell */
+}
+
+/* ─── Decorative background gradients (Figma 2192:6021, 2192:6022) ───
+   Extend below the PageShell section so the lower-right blob continues
+   seamlessly into the PageNav footer area (PageNav has a transparent
+   background, so the gradient paints behind its pill + arrows instead
+   of being clipped at the section boundary). */
+.gradients {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gradientAWrap,
+.gradientBWrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Top-left blob — rotated bounding box 1526.13×1385.94 @ (-770, -731) */
+.gradientBWrap {
+  left: calc(var(--foreword-offset-x) + var(--foreword-w) * -770 / 1440);
+  top: calc(var(--foreword-w) * -731 / 1440);
+  width: calc(var(--foreword-w) * 1526.13 / 1440);
+  aspect-ratio: 1526.13 / 1385.942;
+}
+
+.gradientBRotate {
+  flex: none;
+  transform: rotate(179deg);
+}
+
+.gradientB {
+  display: block;
+  width: calc(var(--foreword-w) * 1502.624 / 1440);
+  height: auto;
+  max-width: none;
+}
+
+/* Lower-right blob — rotated bounding box 1846.88×1784.91 @ (409.7, 1271) */
+.gradientAWrap {
+  left: calc(var(--foreword-offset-x) + var(--foreword-w) * 409.7 / 1440);
+  top: calc(var(--foreword-w) * 1271 / 1440);
+  width: calc(var(--foreword-w) * 1846.883 / 1440);
+  aspect-ratio: 1846.883 / 1784.908;
+}
+
+.gradientARotate {
+  flex: none;
+  transform: rotate(-160deg);
+}
+
+.gradientA {
+  display: block;
+  width: calc(var(--foreword-w) * 1468.62 / 1440);
+  height: auto;
+  max-width: none;
 }
 
 /* ─── Article ─── */
 .article {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
   flex: 1;
   width: 100%;
-  padding: var(--space-10) var(--page-gutter) var(--space-16);
+  /* Figma page content y=110; PageShell already reserves 104px (72+32) */
+  padding-top: calc(var(--foreword-w) * 6 / 1440);
+  padding-bottom: var(--space-16);
+  padding-right: var(--page-gutter);
 }
 
 .container {
-  max-width: 720px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  max-width: calc(var(--foreword-w) * 712 / 1440);
+  margin-left: max(
+    var(--page-gutter),
+    calc(var(--foreword-offset-x) + var(--foreword-w) * 363 / 1440)
+  );
 }
 
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Figma 2192:6028 — text/md/book, color/orange */
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.3333;
   color: var(--color-orange);
-  margin-bottom: var(--space-4);
+  letter-spacing: 0;
 }
 
+/* Figma 2192:6029 — text/5xl/book */
 .headline {
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5vw, 4rem);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, calc(var(--foreword-w) * 72 / 1440), var(--text-7xl));
+  font-weight: 400;
+  line-height: 1.1111; /* 80px / 72px */
   color: var(--color-teal-dark);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-10);
+  letter-spacing: 0;
 }
 
-/* ─── Body paragraphs ─── */
+/* ─── Body paragraphs (Figma 2192:6030, 2192:6036 — text/md/book) ─── */
 .body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-6);
   font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.3333; /* 24px / 18px */
   color: var(--color-teal-dark);
-  margin-bottom: var(--space-10);
+  letter-spacing: 0;
+}
+
+.body p {
+  margin: 0;
 }
 
 .body a {
-  color: var(--color-teal-dark);
+  color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -59,33 +148,65 @@
   color: var(--color-orange);
 }
 
-/* ─── Video thumbnail ─── */
+/* ─── Video (Figma 2192:6031) ─── */
+
+/* Active video player — shown when FOREWORD_VIDEO_SRC is set and user clicked play */
+.videoContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 712 / 396;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--color-teal-dark);
+}
+
+.videoPlayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Thumbnail placeholder — shown while no video src is active */
 .videoThumb {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-lg);
+  aspect-ratio: 712 / 396;
+  border: none;
+  padding: 0;
+  border-radius: 10px;
   overflow: hidden;
-  margin: 0 auto var(--space-10);
   cursor: pointer;
   background: var(--color-teal-dark);
 }
 
-.videoImage {
+.videoPhoto {
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle at 30% 40%,
-      rgba(255, 158, 121, 0.55) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      135deg,
-      var(--color-magenta) 0%,
-      var(--color-teal-dark) 100%
-    );
+  left: 0;
+  top: -6.24%;
+  width: 102.13%;
+  height: 121.1%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.videoShadow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 23.48%;
+  background: linear-gradient(
+    to bottom,
+    #fff 0%,
+    #6b6969 60%,
+    #393838 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 
 .playButton {
@@ -93,13 +214,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-full);
-  background: var(--color-orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: clamp(56px, calc(var(--foreword-w) * 78 / 1440), 78px);
+  height: auto;
   transition: transform var(--duration-fast) var(--ease-out);
 }
 
@@ -107,26 +223,19 @@
   transform: translate(-50%, -50%) scale(1.06);
 }
 
-.playIcon {
-  width: 26px;
-  height: 26px;
-  color: var(--color-cream);
-  margin-left: 3px;
-}
-
-/* ─── Author byline ─── */
+/* ─── Author byline (Figma 2192:6037) ─── */
 .byline {
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  margin-top: var(--space-8);
+  margin: 0;
 }
 
 .avatar {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-magenta), var(--color-orange));
+  object-fit: cover;
   flex-shrink: 0;
 }
 
@@ -139,12 +248,21 @@
 .bylineName {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
+}
+
+.bylineNameLink {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 500;
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.2857;
   color: var(--color-teal-dark);
-  line-height: 1.1;
+  text-decoration: none;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.bylineNameLink:hover {
+  opacity: 0.78;
 }
 
 .linkedInLink {
@@ -159,12 +277,42 @@
 }
 
 .linkedInIcon {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 
 .bylineRole {
   font-family: var(--font-sans);
   font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1.375;
   color: var(--color-orange);
+}
+
+@media (max-width: 900px) {
+  /* Upper-left blob: top as % of page height keeps it proportional
+     regardless of how tall the mobile content grows. */
+  .gradientBWrap {
+    left: calc(var(--foreword-offset-x) + var(--foreword-w) * -0.45);
+    top: -25%;
+    width: 115%;
+  }
+
+  /* Lower-right blob: 60% of page height keeps it in the lower third
+     on any content-driven page height (mobile text reflows to ~2× desktop height). */
+  .gradientAWrap {
+    left: calc(var(--foreword-offset-x) + var(--foreword-w) * 0.05);
+    top: 60%;
+    width: 130%;
+  }
+
+  .article {
+    padding-top: var(--space-4);
+    padding-left: var(--page-gutter);
+  }
+
+  .container {
+    margin-left: 0;
+    max-width: none;
+  }
 }

@@ -1,3 +1,4 @@
+/* Figma Navigation artboard (2192:5896) — 1440×900 reference */
 .page {
   background-color: var(--color-cream);
   color: var(--color-teal-dark);
@@ -6,34 +7,48 @@
 .body {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-10) var(--page-gutter);
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
+  /* Figma menu @ top 130px; PageShell already reserves top nav + clearance */
+  padding-top: calc(130px - var(--top-nav-height) - var(--content-top-clearance));
+  /* Figma menu @ left 180px from artboard edge; scales with centered 1440 column */
+  padding-left: max(
+    var(--space-4),
+    calc(
+      (100vw - min(100vw, var(--content-max-width))) / 2 +
+        min(100vw, var(--content-max-width)) * 180 / 1440
+    )
+  );
+  padding-right: var(--page-gutter);
+  padding-bottom: var(--space-10);
 }
 
-/* ─── TOC two-column grid ─── */
+/* ─── TOC two-column grid (Figma: 492px cols, 48px gap, 620px divider) ─── */
 .toc {
   width: 100%;
-  max-width: 1100px;
+  max-width: calc(min(100vw, var(--content-max-width)) * 1033 / 1440);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
-  gap: clamp(var(--space-8), 6vw, var(--space-20));
-  align-items: stretch;
+  column-gap: clamp(var(--space-8), calc(var(--content-vw) * 48 / 1440), 3rem);
+  align-items: start;
 }
 
 .column {
   display: flex;
   flex-direction: column;
+  max-width: calc(var(--content-vw) * 492 / 1440);
 }
 
 .colDivider {
   width: 1px;
-  align-self: stretch;
+  height: min(620px, 70vh);
+  justify-self: center;
+  align-self: center;
   background: rgba(4, 39, 41, 0.18);
 }
 
-/* ─── Item ─── */
+/* ─── Item (Figma navigation/link) ─── */
 .item {
   border-bottom: 1px solid rgba(4, 39, 41, 0.18);
 }
@@ -45,8 +60,8 @@
 .link {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-6) 0;
+  gap: var(--space-4);
+  padding: var(--space-8) 0;
   transition: opacity var(--duration-fast) var(--ease-out);
 }
 
@@ -56,33 +71,58 @@
 
 .itemLabel {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.3333;
   color: var(--color-orange);
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
+}
+
+.itemHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
 }
 
 .itemTitle {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-xl), 2.2vw, var(--text-2xl));
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: clamp(1.375rem, calc(var(--content-vw) * 0.01944), 1.75rem);
+  font-weight: 500;
   color: var(--color-teal-dark);
-  line-height: var(--leading-tight);
-  margin-top: var(--space-1);
+  line-height: 1.2857;
+  letter-spacing: 0;
 }
 
 .itemDescription {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: clamp(1.125rem, calc(var(--content-vw) * 0.01389), 1.25rem);
+  font-weight: 400;
   color: var(--color-teal-dark);
-  opacity: 0.78;
-  line-height: var(--leading-snug);
-  max-width: 38ch;
+  line-height: 1.4;
+  letter-spacing: 0;
+  white-space: pre-line;
+}
+
+@media (max-width: 900px) {
+  .body {
+    padding-top: var(--space-6);
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+  }
+
+  .toc {
+    max-width: none;
+  }
+
+  .column {
+    max-width: none;
+  }
 }
 
 @media (max-width: 768px) {
   .toc {
     grid-template-columns: 1fr;
-    gap: 0;
+    column-gap: 0;
   }
 
   .colDivider {
