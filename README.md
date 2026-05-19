@@ -120,12 +120,3 @@ in JSX — it ships into HubSpot CMS downstream where it becomes editable.
 Edit `src/styles/tokens.css`. All colors and typography values are CSS custom properties — changes propagate everywhere automatically.
 
 ---
-
-## Delivery Notes
-
-- **Accessibility:** WCAG 2.1 AA, 0 AXE issues (mobile + desktop)
-- **Performance:** Lighthouse 85+ (mobile baseline)
-- **SEO:** Lighthouse 90+
-- **Browser support:** Chrome, Firefox, Safari, Edge (latest)
-- **No console errors/warnings** in production
-- **Localization-ready:** no hardcoded strings
