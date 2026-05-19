@@ -33,7 +33,8 @@
             {
               "label": "< 200 employees",
               "valuesM": [14, 18, 24, 27, 31],
-              "fill": "var(--color-lavender-dark)"
+              "fill": "var(--color-lavender-dark)",
+              "tableSwatch": "var(--color-pink)"
             }
           ]
         }
@@ -66,24 +67,23 @@
           "rowHeaderLabel": "Focus",
           "series": [
             {
-              "label": "AI Enhanced",
-              "valuesM": [12, 16, 20, 22, 24],
-              "fill": "var(--color-lavender)"
-            },
-            {
               "label": "AI First",
               "valuesM": [7, 9, 12, 15, 18],
               "fill": "var(--color-orange)"
+            },
+            {
+              "label": "AI Enhanced",
+              "valuesM": [12, 16, 20, 22, 24],
+              "fill": "var(--color-lavender-dark)"
             }
           ]
         }
       },
       "cta": {
-        "image": null,
-        "title": "HubSpot AI Transformation Playbook",
-        "subtitle": "Forward-deployed AI playbook for partners",
+        "title": "AI Transformation Playbook for Solutions Partners",
+        "subtitle": "A repeatable model for leading AI deals.",
         "href": "https://offers.hubspot.com/ai-transformation-playbook-for-partners#widget_1778589175272",
-        "linkText": "Learn more"
+        "linkText": "Download for Free"
       }
     },
     {
@@ -106,27 +106,27 @@
           "series": [
             {
               "label": "Commerce",
-              "valuesM": [1, 1, 2, 2, 2],
-              "fill": "var(--color-sage)"
-            },
-            {
-              "label": "Data / Operations",
-              "valuesM": [2, 2, 3, 3, 4],
-              "fill": "var(--color-lavender)"
-            },
-            {
-              "label": "Sales",
-              "valuesM": [2, 3, 4, 5, 6],
+              "valuesM": [0.25, 0.5, 0.75, 1, 1.25],
               "fill": "var(--color-pink)"
             },
             {
-              "label": "Customer Success",
-              "valuesM": [3, 4, 5, 6, 7],
-              "fill": "var(--color-enabled)"
+              "label": "Marketing",
+              "valuesM": [10.5, 13.75, 17.25, 19.5, 22],
+              "fill": "var(--color-lavender-dark)"
             },
             {
-              "label": "Marketing",
-              "valuesM": [4, 5, 5, 7, 9],
+              "label": "Data/Operations",
+              "valuesM": [1.25, 1.75, 2.5, 3.25, 3.5],
+              "fill": "var(--data-peach)"
+            },
+            {
+              "label": "Sales",
+              "valuesM": [5.5, 7.25, 9.25, 10.75, 12.25],
+              "fill": "var(--data-orange-mid)"
+            },
+            {
+              "label": "Customer Success",
+              "valuesM": [1.5, 1.75, 2.25, 2.5, 3],
               "fill": "var(--color-orange)"
             }
           ]
@@ -165,12 +165,12 @@
             {
               "label": "ANZ",
               "valuesM": [1, 1, 1, 3, 2],
-              "fill": "var(--data-blue-light)"
+              "fill": "var(--data-blue)"
             },
             {
               "label": "India",
               "valuesM": [1, 1, 2, 2, 3],
-              "fill": "var(--data-blue-deep)"
+              "fill": "var(--data-blue-pale)"
             },
             {
               "label": "Rest of APeJC",
@@ -185,17 +185,17 @@
             {
               "label": "Europe",
               "valuesM": [4, 5, 6, 7, 8],
-              "fill": "var(--color-lavender)"
+              "fill": "var(--color-lavender-dark)"
             },
             {
               "label": "Japan",
               "valuesM": [1, 1, 2, 2, 3],
-              "fill": "var(--color-cream)"
+              "fill": "var(--data-peach)"
             },
             {
               "label": "LATAM",
               "valuesM": [3, 3, 4, 4, 5],
-              "fill": "var(--color-enabled)"
+              "fill": "var(--data-orange-mid)"
             },
             {
               "label": "USA",

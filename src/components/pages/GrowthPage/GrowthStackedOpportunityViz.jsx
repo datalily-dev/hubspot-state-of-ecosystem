@@ -107,15 +107,28 @@ export default function GrowthStackedOpportunityViz({ data, title }) {
     const valueLabelCenterY =
       barBottomY - barH - VALUE_LABEL_GAP - VALUE_LABEL_H / 2;
 
+    const barDelay = i * 120;
+    const labelDelay = barDelay + 450;
+
     return (
       <g key={year}>
-        {segments}
+        <g
+          className={styles.barGroup}
+          style={{
+            '--bar-origin-x': `${x + BAR_W / 2}px`,
+            '--bar-origin-y': `${barBottomY}px`,
+            '--bar-delay': `${barDelay}ms`,
+          }}
+        >
+          {segments}
+        </g>
         <text
           x={x + BAR_W / 2}
           y={valueLabelCenterY}
           textAnchor="middle"
           dominantBaseline="middle"
           className={styles.barLabel}
+          style={{ '--label-delay': `${labelDelay}ms` }}
         >
           {formatOpportunityValue(total)}
         </text>
@@ -125,6 +138,7 @@ export default function GrowthStackedOpportunityViz({ data, title }) {
           textAnchor="middle"
           dominantBaseline="middle"
           className={styles.axisYear}
+          style={{ '--label-delay': `${barDelay + 200}ms` }}
         >
           {year}
         </text>
@@ -132,6 +146,7 @@ export default function GrowthStackedOpportunityViz({ data, title }) {
     );
   });
 
+  // Figma 2316:4716 — legend reads top-of-stack first (Customer Success → Commerce).
   const legendSeries = [...series].reverse();
 
   return (
@@ -139,7 +154,7 @@ export default function GrowthStackedOpportunityViz({ data, title }) {
       <svg
         className={styles.svg}
         viewBox={`0 0 ${viewW} ${viewH}`}
-        preserveAspectRatio="xMidYMax meet"
+        preserveAspectRatio="xMinYMax meet"
         role="img"
         aria-labelledby={`${titleId} ${descId}`}
       >
@@ -177,8 +192,17 @@ export function GrowthStackedOpportunityTable({ data }) {
           Opportunity values for {years.join(', ')}. Rows list categories from
           largest stack segment to smallest.
         </caption>
+        <colgroup>
+          <col className={styles.colLabel} />
+          {years.map((y) => (
+            <col key={y} className={styles.colYear} />
+          ))}
+        </colgroup>
         <thead>
-          <tr>
+          <tr
+            className={styles.tableRowAnim}
+            style={{ '--row-delay': '0ms' }}
+          >
             <th scope="col">
               <span className={styles.colHeadHidden}>{firstColLabel}</span>
             </th>
@@ -190,8 +214,12 @@ export function GrowthStackedOpportunityTable({ data }) {
           </tr>
         </thead>
         <tbody>
-          {tableRows.map((s) => (
-            <tr key={s.label}>
+          {tableRows.map((s, ri) => (
+            <tr
+              key={s.label}
+              className={styles.tableRowAnim}
+              style={{ '--row-delay': `${(ri + 1) * 120}ms` }}
+            >
               <th scope="row">
                 <span className={styles.rowHead}>
                   <span

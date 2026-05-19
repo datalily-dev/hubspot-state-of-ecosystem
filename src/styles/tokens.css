@@ -15,8 +15,10 @@
   --color-enabled:     #FA9E79;
 
   /* ─── Data viz extensions (used for chart/table swatches only) ─── */
-  --data-blue-light:   #A8D4F0;
-  --data-blue-deep:    #1E4D6B;
+  --data-blue:         #4EB3DE;
+  --data-blue-pale:    #D1EFFC;
+  --data-orange-mid:   #FF9000;
+  --data-peach:        #FFD093;
 
   /* ─── Typography ─── */
   --font-sans:    'HubSpot Text', system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;

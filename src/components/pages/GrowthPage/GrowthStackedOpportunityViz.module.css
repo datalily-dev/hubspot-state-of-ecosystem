@@ -1,11 +1,12 @@
 /* Growth page — reusable stacked bar + opportunity table */
 
+/* Figma 2316:4725 — bars + legend grouped with 22px gap, left-aligned in panel */
 .chartWrap {
   width: 100%;
-  padding: var(--space-6) 0 var(--space-2);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  gap: calc(var(--gw) * 22 / 1440);
 }
 
 .svg {
@@ -15,12 +16,33 @@
   display: block;
 }
 
+/* ─── Bar grow animation ─── */
+@keyframes growBar {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+.barGroup {
+  transform-origin: var(--bar-origin-x) var(--bar-origin-y);
+  animation: growBar 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--bar-delay, 0ms);
+  transform: scaleY(0);
+}
+
+@keyframes fadeInLabel {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .barLabel {
   font-family: var(--font-sans);
   font-size: 16px;
   font-weight: 400;
   fill: var(--color-cream);
   letter-spacing: 0.1px;
+  opacity: 0;
+  animation: fadeInLabel 400ms var(--ease-out) forwards;
+  animation-delay: var(--label-delay, 500ms);
 }
 
 .axisYear {
@@ -28,86 +50,173 @@
   font-size: 16px;
   font-weight: 400;
   fill: var(--color-cream);
+  opacity: 0;
+  animation: fadeInLabel 400ms var(--ease-out) forwards;
+  animation-delay: var(--label-delay, 400ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barGroup {
+    animation: none;
+    transform: none;
+  }
+
+  .barLabel,
+  .axisYear,
+  .legend {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Figma 2296:2787 — circular swatches (17px) at sm font (16/22), 8px gap */
+/* Figma 2316:4792 — flex-wrap key, 10px row / 20px column gap */
+@keyframes legendFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
-  justify-content: center;
-  margin-top: var(--space-5);
-  padding-bottom: var(--space-2);
+  gap: 10px 20px;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: calc(var(--gw) * 532 / 1440);
+  opacity: 0;
+  animation: legendFadeIn 500ms var(--ease-out) 700ms forwards;
 }
 
 .legendItem {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 8px;
   font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  color: rgba(248, 245, 238, 0.9);
+  font-size: var(--text-base); /* 16 */
+  font-weight: 400;
+  line-height: 1.375; /* 22/16 */
+  color: var(--color-cream);
+}
+
+.legendItem .swatch {
+  width: 17px;
+  height: 17px;
 }
 
 .swatch {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-/* ─── Table ─── */
+/* ─── Table (Figma 2316:3258 — Mid-Market Table view) ─────────────────────
+   Year-header row above, then one row per series. Each data row has a sage
+   bottom border (#B9CDBE). Label column is 174px and shows a 17px swatch +
+   label; year/value columns are 64px centered cells.
+
+   The whole table is right-aligned inside the chart panel: Figma's parent
+   uses `items-end`, so the year cells sit flush with the panel's right
+   edge and the row labels stick out leftward (Figma 2316:3258 / 2316:3356). */
 .tableScroll {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .table {
-  width: 100%;
-  min-width: 28rem;
+  /* Table sizes to its declared column widths (174 + 5×64 = 494px), then
+     right-aligns inside .tableScroll. table-layout: fixed honours <col>
+     widths exactly so the year header cells line up over their values
+     regardless of cell content. */
+  width: auto;
   border-collapse: collapse;
+  table-layout: fixed;
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-base); /* 16 */
   color: var(--color-cream);
 }
 
+.colLabel {
+  width: 174px;
+}
+
+.colYear {
+  width: 64px;
+}
+
+/* Year column headers — text/sm/medium with light tracking, no underline. */
 .table thead th {
-  font-weight: 600;
-  text-align: right;
-  padding: var(--space-3) var(--space-3);
-  color: rgba(248, 245, 238, 0.85);
-  border-bottom: 1px solid rgba(248, 245, 238, 0.18);
+  font-weight: 500;
+  text-align: center;
+  padding: 10px;
+  letter-spacing: 0.32px;
+  line-height: 1.375; /* 22/16 */
+  color: var(--color-cream);
+  border-bottom: none;
+  white-space: nowrap;
 }
 
 .table thead th:first-child {
   text-align: left;
-  padding-left: 0;
+  padding: 10px;
 }
 
-.table tbody td {
-  text-align: right;
-  padding: var(--space-3) var(--space-3);
-  vertical-align: middle;
+/* Data rows — sage divider under every row (including the last). */
+.table tbody tr {
+  border-bottom: 1px solid var(--color-sage);
 }
 
 .table tbody th {
   text-align: left;
-  padding: var(--space-3) var(--space-3) var(--space-3) 0;
-  font-weight: 500;
+  padding: 10px;
+  font-weight: 400;
+  line-height: 1.375;
 }
 
-.table tbody tr {
-  border-bottom: 1px solid rgba(248, 245, 238, 0.08);
+.table tbody td {
+  text-align: center;
+  padding: 10px;
+  vertical-align: middle;
+  font-weight: 400;
+  line-height: 1.375;
+  white-space: nowrap;
 }
 
-.table tbody tr:last-child {
-  border-bottom: none;
-}
-
+/* Swatch beside the row label. Matches the legend swatch (17px circle). */
 .rowHead {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 8px;
+}
+
+/* ─── Table row cascade animation ─── */
+@keyframes tableRowFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tableRowAnim {
+  opacity: 0;
+  animation: tableRowFadeIn 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--row-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tableRowAnim {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .colHeadHidden {

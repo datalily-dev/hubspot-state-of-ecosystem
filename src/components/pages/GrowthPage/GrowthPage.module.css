@@ -1,202 +1,344 @@
+/* Figma Growth artboard (2296:2736) — 1440×1408 Mid-Market reference */
 .page {
   position: relative;
+  --gw: var(--content-vw);
   background-color: var(--color-teal-dark);
   color: var(--color-cream);
   overflow-x: clip;
 }
 
+/* ─── Decorative background gradients (Figma 2296:2737 / 2296:2738) ───
+   Same orange blob shape used on Vision (5% opacity on dark teal). One
+   sits off the upper-right corner, the other off the lower-left, giving
+   the slide its subtle radial wash. Pattern follows ShortTakes / Vision. */
+.gradients {
+  position: absolute;
+  inset: 0;
+  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gradientAWrap,
+.gradientBWrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A — upper-right blob.
+   Figma rotated bbox 1870.587×1918.331 anchored at left=calc(50% + 65.15px),
+   top=-816.9, with the inner image rotated -116°. */
+.gradientAWrap {
+  left: calc(50% + var(--gw) * 65.15 / 1440);
+  top: calc(var(--gw) * -816.9 / 1440);
+  width: calc(var(--gw) * 1870.587 / 1440);
+  aspect-ratio: 1870.587 / 1918.331;
+}
+
+.gradientARotate {
+  flex: none;
+  transform: rotate(-116deg);
+}
+
+/* B — lower-left blob.
+   Figma rotated bbox 1846.883×1784.908 anchored at left=-900, top=715.01,
+   with the inner image rotated -160°. */
+.gradientBWrap {
+  left: calc(var(--gw) * -900 / 1440);
+  top: calc(var(--gw) * 715.01 / 1440);
+  width: calc(var(--gw) * 1846.883 / 1440);
+  aspect-ratio: 1846.883 / 1784.908;
+}
+
+.gradientBRotate {
+  flex: none;
+  transform: rotate(-160deg);
+}
+
+.gradientImg {
+  display: block;
+  width: calc(var(--gw) * 1468.62 / 1440);
+  height: auto;
+  max-width: none;
+}
+
 /* ─── Body ─── */
 .body {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
   flex: 1;
   width: 100%;
-  padding: var(--space-8) var(--page-gutter) var(--space-16);
-  display: flex;
-  justify-content: center;
+  /* Figma title @ left=180 from the 1440 artboard (global margin token). */
+  padding-left: max(
+    var(--space-4),
+    calc(
+      (100vw - min(100vw, var(--content-max-width))) / 2 +
+        min(100vw, var(--content-max-width)) * 180 / 1440
+    )
+  );
+  padding-right: var(--page-gutter);
+  padding-bottom: var(--space-12);
 }
 
 .container {
   width: 100%;
-  max-width: 1080px;
-  margin-inline: auto;
+  /* Figma content frame: 1079px @ x=180 in a 1440 artboard. */
+  max-width: calc(var(--gw) * 1080 / 1440);
 }
 
-/* ─── Header (label + heading + tab row) ─── */
+/* ─── Title (Figma 2296:2802 — title block 704px @ x=180, y=110) ─── */
 .header {
-  margin-bottom: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gw) * 18 / 1440);
+  padding-top: calc(var(--gw) * 6 / 1440);
+  margin-bottom: calc(var(--gw) * 40 / 1440);
+  max-width: calc(var(--gw) * 704 / 1440);
 }
 
+/* Figma 2296:2803 — text/md/book, color/orange */
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg); /* 18 */
+  font-weight: 400;
+  line-height: 1.3333; /* 24/18 */
   color: var(--color-orange);
-  margin-bottom: var(--space-3);
+  margin: 0;
 }
 
+/* Figma 2296:2804 — text/2xl/book, 44/52 */
 .heading {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4.2vw, 3rem);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(1.875rem, calc(var(--gw) * 44 / 1440), 2.75rem);
+  font-weight: 400;
+  line-height: 1.1818; /* 52/44 */
   color: var(--color-cream);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-6);
-  max-width: 22ch;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+/* ─── Tabs (Figma 2296:2795 — full-bleed divider, tabs at content margin) ─── */
+.tabSection {
+  margin-bottom: calc(var(--gw) * 40 / 1440);
 }
 
 .tabRow {
   display: block;
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid rgba(248, 245, 238, 0.18);
 }
 
 .tabs {
-  margin-top: 0;
+  margin: 0;
 }
 
-/* ─── Two-column body ─── */
+.tabDivider {
+  height: 1px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: rgba(248, 245, 238, 0.18);
+  border: none;
+}
+
+/* ─── Two-column body (Figma 2296:2741 — left 441 / divider / right 532) ─── */
 .columns {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: var(--space-10);
-  padding-top: var(--space-8);
+  grid-template-columns: minmax(0, 441fr) auto minmax(0, 532fr);
+  column-gap: calc(var(--gw) * 53 / 1440);
 }
 
 .leftCol {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: calc(var(--gw) * 32 / 1440);
   min-width: 0;
+}
+
+.divider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(248, 245, 238, 0.18);
 }
 
 .rightCol {
   min-width: 0;
-  border-left: 1px solid rgba(248, 245, 238, 0.18);
-  padding-left: var(--space-10);
-}
-
-@media (max-width: 860px) {
-  .columns {
-    grid-template-columns: 1fr;
-  }
-
-  .rightCol {
-    border-left: none;
-    padding-left: 0;
-    border-top: 1px solid rgba(248, 245, 238, 0.18);
-    padding-top: var(--space-8);
-  }
+  padding-top: calc(var(--gw) * 40 / 1440);
+  display: flex;
 }
 
 /* ─── Left column copy ─── */
 .colEyebrow {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-size: var(--text-lg); /* 18 */
+  font-weight: 500;
+  line-height: 1.3333; /* 24/18 */
   color: var(--color-orange);
-  margin-bottom: var(--space-2);
+  margin: 0;
 }
 
+/* Figma 2296:2745 — text/xl/book, 28/36 */
 .colHeading {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(1.375rem, calc(var(--gw) * 28 / 1440), 1.75rem);
+  font-weight: 400;
+  line-height: 1.2857; /* 36/28 */
   color: var(--color-cream);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-2);
+  letter-spacing: 0;
+  margin: 0;
+}
+
+/* Figma 2296:2746 — text/sm/book, 16/22 */
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* Figma uses a blank line between blocks (~22px) */
+  font-family: var(--font-sans);
+  font-size: var(--text-base); /* 16 */
+  font-weight: 400;
+  line-height: 1.375; /* 22/16 */
+  color: var(--color-cream);
 }
 
 .paragraph {
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
-  color: var(--color-cream);
-  max-width: 56ch;
+  margin: 0;
 }
 
 .bullets {
-  list-style: none;
+  list-style: disc;
+  padding-left: 24px;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  padding-left: var(--space-4);
-  max-width: 56ch;
+  gap: 0;
 }
 
 .bullet {
-  position: relative;
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
-  color: var(--color-cream);
-  padding-left: var(--space-3);
+  padding-left: 0;
+  line-height: 1.375;
 }
 
-.bullet::before {
-  content: '\2022';
+/* ─── CTA card (Figma 2316:3209 — 436×164, photo masked left, copy overlay) ─── */
+.ctaCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  max-width: calc(var(--gw) * 436 / 1440);
+  min-height: calc(var(--gw) * 164 / 1440);
+  padding: calc(var(--gw) * 16 / 1440) calc(var(--gw) * 41 / 1440)
+    calc(var(--gw) * 20 / 1440);
+  color: var(--color-cream);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.ctaBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-magenta);
+}
+
+/* Figma 2316:3212 — 127×164 mask group with rounded top-left corner. */
+.ctaPhotoFrame {
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--color-cream);
-}
-
-/* ─── CTA card ─── */
-.ctaCard {
-  margin-top: var(--space-6);
-  display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  align-items: stretch;
-  background: var(--color-magenta);
-  color: var(--color-cream);
-  border-radius: var(--radius-md);
+  width: calc(var(--gw) * 127 / 1440);
+  height: 100%;
   overflow: hidden;
-  max-width: 480px;
+  mask-image: url('../../../assets/growth/cta-photo-mask.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url('../../../assets/growth/cta-photo-mask.svg');
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
 }
 
-.ctaImage {
+/* Figma 2316:3214 — 248×169 photo at (-7, -3), rotated 180° + flipped Y. */
+.ctaPhotoInner {
+  position: absolute;
+  left: calc(var(--gw) * -7 / 1440);
+  top: calc(var(--gw) * -3 / 1440);
+  width: calc(var(--gw) * 248 / 1440);
+  aspect-ratio: 248 / 169;
+  transform: rotate(180deg) scaleY(-1);
+}
+
+.ctaPhoto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.ctaPhotoPlaceholder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(var(--gw) * 127 / 1440);
+  height: 100%;
   background: linear-gradient(135deg, var(--color-enabled), var(--color-orange-dark));
-  min-height: 120px;
+  border-radius: 10px 0 0 10px;
 }
 
+/* Figma 2316:3215 — 239×123 copy block aligned to the right inset. */
 .ctaBody {
-  padding: var(--space-4) var(--space-5);
+  position: relative;
+  z-index: 1;
+  width: calc(var(--gw) * 239 / 1440);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: calc(var(--gw) * 9 / 1440);
   align-items: flex-start;
+}
+
+.ctaTextGroup {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gw) * 6 / 1440);
+  width: 100%;
 }
 
 .ctaTitle {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
-  font-weight: 700;
+  font-size: var(--text-lg); /* 18 */
+  font-weight: 500;
+  line-height: 1.1667; /* 21/18 */
   color: var(--color-cream);
-  line-height: 1.25;
+  margin: 0;
 }
 
 .ctaSubtitle {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-base); /* 16 */
+  font-weight: 400;
+  line-height: 1.375; /* 22/16 */
   color: var(--color-cream);
-  line-height: var(--leading-snug);
-  opacity: 0.92;
+  margin: 0;
+  max-width: calc(var(--gw) * 227 / 1440);
 }
 
 .ctaButton {
-  margin-top: var(--space-2);
+  margin-top: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-2) var(--space-4);
+  height: 36px;
+  padding: 8px 24px;
   background: var(--color-orange);
   color: var(--color-cream);
-  border-radius: var(--radius-md);
+  border-radius: 30px;
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  line-height: 1;
+  font-size: var(--text-base); /* 16 */
+  font-weight: 400;
+  line-height: 1.375;
+  text-decoration: none;
   transition: background var(--duration-fast) var(--ease-out);
 }
 
@@ -204,29 +346,119 @@
   background: var(--color-orange-dark);
 }
 
-/* ─── Right column chart panel ─── */
+/* Agentic tab CTA (Figma 2316:3651 — 436×180, playbook photo, no flip) */
+.ctaCardTall {
+  min-height: calc(var(--gw) * 180 / 1440);
+}
+
+.ctaCardTall .ctaPhotoFrame {
+  mask-image: url('../../../assets/growth/cta-photo-mask-agentic.svg');
+  -webkit-mask-image: url('../../../assets/growth/cta-photo-mask-agentic.svg');
+}
+
+.ctaCardTall .ctaPhotoInner {
+  left: calc(var(--gw) * -96 / 1440);
+  top: calc(var(--gw) * 1 / 1440);
+  width: calc(var(--gw) * 260 / 1440);
+  aspect-ratio: 259.912 / 176.986;
+  transform: none;
+}
+
+.ctaCardTall .ctaBody {
+  gap: calc(var(--gw) * 12 / 1440);
+}
+
+/* ─── Right column / chart panel ─── */
 .chartPanel {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  width: 100%;
+  /* Figma right-col chart frame is 532px wide and 719px tall; spreading
+     content top-bottom places the source line at the bottom of the column. */
+  flex: 1;
+  justify-content: space-between;
+  gap: var(--space-6);
 }
 
+/* Figma 2316:3250 — title + tabs + viz are stacked tightly together
+   (flex-col gap-20). Keeping them in one wrapper means .chartPanel's
+   space-between only separates this whole cluster from the source line. */
+.chartTop {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gw) * 20 / 1440);
+  min-width: 0;
+}
+
+/* Figma 2316:3251 — title and tab pills are sub-grouped with a 24px gap. */
+.chartTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gw) * 24 / 1440);
+}
+
+/* Figma 2296:2750 — text/xl/book, 28/36 */
 .chartTitle {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(1.375rem, calc(var(--gw) * 28 / 1440), 1.75rem);
+  font-weight: 400;
+  line-height: 1.2857;
   color: var(--color-cream);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+  margin: 0;
 }
 
-.chartViewTabs {
-  margin-top: var(--space-1);
+/* Figma 2296:2855 — small rectangular Chart/Table pill toggle */
+.viewToggle {
+  display: inline-flex;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.viewPill,
+.viewPillActive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 86px;
+  padding: 3px 0;
+  border: none;
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: var(--text-base); /* 16 */
+  font-weight: 400;
+  line-height: 1.75; /* 28/16 — Figma heading-5 line-height */
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.viewPillActive {
+  background: var(--color-orange);
+  color: var(--color-cream);
+}
+
+.viewPill {
+  background: var(--color-teal); /* HubSpot Light Teal #0A4043 */
+  color: var(--color-sage);
+}
+
+.viewPill:hover {
+  background: #0e565a;
+  color: var(--color-cream);
+}
+
+.viewPillActive:hover {
+  background: var(--color-orange-dark);
 }
 
 .chartVizRegion {
   width: 100%;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .chartCanvas {
@@ -237,54 +469,142 @@
   border: 1px dashed rgba(248, 245, 238, 0.15);
 }
 
+/* Figma 2296:2794 — text/xs (12/20), cream, left-aligned */
 .chartSource {
   font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  color: rgba(248, 245, 238, 0.7);
-  line-height: var(--leading-snug);
-  margin-top: var(--space-2);
-}
-
-.chartSourceEnd {
-  text-align: end;
+  font-size: var(--text-xs); /* 12 */
+  font-weight: 400;
+  line-height: 1.6667; /* 20/12 */
+  color: var(--color-cream);
+  margin: 0;
 }
 
 .chartSourceLink {
-  color: rgba(248, 245, 238, 0.85);
+  color: var(--color-cream);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .chartSourceLink:hover {
-  color: var(--color-cream);
+  opacity: 0.85;
 }
 
-/* Short-viewport tightening (≤920px tall): reclaim vertical room so more of
-   the two-column body and chart fit above the fold at 1440×900 laptops.
-   Pairs with tokens.css and SlideDeck.module.css's matching reductions. */
-@media (max-height: 920px) {
+/* ─── Entrance & tab-switch animations ─── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animFadeUp {
+  opacity: 0;
+  animation: fadeUp 650ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--anim-delay, 0ms);
+}
+
+.animSlideIn {
+  opacity: 0;
+  animation: slideIn 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--anim-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animFadeUp,
+  .animSlideIn {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
   .body {
-    padding-top: var(--space-4);
-  }
-
-  .header {
-    margin-bottom: var(--space-5);
-  }
-
-  .heading {
-    margin-bottom: var(--space-4);
+    padding-left: var(--page-gutter);
   }
 
   .columns {
-    padding-top: var(--space-4);
-    gap: var(--space-6);
+    grid-template-columns: 1fr;
+    row-gap: var(--space-8);
   }
 
-  .leftCol {
-    gap: var(--space-3);
+  .divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .rightCol {
+    padding-top: 0;
+  }
+
+  .heading {
+    font-size: clamp(1.875rem, 7vw, 2.5rem);
   }
 
   .ctaCard {
-    margin-top: var(--space-4);
+    max-width: none;
+    min-height: 0;
+    padding: var(--space-4) var(--space-5) var(--space-5);
+  }
+
+  .ctaBody {
+    width: min(100%, 239px);
+  }
+
+  .ctaPhotoFrame,
+  .ctaPhotoPlaceholder {
+    width: 127px;
+  }
+
+  .ctaPhotoInner {
+    left: -7px;
+    top: -3px;
+    width: 248px;
+  }
+
+  .ctaCardTall .ctaPhotoInner {
+    left: -96px;
+    top: 1px;
+    width: 260px;
+  }
+}
+
+/* Short-viewport tightening (≤920px tall) — pairs with tokens.css. */
+@media (max-height: 920px) {
+  .body {
+    padding-bottom: var(--space-6);
+  }
+
+  .header {
+    padding-top: 0;
+    margin-bottom: calc(var(--gw) * 24 / 1440);
+  }
+
+  .tabSection {
+    margin-bottom: calc(var(--gw) * 24 / 1440);
+  }
+
+  .leftCol {
+    gap: calc(var(--gw) * 20 / 1440);
+  }
+
+  .rightCol {
+    padding-top: calc(var(--gw) * 20 / 1440);
   }
 }
