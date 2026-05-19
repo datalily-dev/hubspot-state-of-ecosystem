@@ -1,111 +1,191 @@
+/* Figma By the Numbers artboard (2194:2341) — 1440×900 reference */
 .page {
   position: relative;
+  --btn-w: var(--content-vw);
+  --btn-offset-x: calc((100vw - var(--btn-w)) / 2);
   background-color: var(--color-cream);
   color: var(--color-teal-dark);
   overflow-x: clip;
 }
 
+/* ─── Decorative background gradients (Figma 2194:2342, 2194:2343) ───
+   Two soft orange blob shapes. A: upper-right, rotated and y-flipped.
+   B: lower-left, rotated 160°. Same SVG art used elsewhere on the site;
+   here we shift origin and rotation to match the Figma frame.
+
+   Extend the gradient layer past PageShell's bottom so blobs continue
+   seamlessly into the PageNav footer area (PageNav is transparent on
+   top of the slide's cream background). Without this the lower-left
+   blob clips at the PageShell boundary and the cream area below the
+   last card reads as flat / un-tinted. */
+.gradients {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gradientAWrap,
+.gradientBWrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A — rotated bbox 1824.158×1926.469 @ (calc(33.33% + 59px), -991.16).
+   Figma's exact spec uses left=539 in a 1440 frame. We shift ~70px
+   leftward (left=470) so the visible curve clears "a glance" instead
+   of interrupting it — our HubSpot Sans fallback renders the heading
+   slightly wider than the Figma reference, pushing "glance" into the
+   absolute Figma position of the gradient's curve. */
+.gradientAWrap {
+  left: calc(var(--btn-offset-x) + var(--btn-w) * 470 / 1440);
+  top: calc(var(--btn-w) * -991 / 1440);
+  width: calc(var(--btn-w) * 1824.158 / 1440);
+  aspect-ratio: 1824.158 / 1926.469;
+}
+
+.gradientARotate {
+  flex: none;
+  transform: scaleY(-1) rotate(-73.69deg);
+}
+
+.gradientA {
+  display: block;
+  width: calc(var(--btn-w) * 1586.949 / 1440);
+  height: auto;
+  max-width: none;
+}
+
+/* B — rotated bbox 1849.872×1781.919 @ (-1040, 29) */
+.gradientBWrap {
+  left: calc(var(--btn-offset-x) + var(--btn-w) * -1040 / 1440);
+  top: calc(var(--btn-w) * 29 / 1440);
+  width: calc(var(--btn-w) * 1849.872 / 1440);
+  aspect-ratio: 1849.872 / 1781.919;
+}
+
+.gradientBRotate {
+  flex: none;
+  transform: rotate(-160deg);
+}
+
+.gradientB {
+  display: block;
+  width: calc(var(--btn-w) * 1473.62 / 1440);
+  height: auto;
+  max-width: none;
+}
+
 /* ─── Body ─── */
 .body {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
   flex: 1;
   width: 100%;
   display: flex;
-  align-items: safe center;
   justify-content: center;
-  padding: var(--space-8) var(--page-gutter);
+  padding: 0 var(--page-gutter);
 }
 
 .container {
   width: 100%;
-  max-width: 1100px;
+  /* Figma content column: x=180 to x=1260 (1080px in a 1440 frame) */
+  max-width: calc(var(--btn-w) * 1080 / 1440);
+}
+
+/* ─── Title (Figma 2194:2397; y=110 from top) ─── */
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  /* PageShell already reserves 72+32=104px above; Figma title is at y=110 */
+  padding-top: calc(var(--btn-w) * 6 / 1440);
+  margin-bottom: calc(var(--btn-w) * 38 / 1440);
 }
 
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg); /* Figma text/md/book = 18px */
+  font-weight: 400;
+  line-height: 1.3333;
   color: var(--color-orange);
-  margin-bottom: var(--space-3);
 }
 
 .heading {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(1.875rem, calc(var(--btn-w) * 44 / 1440), 2.75rem);
+  font-weight: 400;
+  line-height: 1.1818; /* 52px / 44px */
   color: var(--color-teal-dark);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-8);
+  letter-spacing: 0;
 }
 
 /* ─── Card grid rows ─── */
 .row {
   display: grid;
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
+  gap: calc(var(--btn-w) * 10 / 1440);
 }
 
-/* Top row: 3 columns of equal size, hero feature on left */
+/* Top row card widths from Figma: 434 / 305 / 321 */
 .rowTop {
-  grid-template-columns: 1.4fr 1fr 1.4fr;
+  grid-template-columns: 434fr 305fr 321fr;
+  margin-bottom: calc(var(--btn-w) * 10 / 1440);
 }
 
-/* Bottom row: 3 small + 1 image */
+/* Bottom row card widths from Figma: 290 / 290 / 260 / 210 */
 .rowBottom {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-bottom: 0;
+  grid-template-columns: 290fr 290fr 260fr 210fr;
 }
 
-@media (max-width: 900px) {
-  .rowTop,
-  .rowBottom {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
-  .rowTop,
-  .rowBottom {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ─── Card ─── */
+/* ─── Card base ─── */
 .card {
   position: relative;
   background: var(--color-orange);
   color: var(--color-cream);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8) var(--space-6);
+  border-radius: 20px;
+  padding: 0 calc(var(--btn-w) * 30 / 1440);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 240px;
+  gap: var(--space-2);
   overflow: hidden;
 }
 
+/* Top-row hero cards (308px tall, value pushed down with padding-top 94) */
 .size_lg {
-  min-height: 280px;
+  min-height: calc(var(--btn-w) * 308 / 1440);
+  padding-top: calc(var(--btn-w) * 94 / 1440);
+  padding-bottom: calc(var(--btn-w) * 34 / 1440);
 }
 
+/* Top-row middle card — divider under value, centered content */
 .size_md {
-  min-height: 280px;
+  min-height: calc(var(--btn-w) * 308 / 1440);
+  padding-top: calc(var(--btn-w) * 24 / 1440);
+  padding-bottom: calc(var(--btn-w) * 34 / 1440);
   align-items: center;
   text-align: center;
-  padding-top: var(--space-10);
+  gap: 0;
 }
 
+/* Bottom-row small cards (232px tall) */
 .size_sm {
-  min-height: 220px;
+  min-height: calc(var(--btn-w) * 232 / 1440);
+  padding-top: calc(var(--btn-w) * 34 / 1440);
+  padding-bottom: calc(var(--btn-w) * 34 / 1440);
 }
 
 .cardIcon {
   position: absolute;
-  top: var(--space-5);
-  right: var(--space-5);
-  width: 24px;
-  height: 24px;
+  top: calc(var(--btn-w) * 18 / 1440);
+  right: calc(var(--btn-w) * 18 / 1440);
+  width: 30px;
+  height: 30px;
   color: var(--color-cream);
   display: block;
 }
@@ -115,97 +195,153 @@
   height: 100%;
 }
 
+/* Stat value text (HubSpot Serif Medium, varies by card size) */
 .cardValue {
   font-family: var(--font-display);
   font-weight: 500;
-  line-height: 1;
+  line-height: 1.12; /* Figma 8xl line-height 112px on 100px font ≈ 1.12 */
   letter-spacing: -0.01em;
   color: var(--color-cream);
+  margin: 0;
+  /* Push value to top of available space inside lg cards (after padding) */
   margin-top: auto;
+  margin-bottom: auto;
 }
 
 .size_lg .cardValue {
-  font-size: clamp(3rem, 6.5vw, 6rem);
+  /* $42B card uses 130px; 300K uses 100px. Use the larger of the two for
+     hero cards so they read as the strongest element on the page. */
+  font-size: clamp(3.5rem, calc(var(--btn-w) * 110 / 1440), 8.125rem);
+  margin: 0;
 }
 
 .size_md .cardValue {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  margin-top: 0;
-  border-bottom: 1px solid rgba(248, 245, 238, 0.45);
-  padding-bottom: var(--space-4);
-  margin-bottom: var(--space-4);
+  font-size: clamp(2.5rem, calc(var(--btn-w) * 80 / 1440), 5rem);
+  margin: 0;
+  padding: calc(var(--btn-w) * 8 / 1440) 0 calc(var(--btn-w) * 16 / 1440);
+  border-bottom: 1px solid var(--color-cream);
   width: 100%;
+  margin-bottom: calc(var(--btn-w) * 20 / 1440);
 }
 
 .size_sm .cardValue {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.25rem, calc(var(--btn-w) * 100 / 1440), 6.25rem);
+  margin: 0;
 }
 
 .cardDescription {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  line-height: var(--leading-snug);
+  font-size: var(--text-base); /* Figma text/sm/book = 16px */
+  font-weight: 400;
+  line-height: 1.375; /* 22px / 16px */
   color: var(--color-cream);
-  margin-top: var(--space-3);
-  max-width: 32ch;
+  margin: 0;
 }
 
 .size_md .cardDescription {
-  text-align: center;
-  margin: 0 auto;
+  text-align: left;
+  width: 100%;
 }
 
 .cardLink {
-  color: var(--color-cream);
+  color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
 }
 
 .cardLink:hover {
   opacity: 0.85;
 }
 
-/* ─── Image card ─── */
+/* ─── Image card (Figma 2329:5670) ─── */
+/* Acts as a viewport for the PartnerCarousel — full-bleed photos with
+   their "HEAR FROM PARTNERS / <name>" label + dark scrim baked into the
+   JPG. When the assets are swapped for clean headshots, add back
+   .imageScrim + .imageContent overlay styles for HTML text. */
 .cardImage {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(4, 39, 41, 0) 40%,
-      rgba(4, 39, 41, 0.65) 100%
-    ),
-    radial-gradient(
-      circle at 50% 30%,
-      rgba(255, 158, 121, 0.55) 0%,
-      transparent 60%
-    ),
-    linear-gradient(135deg, var(--color-magenta), var(--color-teal-dark));
-  padding: var(--space-5);
-  justify-content: flex-end;
-  min-height: 220px;
+  padding: 0;
+  background: #1a1a1a;
+  min-height: calc(var(--btn-w) * 232 / 1440);
 }
 
-.imageOverlay {
+.imagePhoto {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.imageContent {
-  position: relative;
-  z-index: 1;
+/* ─── Partner carousel slides ───
+   All slides stack at inset:0. Active sits at 0; outgoing sits at -100%;
+   the rest park offscreen at 100% with no transition so they don't streak
+   across the card when the index advances. */
+.slide {
+  transform: translate3d(100%, 0, 0);
+  transition: none;
+  will-change: transform;
 }
 
-.imageHeading {
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-cream);
+.slideActive {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.imageSubtitle {
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  color: var(--color-cream);
-  opacity: 0.8;
-  margin-top: var(--space-1);
+.slideOffLeft {
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.slideOffRight {
+  transform: translate3d(100%, 0, 0);
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slideActive,
+  .slideOffLeft,
+  .slideOffRight {
+    transition: none;
+  }
+}
+
+/* ─── Responsive — collapse to 2 cols, then 1 col on small screens ─── */
+@media (max-width: 900px) {
+  .rowTop,
+  .rowBottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: calc(var(--btn-w) * 10 / 1440);
+  }
+
+  .card {
+    padding: var(--space-6) var(--space-5);
+    min-height: 220px;
+  }
+
+  .size_lg,
+  .size_md,
+  .size_sm {
+    min-height: 220px;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .size_lg .cardValue,
+  .size_sm .cardValue {
+    font-size: clamp(3rem, 12vw, 5.5rem);
+  }
+
+  .size_md .cardValue {
+    font-size: clamp(2.5rem, 10vw, 4.5rem);
+  }
+}
+
+@media (max-width: 560px) {
+  .rowTop,
+  .rowBottom {
+    grid-template-columns: 1fr;
+  }
 }
