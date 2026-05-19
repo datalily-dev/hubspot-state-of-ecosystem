@@ -1,3 +1,4 @@
+import ArrowLeft from '../../../assets/icon/arrow-left.svg?react';
 import ArrowRight from '../../../assets/icon/arrow-right.svg?react';
 import styles from './PageNav.module.css';
 
@@ -78,15 +79,15 @@ export default function PageNav({
 
       <div className={styles.arrowGroup}>
         {prevHref ? (
-          <a href={prevHref} className={`${styles.arrowBtn} ${styles.prev}`} aria-label="Previous page">
-            <ArrowRight className={styles.arrowIcon} aria-hidden="true" focusable="false" />
+          <a href={prevHref} className={styles.arrowBtn} aria-label="Previous page">
+            <ArrowLeft className={styles.arrowIcon} aria-hidden="true" focusable="false" />
           </a>
         ) : (
           <span className={styles.arrowSlotEmpty} aria-hidden="true" />
         )}
 
         {nextHref && (
-          <a href={nextHref} className={`${styles.arrowBtn} ${styles.next}`} aria-label="Next page">
+          <a href={nextHref} className={styles.arrowBtn} aria-label="Next page">
             <ArrowRight className={styles.arrowIcon} aria-hidden="true" focusable="false" />
           </a>
         )}

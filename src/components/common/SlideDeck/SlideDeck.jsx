@@ -25,8 +25,10 @@ const PAGE_ANCHORS = [
 ];
 
 // Per-slide variant for the persistent PageNav, matching each page's
-// background palette so the dot pill stays legible.
-const DEFAULT_PAGE_VARIANTS = ['dark', 'light', 'light', 'light', 'dark', 'light', 'light', 'dark'];
+// background palette so the dot pill stays legible. Order must mirror
+// DEFAULT_PAGE_BG_COLORS below — 'dark' on teal-dark slides, 'light' on
+// cream slides — so the sticky nav's background blends into the page.
+const DEFAULT_PAGE_VARIANTS = ['dark', 'light', 'light', 'light', 'dark', 'light', 'dark', 'light'];
 
 // Per-slide background color for the sticky PageNav footer. Matches the
 // owning page's background so content scrolling underneath the nav vanishes

@@ -185,3 +185,38 @@
   font-size: var(--text-sm);
   color: var(--color-orange);
 }
+
+/* Short-viewport tightening (≤920px tall): tighten vertical rhythm so more of
+   the body content + byline sits above the fold at 1440×900 laptops. Pairs
+   with tokens.css and SlideDeck.module.css's matching chrome reductions. */
+@media (max-height: 920px) {
+  .article {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-8);
+  }
+
+  .headline {
+    margin-bottom: var(--space-4);
+  }
+
+  .subhead {
+    margin-bottom: var(--space-4);
+  }
+
+  .videoThumb {
+    margin-bottom: var(--space-6);
+  }
+
+  .body {
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .takeaways {
+    gap: var(--space-3);
+  }
+
+  .byline {
+    margin-top: var(--space-4);
+  }
+}

@@ -14,10 +14,10 @@
    here we shift origin and rotation to match the Figma frame.
 
    Extend the gradient layer past PageShell's bottom so blobs continue
-   seamlessly into the PageNav footer area (PageNav is transparent on
-   top of the slide's cream background). Without this the lower-left
-   blob clips at the PageShell boundary and the cream area below the
-   last card reads as flat / un-tinted. */
+   into the area reserved for the sticky PageNav footer. Without this
+   extension the lower-left blob clips at the PageShell boundary and the
+   cream area below the last card reads as flat / un-tinted while it
+   scrolls past underneath the sticky nav. */
 .gradients {
   position: absolute;
   left: 0;
@@ -106,7 +106,7 @@
   gap: var(--space-4);
   /* PageShell already reserves 72+32=104px above; Figma title is at y=110 */
   padding-top: calc(var(--btn-w) * 6 / 1440);
-  margin-bottom: calc(var(--btn-w) * 38 / 1440);
+  margin-bottom: clamp(var(--space-3), calc(var(--btn-w) * 38 / 1440), 2.5vh);
 }
 
 .eyebrow {
@@ -135,7 +135,7 @@
 /* Top row card widths from Figma: 434 / 305 / 321 */
 .rowTop {
   grid-template-columns: 434fr 305fr 321fr;
-  margin-bottom: calc(var(--btn-w) * 10 / 1440);
+  margin-bottom: clamp(6px, calc(var(--btn-w) * 10 / 1440), 1.2vh);
 }
 
 /* Bottom row card widths from Figma: 290 / 290 / 260 / 210 */
@@ -156,18 +156,20 @@
   overflow: hidden;
 }
 
-/* Top-row hero cards (308px tall, value pushed down with padding-top 94) */
+/* Top-row hero cards (308px tall, value pushed down with padding-top 94).
+   Each height-driving value is capped with min(width-scaled, vh-scaled) so
+   cards compress on short laptops instead of overflowing into a scroll. */
 .size_lg {
-  min-height: calc(var(--btn-w) * 308 / 1440);
-  padding-top: calc(var(--btn-w) * 94 / 1440);
-  padding-bottom: calc(var(--btn-w) * 34 / 1440);
+  min-height: min(calc(var(--btn-w) * 308 / 1440), 28vh);
+  padding-top: min(calc(var(--btn-w) * 94 / 1440), 5vh);
+  padding-bottom: min(calc(var(--btn-w) * 34 / 1440), 2.5vh);
 }
 
 /* Top-row middle card — divider under value, centered content */
 .size_md {
-  min-height: calc(var(--btn-w) * 308 / 1440);
-  padding-top: calc(var(--btn-w) * 24 / 1440);
-  padding-bottom: calc(var(--btn-w) * 34 / 1440);
+  min-height: min(calc(var(--btn-w) * 308 / 1440), 28vh);
+  padding-top: min(calc(var(--btn-w) * 24 / 1440), 2vh);
+  padding-bottom: min(calc(var(--btn-w) * 34 / 1440), 2.5vh);
   align-items: center;
   text-align: center;
   gap: 0;
@@ -175,9 +177,9 @@
 
 /* Bottom-row small cards (232px tall) */
 .size_sm {
-  min-height: calc(var(--btn-w) * 232 / 1440);
-  padding-top: calc(var(--btn-w) * 34 / 1440);
-  padding-bottom: calc(var(--btn-w) * 34 / 1440);
+  min-height: min(calc(var(--btn-w) * 232 / 1440), 20vh);
+  padding-top: min(calc(var(--btn-w) * 34 / 1440), 2.5vh);
+  padding-bottom: min(calc(var(--btn-w) * 34 / 1440), 2.5vh);
 }
 
 .cardIcon {
@@ -262,7 +264,7 @@
 .cardImage {
   padding: 0;
   background: #1a1a1a;
-  min-height: calc(var(--btn-w) * 232 / 1440);
+  min-height: min(calc(var(--btn-w) * 232 / 1440), 20vh);
 }
 
 .imagePhoto {

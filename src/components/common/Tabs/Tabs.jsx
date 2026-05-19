@@ -18,7 +18,7 @@ import styles from './Tabs.module.css';
  *   activeId: string,
  *   onChange: (id: string) => void,
  *   ariaLabel: string,
- *   variant?: 'dark' | 'light',
+ *   variant?: 'dark' | 'light' | 'bar',
  *   className?: string,
  * }} props
  */
@@ -59,7 +59,7 @@ export default function Tabs({
 
   const rootClass = [
     styles.tablist,
-    variant === 'light' ? styles.light : styles.dark,
+    variant === 'bar' ? styles.bar : variant === 'light' ? styles.light : styles.dark,
     className,
   ]
     .filter(Boolean)

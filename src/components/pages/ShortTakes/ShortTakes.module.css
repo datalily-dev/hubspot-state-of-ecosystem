@@ -1,67 +1,169 @@
+/* Figma Short Takes artboard (2193:1609) — 1440×900 reference */
 .page {
   position: relative;
+  --st-w: var(--content-vw);
   background-color: var(--color-teal-dark);
   color: var(--color-cream);
   overflow-x: clip;
 }
 
+/* ─── Decorative background gradients (Figma 2193:1610, 2193:1611) ───
+   Sage-tinted blobs at 5% opacity. Same SVG-via-<img> + rotate pattern as
+   Cover, Foreword, and By the Numbers — viewBox-only SVGs (no width/height
+   100%) so height:auto on the img resolves correctly.
+
+   Extend past PageShell's bottom so blobs continue into the area
+   reserved for the sticky PageNav footer (otherwise they clip at the
+   PageShell boundary as content scrolls past underneath the nav). */
+.gradients {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gradientAWrap,
+.gradientBWrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* B — rotated bbox 1824.158×1926.469 @ (-911, -991.16).
+   Full-bleed slide background: position from the viewport edge, not the
+   centered content column (no --st-offset-x). */
+.gradientBWrap {
+  left: calc(var(--st-w) * -911 / 1440);
+  top: calc(var(--st-w) * -991.16 / 1440);
+  width: calc(var(--st-w) * 1824.158 / 1440);
+  aspect-ratio: 1824.158 / 1926.469;
+}
+
+.gradientBRotate {
+  flex: none;
+  transform: scaleY(-1) rotate(-73.69deg);
+}
+
+.gradientB {
+  display: block;
+  width: calc(var(--st-w) * 1586.949 / 1440);
+  height: auto;
+  max-width: none;
+}
+
+/* A — rotated bbox 1921.421×1811.049 @ (calc(41.67% + 87px), 168) */
+.gradientAWrap {
+  left: calc(var(--st-w) * 687 / 1440);
+  top: calc(var(--st-w) * 168 / 1440);
+  width: calc(var(--st-w) * 1921.421 / 1440);
+  aspect-ratio: 1921.421 / 1811.049;
+}
+
+.gradientARotate {
+  flex: none;
+  transform: scaleY(-1) rotate(-165.68deg);
+}
+
+.gradientA {
+  display: block;
+  width: calc(var(--st-w) * 1610.819 / 1440);
+  height: auto;
+  max-width: none;
+}
+
 /* ─── Body ─── */
 .body {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
   flex: 1;
   width: 100%;
-  padding: var(--space-8) var(--page-gutter) var(--space-12);
-  display: flex;
-  justify-content: center;
+  /* Figma global margin @ 180px from the 1440 artboard edge (2193:1636) */
+  padding-left: max(
+    var(--space-4),
+    calc(
+      (100vw - min(100vw, var(--content-max-width))) / 2 +
+        min(100vw, var(--content-max-width)) * 180 / 1440
+    )
+  );
+  padding-right: var(--page-gutter);
+  padding-bottom: var(--space-12);
 }
 
 .container {
   width: 100%;
-  max-width: 880px;
+  max-width: calc(var(--st-w) * 1080 / 1440);
 }
 
-/* ─── Header (eyebrow + heading + tabs) ─── */
+/* ─── Title (Figma 2193:1636; y=110) ─── */
 .header {
-  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: calc(var(--st-w) * 6 / 1440);
+  margin-bottom: calc(var(--st-w) * 40 / 1440);
 }
 
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.3333;
   color: var(--color-orange);
-  margin-bottom: var(--space-3);
+  margin: 0;
 }
 
 .heading {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(1.875rem, calc(var(--st-w) * 44 / 1440), 2.75rem);
+  font-weight: 400;
+  line-height: 1.1818;
   color: var(--color-cream);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-6);
+  letter-spacing: 0;
+  margin: 0;
+  max-width: calc(var(--st-w) * 879 / 1440);
 }
 
-/* Wrap Tabs in a full-width row so the divider runs the container width and
-   sits flush below the tab buttons (matches the design). */
+/* ─── Tabs (Figma 2193:1640 — full-bleed divider, tabs at content margin) ─── */
+.tabSection {
+  /* Figma: tabs end y=312, text frame starts y=352 → 40px */
+  margin-bottom: calc(var(--st-w) * 40 / 1440);
+}
+
 .tabRow {
   display: block;
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid rgba(248, 245, 238, 0.18);
 }
 
 .tabs {
-  margin-top: 0;
+  margin: 0;
 }
 
-/* ─── Quote list ─── */
+.tabDivider {
+  height: 1px;
+  margin-top: 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: rgba(248, 245, 238, 0.18);
+  border: none;
+}
+
+/* ─── Quote list (Figma 2193:1614 — 1080px column, quotes inset 184px) ───
+   The text frame is 1080px @ x=180; each quote is 712px @ x=184 inside that
+   frame (364px from the artboard edge). Dividers span the full 1080px width. */
 .quotes {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  /* Figma 2193:1614 — 50px between quote, divider, and next quote */
+  gap: calc(var(--st-w) * 50 / 1440);
+  width: 100%;
+  max-width: calc(var(--st-w) * 1080 / 1440);
 }
 
-/* Shown for filter variants whose copy is not yet finalised. */
 .placeholder {
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -75,11 +177,18 @@
 }
 
 .quote {
-  padding: var(--space-5) 0;
-  border-bottom: 1px solid rgba(248, 245, 238, 0.18);
+  width: 100%;
+  max-width: calc(var(--st-w) * 712 / 1440);
+  margin-inline: auto;
 }
 
-.quoteText {
+.quoteInner {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--st-w) * 36 / 1440);
+}
+
+.quoteCopy {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -87,39 +196,49 @@
 
 .quoteTitle {
   font-family: var(--font-sans);
-  font-size: var(--text-lg);
-  font-weight: 700;
+  font-size: clamp(1.125rem, calc(var(--st-w) * 26 / 1440), 1.625rem);
+  font-weight: 500;
+  line-height: 1.3846;
   color: var(--color-cream);
-  line-height: 1.3;
+  margin: 0;
 }
 
 .quoteBody {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
+  font-size: clamp(1rem, calc(var(--st-w) * 24 / 1440), 1.5rem);
+  font-weight: 400;
+  line-height: 1.5;
   color: var(--color-cream);
-  max-width: 60ch;
+  margin: 0;
 }
 
-/* ─── Author row + audio CTA ─── */
 .quoteFooter {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-4);
-  margin-top: var(--space-2);
 }
 
 .byline {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
+  margin: 0;
 }
 
 .avatar {
-  width: 48px;
-  height: 48px;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.avatarPlaceholder {
+  width: 80px;
+  height: 80px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, var(--color-magenta), var(--color-orange));
   flex-shrink: 0;
@@ -134,12 +253,12 @@
 .bylineName {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
   font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 500;
+  font-size: clamp(1.25rem, calc(var(--st-w) * 28 / 1440), 1.75rem);
+  font-weight: 400;
+  line-height: 1.2857;
   color: var(--color-cream);
-  line-height: 1.1;
 }
 
 .linkedInLink {
@@ -154,26 +273,68 @@
 }
 
 .linkedInIcon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 .bylineRole {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.375;
   color: var(--color-orange);
   max-width: 38ch;
-  line-height: var(--leading-snug);
 }
 
 .audioSlot {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.quoteDivider {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgba(248, 245, 238, 0.18);
 }
 
 @media (max-width: 640px) {
   .quoteFooter {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .quote {
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+/* Short-viewport tightening (≤920px tall): tighten the quote rhythm so more
+   of the 3-quote list sits above the fold at 1440×900 laptops. Pairs with
+   tokens.css and SlideDeck.module.css's matching chrome reductions. */
+@media (max-height: 920px) {
+  .body {
+    padding-bottom: var(--space-6);
+  }
+
+  .header {
+    padding-top: 0;
+    margin-bottom: calc(var(--st-w) * 24 / 1440);
+  }
+
+  .tabSection {
+    margin-bottom: calc(var(--st-w) * 24 / 1440);
+  }
+
+  .quotes {
+    gap: calc(var(--st-w) * 32 / 1440);
+  }
+
+  .quoteInner {
+    gap: calc(var(--st-w) * 20 / 1440);
   }
 }

@@ -10,8 +10,13 @@
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  /* Figma menu @ top 130px; PageShell already reserves top nav + clearance */
-  padding-top: calc(130px - var(--top-nav-height) - var(--content-top-clearance));
+  /* Figma menu @ top 130px; PageShell already reserves top nav + clearance.
+     Floor with a vh-based clamp so the gap compresses on short laptops. */
+  padding-top: clamp(
+    var(--space-4),
+    calc(130px - var(--top-nav-height) - var(--content-top-clearance)),
+    6vh
+  );
   /* Figma menu @ left 180px from artboard edge; scales with centered 1440 column */
   padding-left: max(
     var(--space-4),
@@ -21,7 +26,7 @@
     )
   );
   padding-right: var(--page-gutter);
-  padding-bottom: var(--space-10);
+  padding-bottom: clamp(var(--space-4), 2vh, var(--space-10));
 }
 
 /* ─── TOC two-column grid (Figma: 492px cols, 48px gap, 620px divider) ─── */
@@ -42,7 +47,7 @@
 
 .colDivider {
   width: 1px;
-  height: min(620px, 70vh);
+  height: min(620px, 65vh);
   justify-self: center;
   align-self: center;
   background: rgba(4, 39, 41, 0.18);
@@ -60,13 +65,8 @@
 .link {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-8) 0;
-  transition: opacity var(--duration-fast) var(--ease-out);
-}
-
-.link:hover {
-  opacity: 0.78;
+  gap: clamp(var(--space-2), 1vh, var(--space-4));
+  padding: clamp(var(--space-3), 2.4vh, var(--space-8)) 0;
 }
 
 .itemLabel {
@@ -84,13 +84,30 @@
   gap: 0.375rem;
 }
 
+.itemTitleWrap {
+  max-width: 100%;
+}
+
 .itemTitle {
+  display: inline;
   font-family: var(--font-sans);
   font-size: clamp(1.375rem, calc(var(--content-vw) * 0.01944), 1.75rem);
   font-weight: 500;
   color: var(--color-teal-dark);
   line-height: 1.2857;
   letter-spacing: 0;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  background-size: 0% 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-size var(--duration-base) var(--ease-out);
+}
+
+.link:hover .itemTitle,
+.link:focus-visible .itemTitle {
+  background-size: 100% 2px;
 }
 
 .itemDescription {

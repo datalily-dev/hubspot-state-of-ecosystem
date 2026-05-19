@@ -10,10 +10,11 @@
   flex-direction: column;
   /* `overflow-x: clip` prevents any horizontal escape (the slide itself
      also enforces `overflow-x: hidden` as a backstop). `overflow-y: visible`
-     lets the full-bleed column divider extend the final ~92px past .cover's
-     bottom edge into the PageNav footer area, matching Figma 2192:5806
-     where the line runs the full artboard height. `.gradients` carries its
-     own `overflow: hidden`, so the gradient art is still contained. */
+     lets the full-bleed column divider extend past .cover's bottom edge
+     (by --page-nav-overlay-height) into the sticky PageNav footer area,
+     matching Figma 2192:5806 where the line runs the full artboard height.
+     `.gradients` carries its own `overflow: hidden`, so the gradient art
+     is still contained. */
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -204,7 +205,12 @@
 /* ─── Column separator (Figma 2192:5806 — #0C4D51 @ 58.33% + 16px) ─── */
 .colDivider {
   position: absolute;
-  z-index: 1;
+  /* Draw above the sticky PageNav footer (z-index var(--z-raised)) so the
+     line continues unbroken through the bottom bar, matching the full-
+     artboard divider in Figma. The line's horizontal position (~59% of
+     content-vw) threads between the centered dot pill and the right-side
+     arrow controls, so no nav controls are visually crossed. */
+  z-index: calc(var(--z-raised) + 1);
   top: 0;
   height: 100vh;
   left: calc(var(--cover-offset-x) + var(--cover-w) * 856 / 1440);
@@ -316,6 +322,21 @@
     top: -500px;
     width: 105%;
     aspect-ratio: 1308.155 / 1232.028;
+  }
+}
+
+/* Common laptop heights (e.g. 1440×900): tighten the stat column's vertical
+   rhythm so all three stat blocks (+ left-column hero) fit in a single
+   viewport. The reduction is small enough that the visual hierarchy holds
+   while the page-level chrome (top nav, page nav) tightens in parallel
+   (see tokens.css and PageNav.module.css max-height: 920px). */
+@media (max-height: 920px) {
+  .right {
+    padding-top: 0;
+  }
+
+  .statBlock {
+    padding-block: var(--space-5); /* 34px → 20px */
   }
 }
 

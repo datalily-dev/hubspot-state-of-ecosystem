@@ -49,7 +49,9 @@ function TocItem({ label, href, title, description }) {
       <a href={href} className={styles.link}>
         <span className={styles.itemLabel}>{label}</span>
         <div className={styles.itemHeading}>
-          <span className={styles.itemTitle}>{title}</span>
+          <div className={styles.itemTitleWrap}>
+            <span className={styles.itemTitle}>{title}</span>
+          </div>
           <span className={styles.itemDescription}>{description}</span>
         </div>
       </a>

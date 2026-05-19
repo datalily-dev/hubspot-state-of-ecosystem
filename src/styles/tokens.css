@@ -77,7 +77,10 @@
      Every page reserves the same in-flow top padding regardless of slide. */
   --top-nav-height:    4.5rem; /* 72px */
   /* Breathing room between the floating TopNav and the first line of page
-     content so headings never collide with the nav's right-side buttons. */
+     content so headings never collide with the nav's right-side buttons.
+     Tightens on shorter viewports so single-viewport pages still fit at
+     1440×900 laptops (see @media block below + SlideDeck's matching
+     --page-nav-overlay-height reduction). */
   --content-top-clearance: var(--space-8);
 
   /* ─── Transitions ─── */
@@ -100,4 +103,16 @@
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-full: 9999px;
+}
+
+/* Short-viewport tightening: at common laptop heights (e.g. 1440×900),
+   reclaim ~24px of vertical chrome so single-viewport pages fit without a
+   scrollbar. Pages with absolute Figma positions that subtract these tokens
+   (NavigationPage, ByTheNumbers, ShortTakes, ForewordPage) compensate
+   automatically — content stays at its original y-coordinate while the
+   reserved padding shrinks. */
+@media (max-height: 920px) {
+  :root {
+    --content-top-clearance: var(--space-4); /* 32px → 16px */
+  }
 }

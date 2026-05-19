@@ -52,3 +52,32 @@
 .tabActive:hover {
   background: var(--color-orange-dark);
 }
+
+/* ─── Bar variant (Short Takes — Figma interaction/tabs) ─── */
+.bar {
+  gap: var(--space-2);
+}
+
+.bar .tab,
+.bar .tabActive {
+  padding: var(--space-6);
+  border-radius: 10px 10px 0 0;
+  border: none;
+  font-weight: 400;
+  line-height: var(--leading-snug);
+}
+
+.bar .tabActive {
+  background: var(--color-orange);
+  color: var(--color-cream);
+}
+
+.bar .tab {
+  background: #0c4d51;
+  color: var(--color-sage);
+}
+
+.bar .tab:hover {
+  background: #0e565a;
+  color: var(--color-cream);
+}

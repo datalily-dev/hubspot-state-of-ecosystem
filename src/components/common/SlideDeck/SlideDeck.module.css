@@ -2,8 +2,14 @@
   /* Reserve vertical room at the bottom of every slide for the per-slide
      PageNav footer so page content can sit above it without overlap.
      PageShell reads this variable to subtract from its own min-height so
-     non-overflow pages still fit in a single viewport. */
-  --page-nav-overlay-height: calc(var(--space-5, 24px) * 2 + 44px);
+     non-overflow pages still fit in a single viewport, and to add
+     padding-bottom so tall pages clear the sticky nav at the bottom of
+     the viewport. */
+  /* bar padding 16px × 2 (--space-4) + 44px control height = 76px.
+     The bar padding tightens at heights ≤ 920px (see PageNav.module.css)
+     to reclaim vertical room for single-viewport pages; this token follows
+     so PageShell's reserved bottom padding tracks the actual bar height. */
+  --page-nav-overlay-height: calc(var(--space-4) * 2 + 44px);
 
   position: fixed;
   inset: 0;
@@ -18,6 +24,13 @@
      while preserving the visual clipping. */
   overflow: clip;
   outline: none;
+}
+
+@media (max-height: 920px) {
+  .deck {
+    /* 12px × 2 (--space-3) + 44px = 68px */
+    --page-nav-overlay-height: calc(var(--space-3) * 2 + 44px);
+  }
 }
 
 .track {
@@ -36,6 +49,9 @@
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  /* Anchor scrolls (hash navigation, focus-into-view) land above the sticky
+     PageNav footer instead of being hidden behind it. */
+  scroll-padding-bottom: var(--page-nav-overlay-height);
   /* Each slide carries its own page background so the area beneath
      PageShell (where the PageNav footer lives) blends seamlessly with
      the page itself — no cream strip behind a teal page, etc. */
@@ -73,12 +89,15 @@
   transition: opacity var(--fade-half-ms, 220ms) var(--ease-out);
 }
 
-/* PageNav anchored at the very bottom of each page's scrollable content.
-   In-flow (no sticky / no fixed) so it lives in the natural document
-   order: at the end of the page. Combined with PageShell's adjusted
-   min-height, short pages keep it at the viewport bottom without any
-   extra scroll, while tall pages reveal it once the user has scrolled
-   to the end of the content. */
+/* PageNav pinned to the bottom of each slide's scroll container so the
+   dot pill and arrow controls remain available without scrolling to the
+   end of long pages. Sticky (not fixed) so it scopes to the slide it
+   belongs to — only the active slide is visible (others sit at opacity 0),
+   so exactly one nav is ever shown. PageShell reserves padding-bottom of
+   --page-nav-overlay-height so page content never ends underneath it. */
 .pageNavFooter {
+  position: sticky;
+  bottom: 0;
   flex-shrink: 0;
+  z-index: var(--z-raised);
 }

@@ -9,10 +9,11 @@
 }
 
 /* ─── Decorative background gradients (Figma 2192:6021, 2192:6022) ───
-   Extend below the PageShell section so the lower-right blob continues
-   seamlessly into the PageNav footer area (PageNav has a transparent
-   background, so the gradient paints behind its pill + arrows instead
-   of being clipped at the section boundary). */
+   Extend below the PageShell section so the blob shapes fill the area
+   reserved for the PageNav footer instead of clipping at PageShell's
+   border. The sticky PageNav sits opaque on top of this area; the
+   extension still matters because PageShell's reserved bottom padding
+   for clearance gets painted by the gradient. */
 .gradients {
   position: absolute;
   left: 0;

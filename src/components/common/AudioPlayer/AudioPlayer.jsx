@@ -1,4 +1,6 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { usePageId } from '../../../context/PageIdContext';
+import { useSlideDeckOptional } from '../../../context/SlideDeckContext';
 import AudioWavesIcon from '../../../assets/icon/audio-1.svg?react';
 import styles from './AudioPlayer.module.css';
 
@@ -65,15 +67,27 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(durationSeconds || 0);
   const labelId = useId();
+  const pageId = usePageId();
+  const slideDeck = useSlideDeckOptional();
 
   const hasSrc = Boolean(src);
+
+  const stopPlayback = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio || audio.paused) return;
+    audio.pause();
+    setIsPlaying(false);
+    if (activePlayer === audio) {
+      activePlayer = null;
+    }
+  }, []);
 
   useEffect(() => {
     setDuration(durationSeconds || 0);
   }, [durationSeconds]);
 
-  // Pause when scrolled out of frame so audio doesn't keep playing on
-  // other slides. We treat anything below 25 % visibility as "out of frame".
+  // Pause when the pill scrolls out of the slide viewport, or when the user
+  // navigates to another deck slide. Keeps UI state in sync with the element.
   useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper || typeof window.IntersectionObserver === 'undefined') {
@@ -84,10 +98,7 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting || entry.intersectionRatio < 0.25) {
-            const audio = audioRef.current;
-            if (audio && !audio.paused) {
-              audio.pause();
-            }
+            stopPlayback();
           }
         });
       },
@@ -95,7 +106,15 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
     );
     observer.observe(wrapper);
     return () => observer.disconnect();
-  }, []);
+  }, [stopPlayback]);
+
+  useEffect(() => {
+    if (!slideDeck || !pageId) return undefined;
+    if (slideDeck.activeAnchor !== pageId) {
+      stopPlayback();
+    }
+    return undefined;
+  }, [slideDeck, slideDeck?.activeAnchor, pageId, stopPlayback]);
 
   // Tear down the active-player reference if this instance unmounts mid-play.
   useEffect(() => {

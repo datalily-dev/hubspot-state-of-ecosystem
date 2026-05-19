@@ -1,27 +1,8 @@
+import BarsIcon from '../../../assets/icon/bars.svg?react';
 import HubSpotLogo from '../../../assets/logo.svg?react';
 import { useFilters } from '../../../context/FilterContext';
 import { useSlideDeck } from '../../../context/SlideDeckContext';
 import styles from './TopNav.module.css';
-
-function MenuIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M1 5h22M1 12h22M1 19h22"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 // Per-slide overrides. Only deviations from the default config need an entry.
 // Defaults: showMenu, showLearnMore, showClearFilter, and showFilterIndicator are true.
@@ -100,7 +81,7 @@ export default function TopNav() {
             className={styles.menuBtn}
             aria-label="Go to navigation menu"
           >
-            <MenuIcon />
+            <BarsIcon className={styles.menuIcon} aria-hidden="true" focusable="false" />
             <span>Menu</span>
           </a>
         )}
