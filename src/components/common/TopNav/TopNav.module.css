@@ -1,0 +1,124 @@
+/* Single, always-present top nav floating above the deck. Background is fully
+   transparent so horizontal slide transitions never paint a colored band over
+   the still-visible outgoing slide. Pages reserve `--top-nav-height` of
+   top padding (via PageShell) so content doesn't start under this bar. */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: calc(var(--z-modal) + 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.125rem var(--page-gutter);
+  width: 100%;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+/* Re-enable interaction on the actual interactive children — the bar itself
+   stays click-through so the user can interact with content positioned in the
+   reserved padding zone (rare, but defensive). */
+.nav > * {
+  pointer-events: auto;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.logoSvg {
+  display: block;
+  height: 2.25rem; /* 36px — Figma logo height */
+  width: auto;
+  color: var(--color-orange);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.875rem; /* 30px — Figma menu gap */
+}
+
+/* ─── Filter indicator pill ─── */
+/* Color inherits from the page so the label stays legible on both
+   light (teal-dark text) and dark (cream text) page backgrounds. */
+.filterIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: inherit;
+}
+
+.clearFilter {
+  color: var(--color-orange);
+  font-size: var(--text-sm);
+  padding: 0;
+  margin-right: var(--space-1);
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.clearFilter:hover {
+  opacity: 0.75;
+}
+
+.filterDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-orange);
+  flex-shrink: 0;
+}
+
+.filterLabel {
+  white-space: nowrap;
+}
+
+/* ─── Menu button ─── */
+.menuBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-orange);
+  font-size: var(--text-base); /* 16px */
+  line-height: 1.375rem;       /* 22px — matches Figma */
+  font-weight: 400;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.menuBtn:hover {
+  opacity: 0.75;
+}
+
+/* ─── Learn more CTA ─── */
+.learnMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;             /* 36px — Figma button height */
+  padding: var(--space-2) var(--space-6); /* 8px / 24px */
+  background: var(--color-orange);
+  color: var(--color-cream);
+  font-size: var(--text-base); /* 16px */
+  line-height: 1.375rem;       /* 22px */
+  font-weight: 400;
+  border-radius: 30px;         /* matches Figma pill radius */
+  transition: background var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.learnMoreBtn:hover {
+  background: var(--color-orange-dark);
+}
+
+@media (max-width: 640px) {
+  .filterIndicator,
+  .menuBtn span {
+    display: none;
+  }
+}

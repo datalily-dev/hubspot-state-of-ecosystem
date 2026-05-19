@@ -1,3 +1,4 @@
+import { PageIdProvider } from '../../../context/PageIdContext';
 import styles from './PageShell.module.css';
 
 /**
@@ -10,13 +11,15 @@ export default function PageShell({ id, children, className, style }) {
   const classes = [styles.page, className].filter(Boolean).join(' ');
 
   return (
-    <section
-      id={id}
-      className={classes}
-      aria-label={id}
-      style={style}
-    >
-      {children}
-    </section>
+    <PageIdProvider pageId={id}>
+      <section
+        id={id}
+        className={classes}
+        aria-label={id}
+        style={style}
+      >
+        {children}
+      </section>
+    </PageIdProvider>
   );
 }

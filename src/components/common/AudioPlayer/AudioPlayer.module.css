@@ -1,0 +1,120 @@
+.wrapper {
+  display: inline-flex;
+}
+
+.player {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px 16px 4px 4px;
+  height: 44px;
+  background: var(--color-orange);
+  color: var(--color-cream);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1;
+  transition: background var(--duration-fast) var(--ease-out);
+  min-width: 168px;
+}
+
+.player:hover:not(:disabled) {
+  background: var(--color-orange-dark);
+}
+
+.player:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+/* Compact variant — used on Insider Insights story rows. Same anatomy, just
+   smaller padding, smaller bubble, and a tighter min-width to fit alongside
+   the story copy. */
+.playerSm {
+  padding: 3px 14px 3px 3px;
+  height: 36px;
+  min-width: 140px;
+  font-size: var(--text-xs);
+  gap: var(--space-2);
+}
+
+.playerSm .iconBubble {
+  width: 30px;
+  height: 30px;
+}
+
+.playerSm .wavesIdle {
+  width: 28px;
+  height: 16px;
+}
+
+.playerSm .waves {
+  height: 16px;
+}
+
+.iconBubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-cream);
+  color: var(--color-orange);
+  flex-shrink: 0;
+}
+
+.playing .iconBubble {
+  background: var(--color-cream);
+  color: var(--color-orange);
+}
+
+.wavesIdle {
+  width: 38px;
+  height: 22px;
+  color: var(--color-cream);
+  flex-shrink: 0;
+}
+
+/* Force the inline SVG (which authoring app exported with hard-coded fill)
+   to render in the cream pill colour. */
+.wavesIdle path {
+  fill: var(--color-cream);
+}
+
+.time {
+  white-space: nowrap;
+}
+
+/* ─── Animated waveform shown while playing ─── */
+.waves {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.wave {
+  display: inline-block;
+  width: 2px;
+  background: var(--color-cream);
+  border-radius: 2px;
+  animation: waveBounce 900ms ease-in-out infinite;
+  height: 30%;
+}
+
+@keyframes waveBounce {
+  0%, 100% { height: 22%; }
+  25%      { height: 80%; }
+  50%      { height: 45%; }
+  75%      { height: 95%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave {
+    animation: none;
+    height: 60%;
+  }
+}

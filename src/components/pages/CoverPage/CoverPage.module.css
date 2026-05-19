@@ -1,146 +1,156 @@
 /* ─── Cover page shell ─── */
 .cover {
+  position: relative;
+  /* Figma Cover artboard (2192:5803) — positions scale from 1440×900 */
+  --cover-w: var(--content-vw);
+  --cover-offset-x: calc((100vw - var(--cover-w)) / 2);
   background-color: var(--color-teal-dark);
   color: var(--color-cream);
   display: flex;
   flex-direction: column;
+  /* `overflow-x: clip` prevents any horizontal escape (the slide itself
+     also enforces `overflow-x: hidden` as a backstop). `overflow-y: visible`
+     lets the full-bleed column divider extend the final ~92px past .cover's
+     bottom edge into the PageNav footer area, matching Figma 2192:5806
+     where the line runs the full artboard height. `.gradients` carries its
+     own `overflow: hidden`, so the gradient art is still contained. */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* ─── Decorative background gradients (Figma 2192:5804, 2192:5805) ─── */
+.gradients {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
   overflow: hidden;
 }
 
-/* Align chrome + hero to one centered column (matches wide-screen comp) */
-.cover .nav,
-.cover .body,
-.cover .bottomBar {
-  max-width: min(1440px, 100%);
-  margin-inline: auto;
-  width: 100%;
-}
-
-/* ─── Top navigation ─── */
-.nav {
-  position: relative;
-  z-index: var(--z-raised);
+.gradientAWrap,
+.gradientBWrap {
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--space-5) var(--page-gutter);
-  flex-shrink: 0;
+  justify-content: center;
 }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
+/* Rotated bounding box: 1379.496×1399.127 @ (-651, -374.34) */
+.gradientAWrap {
+  left: calc(var(--cover-offset-x) + var(--cover-w) * -651 / 1440);
+  top: -374px;
+  width: calc(var(--cover-w) * 1379.496 / 1440);
+  aspect-ratio: 1379.496 / 1399.127;
 }
 
-.logoSvg {
+.gradientARotate {
+  flex: none;
+  transform: rotate(-126.93deg);
+}
+
+.gradientA {
   display: block;
-  height: clamp(1.75rem, 3.5vw, 2.5rem);
-  width: auto;
+  width: calc(var(--cover-w) * 1041.671 / 1440);
+  height: auto;
+  max-width: none;
 }
 
-.navActions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-6);
+/* Rotated bounding box: 1308.155×1232.028 @ (-175.68, -759) */
+.gradientBWrap {
+  left: calc(var(--cover-offset-x) + var(--cover-w) * -175.68 / 1440);
+  top: -759px;
+  width: calc(var(--cover-w) * 1308.155 / 1440);
+  aspect-ratio: 1308.155 / 1232.028;
 }
 
-.menuBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--color-orange);
-  font-size: var(--text-sm);
-  font-weight: 400;
-  transition: opacity var(--duration-fast) var(--ease-out);
+.gradientBRotate {
+  flex: none;
+  transform: rotate(13.99deg);
 }
 
-.menuBtn:hover {
-  opacity: 0.8;
+.gradientB {
+  display: block;
+  width: calc(var(--cover-w) * 1100.127 / 1440);
+  height: auto;
+  max-width: none;
 }
 
-.learnMoreBtn {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.375rem var(--space-5);
-  background: var(--color-orange);
-  color: var(--color-cream);
-  font-size: var(--text-sm);
-  font-weight: 400;
-  border-radius: var(--radius-full);
-  transition: background var(--duration-fast) var(--ease-out);
-  white-space: nowrap;
-}
-
-.learnMoreBtn:hover {
-  background: var(--color-orange-dark);
-}
-
-/* ─── Two-column body ─── */
+/* ─── Two-column body (58.33% / 41.67% — matches Figma artboard) ─── */
 .body {
   position: relative;
   z-index: var(--z-raised);
   flex: 1;
   min-height: 0;
   display: grid;
-  /* ~62 / 38 split — wider hero column like reference */
-  grid-template-columns: minmax(0, 1.62fr) 1px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 58.33%) minmax(0, 1fr);
   align-items: stretch;
-  padding: var(--space-10) var(--page-gutter);
-  gap: clamp(var(--space-8), 4vw, var(--space-16));
+  padding-inline: var(--page-gutter);
 }
 
-/* ─── Left column ─── */
+/* ─── Left column — vertically centered hero ─── */
 .left {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: var(--space-6);
-  /* Pull hero block off the viewport edge (reference has generous inset) */
-  padding-left: clamp(var(--space-8), 6vw, 5.5rem);
-  margin-left: var(--space-24);
+  /* Figma site-title: 180px from viewport edge at 1440px */
+  padding-left: clamp(
+    var(--space-4),
+    calc(var(--content-vw) * 0.125 - var(--page-gutter)),
+    6.75rem
+  );
+  padding-right: clamp(var(--space-4), calc(var(--content-vw) * 0.04), var(--space-8));
+  max-width: 50.0625rem; /* 801px */
 }
 
 .reportLabel {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   font-weight: 400;
+  line-height: 1.5rem;
   color: var(--color-orange);
 }
 
 .headline {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  font-size: clamp(2.75rem, calc(var(--content-vw) * 0.0736), 6.625rem);
   font-weight: 500;
   color: var(--color-cream);
-  line-height: 1.14;
+  line-height: 1;
   letter-spacing: 0;
 }
 
 .intro {
   font-family: var(--font-sans);
-  font-size: var(--text-xl);
+  font-size: clamp(1.125rem, calc(var(--content-vw) * 0.0194), 1.75rem);
   font-weight: 400;
   color: var(--color-cream);
-  line-height: var(--leading-normal);
+  line-height: 1.2857;
   letter-spacing: 0;
-  max-width: 38ch;
-  opacity: 0.9;
+  max-width: 28.125rem; /* 450px */
+}
+
+.customizeGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
 }
 
 .customizeBtn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 8px 16px 8px 10px;
+  padding: var(--space-2) var(--space-4) var(--space-2) 0.625rem;
   background: var(--color-orange);
   color: var(--color-cream);
   font-family: var(--font-sans);
   font-size: var(--text-base);
   font-weight: 400;
-  border-radius: var(--radius-full);
-  min-height: 40px;
+  line-height: 1.375rem;
+  border-radius: 2.5rem;
+  min-height: 2.5rem;
   transition: background var(--duration-fast) var(--ease-out);
 }
 
@@ -148,34 +158,38 @@
   background: var(--color-orange-dark);
 }
 
-/* Circular knob hosting the filter glyph inside the orange pill */
 .customizeIconWrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: var(--radius-full);
   background: var(--color-cream);
   color: var(--color-orange);
 }
 
 .customizeIcon {
-  width: 16px;
-  height: 16px;
+  width: 1.5rem;
+  height: 1.5rem;
   display: block;
 }
 
-/* Active-filter summary chip ("● Solutions partner / SMB / EMEA") */
 .activeFilters {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  margin-top: var(--space-2);
+  min-height: 1.375rem;
+  margin: 0;
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
+  line-height: 1.375rem;
   color: var(--color-cream);
   letter-spacing: 0.01em;
+}
+
+.activeFiltersEmpty {
+  visibility: hidden;
 }
 
 .activeFiltersDot {
@@ -187,140 +201,144 @@
   flex-shrink: 0;
 }
 
-/* ─── Column separator (full height of main body row) ─── */
+/* ─── Column separator (Figma 2192:5806 — #0C4D51 @ 58.33% + 16px) ─── */
 .colDivider {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  height: 100vh;
+  left: calc(var(--cover-offset-x) + var(--cover-w) * 856 / 1440);
   width: 1px;
-  align-self: stretch;
-  background: rgba(248, 245, 238, 0.18);
+  background: #0c4d51;
+  pointer-events: none;
 }
 
 /* ─── Right column — stats ─── */
 .right {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: clamp(var(--space-4), 1.5vw, var(--space-8));
+  justify-content: flex-start;
+  gap: 6px;
+  max-width: 33rem; /* 528px */
+  padding-top: var(--space-4);
+  padding-left: clamp(1.5rem, calc(var(--content-vw) * 0.058), 5.25rem);
 }
 
 .statBlock {
-  padding: 34px 0;
-  border-bottom: 1px solid #0C4D51;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-block: 2.125rem;
+  border-bottom: 1px solid #0c4d51;
 }
 
 .statBlock:last-child {
   border-bottom: none;
 }
 
-.statDivider {
-  display: none;
-}
-
 .statValue {
   display: flex;
-  align-items: baseline;
-  gap: 0.1em;
-  margin-bottom: var(--space-2);
+  align-items: flex-end;
+  gap: 0.25rem;
+  color: var(--color-orange);
 }
 
-.statNumber {
+.statValue[data-prefix='word'] {
+  align-items: center;
+}
+
+.statNumber,
+.statPrefixSymbol {
   font-family: var(--font-sans);
-  font-size: clamp(3rem, 5.5vw, var(--text-7xl));
+  font-size: clamp(3.5rem, calc(var(--content-vw) * 0.0903), 8.125rem);
   font-weight: 400;
-  color: var(--color-orange);
-  line-height: 1;
+  line-height: 0.8615;
   letter-spacing: 0;
 }
 
 .statSuffix {
   font-family: var(--font-sans);
-  font-size: clamp(1.75rem, 3.5vw, var(--text-4xl));
+  font-size: clamp(2rem, calc(var(--content-vw) * 0.0444), 4rem);
   font-weight: 400;
-  color: var(--color-orange);
-  line-height: 1;
+  line-height: 1.125;
   letter-spacing: 0;
 }
 
-.statPrefix {
+.statPrefixWord {
   font-family: var(--font-sans);
-  font-size: clamp(5.2vw, 5.2vw, var(--text-5xl));
+  font-size: clamp(2rem, calc(var(--content-vw) * 0.0444), 4rem);
   font-weight: 400;
-  color: var(--color-orange);
-  line-height: 1;
+  line-height: 1.125;
   letter-spacing: 0;
-  margin-right: 0.05em;
 }
 
 .statLabel {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.375rem;
   color: var(--color-cream);
-  line-height: var(--leading-snug);
-  max-width: 30ch;
-  opacity: 0.9;
+  max-width: 21.875rem; /* 350px */
 }
 
-/* ─── Bottom bar ─── */
-.bottomBar {
-  position: relative;
-  z-index: var(--z-raised);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-5) var(--page-gutter);
-  flex-shrink: 0;
+@media (max-width: 900px) {
+  .body {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    padding-block: var(--space-4);
+  }
+
+  .colDivider {
+    display: none;
+  }
+
+  .left {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+  }
+
+  .right {
+    max-width: none;
+    padding-top: 0;
+    padding-left: 0;
+  }
+
+  .gradientAWrap {
+    left: calc(var(--cover-offset-x) + var(--cover-w) * -0.32);
+    top: -250px;
+    width: 110%;
+    aspect-ratio: 1379.496 / 1399.127;
+  }
+
+  .gradientBWrap {
+    left: calc(var(--cover-offset-x) + var(--cover-w) * -0.06);
+    top: -500px;
+    width: 105%;
+    aspect-ratio: 1308.155 / 1232.028;
+  }
 }
 
-.pagePill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(248, 245, 238, 0.08);
-  border-radius: var(--radius-full);
-}
+@media (max-height: 760px) {
+  .left {
+    gap: var(--space-4);
+  }
 
-.dot {
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  border: 1.5px solid rgba(248, 245, 238, 0.45);
-  background: transparent;
-  flex-shrink: 0;
-}
+  .headline {
+    font-size: clamp(2.25rem, calc(var(--content-vw) * 0.055), 4rem);
+  }
 
-.dotActive {
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  border: 1.5px solid var(--color-orange);
-  background: var(--color-orange);
-  flex-shrink: 0;
-}
+  .statBlock {
+    padding-block: var(--space-4);
+  }
 
-.nextBtn {
-  position: absolute;
-  right: var(--page-gutter);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-full);
-  border: 1.5px solid var(--color-orange);
-  color: var(--color-orange);
-  transition:
-    background var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
-}
+  .statNumber,
+  .statPrefixSymbol {
+    font-size: clamp(2.5rem, calc(var(--content-vw) * 0.065), 5rem);
+  }
 
-.nextBtn:hover {
-  background: rgba(255, 72, 0, 0.12);
-}
-
-.nextIcon {
-  width: 18px;
-  height: 18px;
-  display: block;
+  .statSuffix,
+  .statPrefixWord {
+    font-size: clamp(1.5rem, calc(var(--content-vw) * 0.035), 2.5rem);
+  }
 }

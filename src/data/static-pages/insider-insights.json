@@ -1,0 +1,83 @@
+{
+  "label": "Insider Insights",
+  "heading": "Hear from our partners",
+  "video": {
+    "thumbnail": null,
+    "src": null,
+    "title": "Partner story spotlight"
+  },
+  "stories": [
+    {
+      "id": "siloy-twelve",
+      "headline": "87% of tickets resolved by Customer Agent, 87% drop in service costs, and 55% increase in positive customer feedback",
+      "body": "We worked with Twelve, a SaaS company and market leader in smart ordering and payment solutions, to move their customer success function to HubSpot and implement Customer Agent. Within the first week, 87.5% of chat tickets were resolved without human intervention, service costs dropped by 87%, and positive customer feedback increased by 55%. This isn't just about software: it's about combining platform, data, AI, process design, and human expertise to create measurable business impact.",
+      "tags": "SaaS | Global",
+      "author": {
+        "name": "Camiel Freriks",
+        "role": "VP Strategic Alliances, Siloy",
+        "linkedIn": "https://www.linkedin.com/in/camielfreriks/"
+      },
+      "audio": { "src": null, "durationSeconds": 38 }
+    },
+    {
+      "id": "aptitude8-b2c",
+      "headline": "Grew closed-won revenue from $4.9M to $121M in 12 months",
+      "body": "Customer expectations had shifted, and the business needed a more proactive B2C sales motion. We first uncovered more than $10M in lost opportunities in their quote-to-booking process in a single year due to technical issues. We used HubSpot reporting and ROI modeling to build a business case for a dedicated B2C outbound sales team, and then built the motion in HubSpot. The results were transformational: closed-won revenue grew from $4.9M to $121M in 12 months.",
+      "tags": "Travel | Upmarket",
+      "author": {
+        "name": "Emily Wingrove",
+        "role": "Chief Marketing Officer, Aptitude 8",
+        "linkedIn": "https://www.linkedin.com/in/emilywingrove/"
+      },
+      "audio": { "src": null, "durationSeconds": 38 }
+    },
+    {
+      "id": "engaging-castle",
+      "headline": "Created an AI-ready complex data model for a global entertainment company",
+      "body": "With the Michael Castle Group, an internationally renowned theatrical producer, we made sense of their data and designed their quite complex data model so that they're now well positioned to make use of AI and all aspects of the HubSpot platform. The result has been a game-changer: they can have intelligent conversations with every aspect of their database — not just customers, but also production management.",
+      "tags": "Commercial Entertainment | Upmarket",
+      "author": {
+        "name": "Michelle O'Keeffe",
+        "role": "CEO, Engaging.io",
+        "linkedIn": "https://www.linkedin.com/in/michelle-o-keeffe-1535b423/"
+      },
+      "audio": { "src": null, "durationSeconds": 38 }
+    },
+    {
+      "id": "grows-colectivo",
+      "headline": "Achieved 100% traceability in student recruitment across 16 campuses",
+      "body": "With 16 campuses across Colombia, Universidad Colectivo de Colombia needed to bring their student attraction and admission process into one place. Each campus had different ways of working, scattered data, and limited visibility. With HubSpot we centralized their channels, organized their data, and gave their teams real-time access to student information — achieving 100% traceability in their student recruitment process across all 16 campuses on a single platform.",
+      "tags": "Education | Upmarket",
+      "author": {
+        "name": "Stuart Toledo",
+        "role": "CEO, Grows",
+        "linkedIn": "https://www.linkedin.com/in/stuarttoledonarria/"
+      },
+      "audio": { "src": null, "durationSeconds": 38 }
+    },
+    {
+      "id": "triario-healthcare",
+      "headline": "Increased appointment scheduling by 20% and decreased paid ad spend by 15% in the first three months",
+      "body": "We delivered for a clinic with a very disjointed tech stack: implementing HubSpot, integrating tools into Snowflake, and ultimately rebuilding the entire patient journey end-to-end. This enabled them to run reports from marketing campaigns through to procedure completion. Appointment scheduling increased 20% and paid ad spend decreased 15% in the first three months.",
+      "tags": "Healthcare | Upmarket",
+      "author": {
+        "name": "Jose Betancur",
+        "role": "Regional President, Triario",
+        "linkedIn": "https://www.linkedin.com/in/jose-alejandro-betancur-vanegas-34b03b102/"
+      },
+      "audio": { "src": null, "durationSeconds": 38 }
+    },
+    {
+      "id": "smartbug-brightstar",
+      "headline": "Eliminated 20% \"silent lead loss\" and restored full pipeline visibility",
+      "body": "Brightstar was experiencing major lead ingestion and routing issues across multiple systems. Roughly 15–20% of monthly lead volume was just disappearing. We eliminated that \"silent lead loss\" and restored confidence in their reporting, giving leadership a much clearer picture of pipeline health and demand performance.",
+      "tags": "Healthcare | Upmarket",
+      "author": {
+        "name": "Adam Bleibtreu",
+        "role": "CEO, SmartBug Media",
+        "linkedIn": "https://www.linkedin.com/in/adam-bleibtreu/"
+      },
+      "audio": { "src": null, "durationSeconds": 38 }
+    }
+  ]
+}

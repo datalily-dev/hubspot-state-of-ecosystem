@@ -1,0 +1,84 @@
+.deck {
+  /* Reserve vertical room at the bottom of every slide for the per-slide
+     PageNav footer so page content can sit above it without overlap.
+     PageShell reads this variable to subtract from its own min-height so
+     non-overflow pages still fit in a single viewport. */
+  --page-nav-overlay-height: calc(var(--space-5, 24px) * 2 + 44px);
+
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  /* `clip` (not `hidden`) so the deck is NOT a scroll container. With
+     `overflow: hidden` the browser would still set `scrollLeft` on the deck
+     when navigating to an in-page anchor (e.g. clicking a `<a href="#foreword">`
+     link or assigning to `window.location.hash`), which combined with our
+     transform-based slide track double-shifts the viewport and lands the user
+     on the wrong slide. `overflow: clip` disallows programmatic scrolling
+     while preserving the visual clipping. */
+  overflow: clip;
+  outline: none;
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: max-content;
+  will-change: transform, opacity;
+}
+
+.slide {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  /* Each slide carries its own page background so the area beneath
+     PageShell (where the PageNav footer lives) blends seamlessly with
+     the page itself — no cream strip behind a teal page, etc. */
+  background-color: var(--page-bg-color, var(--color-cream));
+  /* Default: only the active slide is visible. Non-active slides sit at
+     opacity 0 so the viewport never shows two background colors at once
+     during steady state. The 'push' transition (mode='slide') re-enables
+     a timed opacity transition; the 'crossfade' transition (mode='fade')
+     drives opacity on the whole track instead and disables this one. */
+  opacity: 0;
+}
+
+.slide[data-active="true"] {
+  opacity: 1;
+}
+
+/* Push transition (adjacent hops): track translates 100vw to the next slide
+   while the outgoing slide fades to 0 and the incoming slide fades to 1,
+   all in the same time window. The simultaneous opacity envelope softens
+   the color seam at the slide boundary so the eye never perceives a hard
+   vertical color edge crossing the viewport. */
+.track[data-mode="slide"] {
+  transition: transform var(--slide-ms, 500ms) cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.track[data-mode="slide"] .slide {
+  transition: opacity var(--slide-ms, 500ms) ease;
+}
+
+/* Crossfade transition (non-adjacent / menu hops): the entire track fades
+   out, the transform snaps to the target index while invisible, then the
+   track fades back in. Per-slide opacity flips instantly under the track-
+   level opacity envelope so it never interferes. */
+.track[data-mode="fade"] {
+  transition: opacity var(--fade-half-ms, 220ms) var(--ease-out);
+}
+
+/* PageNav anchored at the very bottom of each page's scrollable content.
+   In-flow (no sticky / no fixed) so it lives in the natural document
+   order: at the end of the page. Combined with PageShell's adjusted
+   min-height, short pages keep it at the viewport bottom without any
+   extra scroll, while tall pages reveal it once the user has scrolled
+   to the end of the content. */
+.pageNavFooter {
+  flex-shrink: 0;
+}

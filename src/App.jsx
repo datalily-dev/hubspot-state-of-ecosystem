@@ -1,4 +1,5 @@
 import { FilterProvider } from './context/FilterContext';
+import SlideDeck from './components/common/SlideDeck/SlideDeck';
 import CoverPage from './components/pages/CoverPage/CoverPage';
 import NavigationPage from './components/pages/NavigationPage/NavigationPage';
 import ForewordPage from './components/pages/ForewordPage/ForewordPage';
@@ -16,14 +17,16 @@ export default function App() {
         Skip to content
       </a>
       <main className={styles.main}>
-        <CoverPage />
-        <NavigationPage />
-        <ForewordPage />
-        <ByTheNumbers />
-        <ShortTakes />
-        <VisionPage />
-        <GrowthPage />
-        <InsiderInsights />
+        <SlideDeck>
+          <CoverPage />
+          <NavigationPage />
+          <ForewordPage />
+          <ByTheNumbers />
+          <ShortTakes />
+          <VisionPage />
+          <GrowthPage />
+          <InsiderInsights />
+        </SlideDeck>
       </main>
     </FilterProvider>
   );

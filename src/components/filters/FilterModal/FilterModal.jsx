@@ -1,20 +1,25 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useFilters } from '../../../context/FilterContext';
 import filtersData from '../../../data/filters.json';
 import FilterChip from '../FilterChip/FilterChip';
 import XMarkIcon from '../../../assets/icon/x-mark.svg?react';
 import styles from './FilterModal.module.css';
 
+/** Matches --duration-slow in tokens.css */
+const CLOSE_MS = 400;
+
+/** Region chip order per Figma (node 2219:3351). */
+const REGION_ORDER = ['emea', 'japac', 'latam', 'nam'];
+
 /**
  * FilterModal — hierarchical filter selection overlay.
  *
  * Behaviour:
- *   - Customer Focus and Region are visible by default (nothing selected) and
- *     when Solutions is selected; they hide only when Technology is selected.
- *   - Selecting a chip fills it in; unselected siblings retain full-opacity
- *     outlined style — no dimming.
- *   - The "X SELECTED" counter reflects pending (in-modal) selections.
- *   - "Apply" commits selections and closes; the close (×) button discards.
+ *   - Only Partner Type is shown until Solutions is selected; Technology keeps
+ *     the modal to that row (segment/region are cleared in state).
+ *   - The "X selected" counter includes Partner Type, Customer Focus, and Region.
+ *   - "Apply" commits selections and closes; Close discards pending changes.
  */
 export default function FilterModal({ isOpen, onClose }) {
   const {
@@ -27,17 +32,52 @@ export default function FilterModal({ isOpen, onClose }) {
   } = useFilters();
 
   const dialogRef = useRef(null);
+  const [isClosing, setIsClosing] = useState(false);
 
-  // When the modal opens, sync pending → confirmed and trap initial focus.
+  const handleClose = useCallback(() => {
+    if (isClosing) return;
+
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      onClose();
+      return;
+    }
+
+    setIsClosing(true);
+  }, [isClosing, onClose]);
+
+  useEffect(() => {
+    if (!isClosing) return undefined;
+
+    const timer = window.setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, CLOSE_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [isClosing, onClose]);
+
+  useEffect(() => {
+    if (isOpen) setIsClosing(false);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    openModal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) return undefined;
-    openModal();
 
     const previouslyFocused = document.activeElement;
     dialogRef.current?.focus();
 
     const handleKey = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
     };
     document.addEventListener('keydown', handleKey);
 
@@ -51,26 +91,23 @@ export default function FilterModal({ isOpen, onClose }) {
         previouslyFocused.focus();
       }
     };
-    // We intentionally only re-run when the modal opens / closes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen && !isClosing) return null;
 
-  const showSubFilters = pendingFilters.partnerType !== 'technology';
+  const showSubFilters = pendingFilters.partnerType === 'solutions';
 
   const selectedCount = [
     pendingFilters.partnerType,
-    showSubFilters && pendingFilters.segment,
-    showSubFilters && pendingFilters.region,
+    pendingFilters.segment,
+    pendingFilters.region,
   ].filter(Boolean).length;
 
   const handleApply = () => {
     confirmFilters();
-    onClose();
+    handleClose();
   };
 
-  // Toggle behaviour: clicking the active option de-selects it.
   const togglePartnerType = (id) =>
     setPendingPartnerType(pendingFilters.partnerType === id ? null : id);
   const toggleSegment = (id) =>
@@ -79,18 +116,24 @@ export default function FilterModal({ isOpen, onClose }) {
     setPendingRegion(pendingFilters.region === id ? null : id);
 
   const handleOverlayMouseDown = (e) => {
-    if (e.target === e.currentTarget) onClose();
+    if (e.target === e.currentTarget) handleClose();
   };
 
-  return (
+  const regions = [...filtersData.regions].sort(
+    (a, b) => REGION_ORDER.indexOf(a.id) - REGION_ORDER.indexOf(b.id),
+  );
+
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <div
-      className={styles.overlay}
+      className={`${styles.overlay} ${isClosing ? styles.overlayClosing : ''}`}
       role="presentation"
       onMouseDown={handleOverlayMouseDown}
     >
       <div
         ref={dialogRef}
-        className={styles.modal}
+        className={`${styles.modal} ${isClosing ? styles.modalClosing : ''}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="filter-modal-title"
@@ -99,78 +142,86 @@ export default function FilterModal({ isOpen, onClose }) {
         <button
           type="button"
           className={styles.closeBtn}
-          onClick={onClose}
+          onClick={handleClose}
           aria-label="Close customize panel"
         >
           <XMarkIcon className={styles.closeIcon} aria-hidden="true" focusable="false" />
           <span className={styles.closeLabel}>Close</span>
         </button>
 
-        <h2 id="filter-modal-title" className={styles.title}>
-          Customize your own experience
-        </h2>
+        <div className={styles.body}>
+          <h2 id="filter-modal-title" className={styles.title}>
+            Customize your own experience
+          </h2>
 
-        <div className={styles.divider} aria-hidden="true" />
+          <div className={styles.sections}>
+            <div className={styles.divider} aria-hidden="true" />
 
-        {/* PARTNER TYPE */}
-        <div className={styles.row}>
-          <span className={styles.rowLabel}>Partner Type</span>
-          <div className={styles.options}>
-            {filtersData.partnerTypes.map((type) => (
-              <FilterChip
-                key={type.id}
-                label={type.label.replace(' Partner', '')}
-                selected={pendingFilters.partnerType === type.id}
-                onClick={() => togglePartnerType(type.id)}
-              />
-            ))}
+            <div className={styles.row}>
+              <span className={styles.rowLabel}>Partner Type</span>
+              <div className={styles.options}>
+                {filtersData.partnerTypes.map((type) => (
+                  <FilterChip
+                    key={type.id}
+                    label={type.label.replace(' Partner', '')}
+                    selected={pendingFilters.partnerType === type.id}
+                    onClick={() => togglePartnerType(type.id)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {showSubFilters && (
+              <>
+                <div className={styles.divider} aria-hidden="true" />
+
+                <div className={styles.row}>
+                  <span className={styles.rowLabel}>Customer focus</span>
+                  <div className={styles.options}>
+                    {filtersData.segments.map((seg) => (
+                      <FilterChip
+                        key={seg.id}
+                        label={seg.label}
+                        selected={pendingFilters.segment === seg.id}
+                        onClick={() => toggleSegment(seg.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className={styles.divider} aria-hidden="true" />
+
+                <div className={styles.row}>
+                  <span className={styles.rowLabel}>Region</span>
+                  <div className={styles.options}>
+                    {regions.map((region) => (
+                      <FilterChip
+                        key={region.id}
+                        label={region.label}
+                        selected={pendingFilters.region === region.id}
+                        onClick={() => toggleRegion(region.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className={styles.divider} aria-hidden="true" />
+
+            <div className={styles.footer}>
+              <span className={styles.counter} aria-live="polite">
+                <span className={styles.counterValue}>{selectedCount}</span>
+                <span className={styles.counterLabel}> selected</span>
+              </span>
+              <button type="button" className={styles.applyBtn} onClick={handleApply}>
+                Apply
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* CUSTOMER FOCUS + REGION — hidden only when Technology is selected */}
-        {showSubFilters && (
-          <>
-            <div className={styles.row}>
-              <span className={styles.rowLabel}>Customer Focus</span>
-              <div className={styles.options}>
-                {filtersData.segments.map((seg) => (
-                  <FilterChip
-                    key={seg.id}
-                    label={seg.label}
-                    selected={pendingFilters.segment === seg.id}
-                    onClick={() => toggleSegment(seg.id)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.row}>
-              <span className={styles.rowLabel}>Region</span>
-              <div className={styles.options}>
-                {filtersData.regions.map((region) => (
-                  <FilterChip
-                    key={region.id}
-                    label={region.label}
-                    selected={pendingFilters.region === region.id}
-                    onClick={() => toggleRegion(region.id)}
-                  />
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-
-        <div className={styles.divider} aria-hidden="true" />
-
-        <div className={styles.footer}>
-          <span className={styles.counter} aria-live="polite">
-            {`${selectedCount} Selected`}
-          </span>
-          <button type="button" className={styles.applyBtn} onClick={handleApply}>
-            Apply
-          </button>
-        </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

@@ -1,0 +1,54 @@
+.tablist {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.tab,
+.tabActive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.tabActive {
+  background: var(--color-orange);
+  color: var(--color-cream);
+}
+
+/* ─── Dark variant (teal-dark backgrounds, e.g. Short Takes) ─── */
+.dark .tab {
+  background: rgba(248, 245, 238, 0.06);
+  color: var(--color-cream);
+  border: 1px solid rgba(248, 245, 238, 0.12);
+}
+
+.dark .tab:hover {
+  background: rgba(248, 245, 238, 0.12);
+}
+
+/* ─── Light variant (cream backgrounds) ─── */
+.light .tab {
+  background: transparent;
+  color: var(--color-teal-dark);
+  border: 1px solid rgba(4, 39, 41, 0.18);
+}
+
+.light .tab:hover {
+  background: rgba(4, 39, 41, 0.06);
+}
+
+.tabActive:hover {
+  background: var(--color-orange-dark);
+}

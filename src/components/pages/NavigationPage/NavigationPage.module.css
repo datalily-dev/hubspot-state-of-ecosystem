@@ -1,26 +1,91 @@
-.nav {
+.page {
   background-color: var(--color-cream);
   color: var(--color-teal-dark);
-  justify-content: center;
-  align-items: center;
 }
 
-.inner {
-  padding: var(--space-16) var(--page-gutter);
-  max-width: var(--max-content-width);
-  margin: 0 auto;
+.body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10) var(--page-gutter);
   width: 100%;
 }
 
-.label {
-  font-size: var(--text-sm);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--color-orange);
-  margin-bottom: var(--space-4);
+/* ─── TOC two-column grid ─── */
+.toc {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  gap: clamp(var(--space-8), 6vw, var(--space-20));
+  align-items: stretch;
 }
 
-.heading {
-  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
-  margin-bottom: var(--space-8);
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.colDivider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(4, 39, 41, 0.18);
+}
+
+/* ─── Item ─── */
+.item {
+  border-bottom: 1px solid rgba(4, 39, 41, 0.18);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6) 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  opacity: 0.78;
+}
+
+.itemLabel {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-orange);
+  letter-spacing: 0.01em;
+}
+
+.itemTitle {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-xl), 2.2vw, var(--text-2xl));
+  font-weight: 600;
+  color: var(--color-teal-dark);
+  line-height: var(--leading-tight);
+  margin-top: var(--space-1);
+}
+
+.itemDescription {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-teal-dark);
+  opacity: 0.78;
+  line-height: var(--leading-snug);
+  max-width: 38ch;
+}
+
+@media (max-width: 768px) {
+  .toc {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .colDivider {
+    display: none;
+  }
 }

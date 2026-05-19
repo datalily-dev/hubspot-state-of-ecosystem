@@ -1,27 +1,260 @@
 .page {
-  background-color: var(--color-sage);
-  color: var(--color-teal-dark);
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  background-color: var(--color-teal-dark);
+  color: var(--color-cream);
+  overflow-x: clip;
 }
 
-.inner {
-  padding: var(--space-16) var(--page-gutter);
-  max-width: var(--max-content-width);
-  margin: 0 auto;
+/* ─── Body ─── */
+.body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
   width: 100%;
+  padding: var(--space-8) var(--page-gutter) var(--space-16);
+  display: flex;
+  justify-content: center;
 }
 
-.label {
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+}
+
+/* ─── Header (label + heading + tab row) ─── */
+.header {
+  margin-bottom: var(--space-8);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
   font-size: var(--text-sm);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--color-teal-dark);
-  opacity: 0.7;
-  margin-bottom: var(--space-4);
+  color: var(--color-orange);
+  margin-bottom: var(--space-3);
 }
 
 .heading {
-  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
-  margin-bottom: var(--space-8);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  font-weight: 500;
+  color: var(--color-cream);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-6);
+  max-width: 22ch;
+}
+
+.tabRow {
+  display: block;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(248, 245, 238, 0.18);
+}
+
+.tabs {
+  margin-top: 0;
+}
+
+/* ─── Two-column body ─── */
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: var(--space-10);
+  padding-top: var(--space-8);
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.rightCol {
+  min-width: 0;
+  border-left: 1px solid rgba(248, 245, 238, 0.18);
+  padding-left: var(--space-10);
+}
+
+@media (max-width: 860px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .rightCol {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid rgba(248, 245, 238, 0.18);
+    padding-top: var(--space-8);
+  }
+}
+
+/* ─── Left column copy ─── */
+.colEyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-orange);
+  margin-bottom: var(--space-2);
+}
+
+.colHeading {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 500;
+  color: var(--color-cream);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-2);
+}
+
+.paragraph {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-cream);
+  max-width: 56ch;
+}
+
+.bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-4);
+  max-width: 56ch;
+}
+
+.bullet {
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-cream);
+  padding-left: var(--space-3);
+}
+
+.bullet::before {
+  content: '\2022';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-cream);
+}
+
+/* ─── CTA card ─── */
+.ctaCard {
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: stretch;
+  background: var(--color-magenta);
+  color: var(--color-cream);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-width: 480px;
+}
+
+.ctaImage {
+  background: linear-gradient(135deg, var(--color-enabled), var(--color-orange-dark));
+  min-height: 120px;
+}
+
+.ctaBody {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.ctaTitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-cream);
+  line-height: 1.25;
+}
+
+.ctaSubtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-cream);
+  line-height: var(--leading-snug);
+  opacity: 0.92;
+}
+
+.ctaButton {
+  margin-top: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-orange);
+  color: var(--color-cream);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.ctaButton:hover {
+  background: var(--color-orange-dark);
+}
+
+/* ─── Right column chart panel ─── */
+.chartPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.chartTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 500;
+  color: var(--color-cream);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.chartViewTabs {
+  margin-top: var(--space-1);
+}
+
+.chartVizRegion {
+  width: 100%;
+  min-height: 0;
+}
+
+.chartCanvas {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-md);
+  background: rgba(248, 245, 238, 0.04);
+  border: 1px dashed rgba(248, 245, 238, 0.15);
+}
+
+.chartSource {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: rgba(248, 245, 238, 0.7);
+  line-height: var(--leading-snug);
+  margin-top: var(--space-2);
+}
+
+.chartSourceEnd {
+  text-align: end;
+}
+
+.chartSourceLink {
+  color: rgba(248, 245, 238, 0.85);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.chartSourceLink:hover {
+  color: var(--color-cream);
 }

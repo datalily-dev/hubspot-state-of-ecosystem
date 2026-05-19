@@ -1,0 +1,177 @@
+{
+  "tabLabel": "From Partners",
+  "heading": "Perspectives from current partners",
+
+  "byFilterId": {
+    "global":                   ["brendan-ittelson", "scott-chancellor", "scott-harrison"],
+    "technology":               ["camiel-freriks-strategic", "michelle-okeeffe-roadmap", "stuart-toledo-community", "adam-bleibtreu-innovate"],
+    "solutions":                ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm", "michelle-miller-trust"],
+    "solutions-smb":            "Content coming soon — copy pending from client.",
+    "solutions-upmarket":       "Content coming soon — copy pending from client.",
+    "solutions-nam":            ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-emea":           ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
+    "solutions-japac":          ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
+    "solutions-latam":          ["adam-bleibtreu-innovate", "justine-gaignard-overwhelm", "michelle-miller-trust"],
+    "solutions-smb-nam":        ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-smb-emea":       ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
+    "solutions-smb-japac":      ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
+    "solutions-smb-latam":      ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm"],
+    "solutions-upmarket-nam":   ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-upmarket-emea":  ["michelle-okeeffe-roadmap"],
+    "solutions-upmarket-japac": ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
+    "solutions-upmarket-latam": "Content coming soon — copy pending from client."
+  },
+
+  "library": {
+    "brendan-ittelson": {
+      "title": "Customer-centric integrations drive the future of work",
+      "quote": "This isn't just about today's integrations, it's about enabling the next generation of connected work experiences. Our partnership with HubSpot demonstrates what's possible when two platforms commit to customer-centric integration.",
+      "author": {
+        "name": "Brendan Ittelson",
+        "role": "Chief Ecosystem Officer, Zoom",
+        "linkedIn": "https://www.linkedin.com/in/bittelson/"
+      },
+      "audio": { "durationSeconds": 41 }
+    },
+    "scott-chancellor": {
+      "title": "Software built for humans must evolve to deliver for agents",
+      "quote": "Software built for humans has to evolve to be accessible by agents—that's the transition Aircall and HubSpot are building for together. Customer value above all. Open by design. Trusted by default.",
+      "author": {
+        "name": "Scott Chancellor",
+        "role": "CEO, Aircall",
+        "linkedIn": "https://www.linkedin.com/in/scottchancellor/"
+      },
+      "audio": { "durationSeconds": 36 }
+    },
+    "scott-harrison": {
+      "title": "HubSpot's ecosystem delivers value at scale",
+      "quote": "We've seen real growth on our side. More teams are adopting both platforms together, because they want to streamline workflows with faster execution. Being part of the HubSpot ecosystem gives us the opportunity to deliver that value at scale.",
+      "author": {
+        "name": "Scott Harrison",
+        "role": "Vice President, ISV Partnerships, DocuSign",
+        "linkedIn": "https://www.linkedin.com/in/scottharrisonsr/"
+      },
+      "audio": { "durationSeconds": 42 }
+    },
+    "camiel-freriks-strategic": {
+      "title": "An increasingly strategic platform for mid-market and the enterprise",
+      "quote": "Being a part of the ecosystem helps us build trust. As HubSpot becomes an increasingly strategic platform for growing mid-market and enterprise organizations, customers need partners with the skill, quality, and confidence to support them over the long term.",
+      "author": {
+        "name": "Camiel Freriks",
+        "role": "VP Strategic Alliances, Siloy",
+        "linkedIn": "https://www.linkedin.com/in/camielfreriks/"
+      },
+      "audio": { "durationSeconds": 40 }
+    },
+    "michelle-okeeffe-roadmap": {
+      "title": "Clear, transparent, and communicative about the product roadmap",
+      "quote": "HubSpot being really clear about the product roadmap—and they're very transparent with us—having that level of communication and HubSpot's trust in us as partners, has meant that we've been able to navigate this crazy tech industry together, really well.",
+      "author": {
+        "name": "Michelle O'Keeffe",
+        "role": "CEO, Engaging.io",
+        "linkedIn": "https://www.linkedin.com/in/michelle-o-keeffe-1535b423/"
+      },
+      "audio": { "durationSeconds": 39 }
+    },
+    "stuart-toledo-community": {
+      "title": "A community working together to drive customer growth",
+      "quote": "For us, HubSpot is not only a platform, it is a community of partners, customers, and teams working with one shared goal: helping companies grow better. Our growth has been possible thanks to the trust, learning, and opportunities we've found in the HubSpot ecosystem.",
+      "author": {
+        "name": "Stuart Toledo",
+        "role": "CEO, Grows",
+        "linkedIn": "https://www.linkedin.com/in/stuarttoledonarria/"
+      },
+      "audio": { "durationSeconds": 40 }
+    },
+    "adam-bleibtreu-innovate": {
+      "title": "Pushing us to innovate, think bigger, and deliver across the front office",
+      "quote": "HubSpot has been a critical part of helping us continually expand our capabilities and think bigger. It's also changed the nature of the conversations we're having—clients are looking for connected systems, reliable data, operational visibility, and scalable processes that support growth across the entire customer journey.",
+      "author": {
+        "name": "Adam Bleibtreu",
+        "role": "CEO, SmartBug Media",
+        "linkedIn": "https://www.linkedin.com/in/adam-bleibtreu/"
+      },
+      "audio": { "durationSeconds": 43 }
+    },
+    "emily-wingrove-central": {
+      "title": "Partners are central to how HubSpot approaches its success",
+      "quote": "We were incredibly driven by the impact we were certain HubSpot would have on businesses. And that belief was reinforced by how HubSpot approaches its partner ecosystem: they view us as critical to how their customers succeed.",
+      "author": {
+        "name": "Emily Wingrove",
+        "role": "Chief Marketing Officer, Aptitude 8",
+        "linkedIn": "https://www.linkedin.com/in/emilywingrove/"
+      },
+      "audio": { "durationSeconds": 35 }
+    },
+    "justine-gaignard-overwhelm": {
+      "title": "HubSpot turns AI overwhelm into concrete and accessible growth",
+      "quote": "A lot of businesses are overwhelmed right now, especially with AI evolving so quickly. But HubSpot makes things feel concrete and accessible. When clients start feeling that relief and confidence again, it changes everything.",
+      "author": {
+        "name": "Justine Gaignard-Parent",
+        "role": "President and Founder, Guépard",
+        "linkedIn": "https://www.linkedin.com/in/justinegaignardparent/"
+      },
+      "audio": { "durationSeconds": 33 }
+    },
+    "michelle-miller-trust": {
+      "title": "The ecosystem builds trust with customers and helps us evolve our services",
+      "quote": "The ecosystem allows us to build a level of trust with customers. I'm really glad that the platform has continued to evolve. It allows us to innovate alongside our clients instead of building from scratch every year, and gives my business additional opportunities for services.",
+      "author": {
+        "name": "Michelle Miller",
+        "role": "President, Creativate",
+        "linkedIn": "https://www.linkedin.com/in/millermk/"
+      },
+      "audio": { "durationSeconds": 38 }
+    },
+    "ross-breckenridge-transformed": {
+      "title": "Already transformed our company, and we're just getting started with AI",
+      "quote": "The HubSpot ecosystem hasn't just helped us grow as a business, it's completely changed the direction of the company and the value we're able to deliver for our clients. It does feel like we're just getting started where AI and automation are heading, and that's a really exciting opportunity for us.",
+      "author": {
+        "name": "Ross Breckenridge",
+        "role": "Managing Director, Breckenridge",
+        "linkedIn": "https://www.linkedin.com/in/rossbreckenridge/"
+      },
+      "audio": { "durationSeconds": 42 }
+    },
+    "daryl-michel-influence": {
+      "title": "Our clients feel that we can influence how HubSpot gets built",
+      "quote": "I genuinely don't know of another platform that has such a big product team that wants to interact with their client base and get feedback. And that's actually very impactful for us as partners, because our clients feel that we can influence how HubSpot gets built. It's been really helpful.",
+      "author": {
+        "name": "Daryl Michel",
+        "role": "Owner, Cogent Connective",
+        "linkedIn": "https://www.linkedin.com/in/daryl-michel/"
+      },
+      "audio": { "durationSeconds": 41 }
+    },
+    "hsiang-lee-changed-everything": {
+      "title": "HubSpot's ecosystem has changed everything about how we grow",
+      "quote": "We wanted to help clients solve a bigger problem—how to bring everything together. And that's where HubSpot's ecosystem really changed everything about how we grow as a business. We're constantly learning from HubSpot's product evolution, partner network, and global best practices.",
+      "author": {
+        "name": "Hsiang Lee",
+        "role": "Cofounder, Hububble",
+        "linkedIn": "https://www.linkedin.com/in/hsianglee/"
+      },
+      "audio": { "durationSeconds": 39 }
+    },
+    "jose-betancur-best-option": {
+      "title": "HubSpot made us the best option for the right type of client",
+      "quote": "Being specialized in HubSpot, we created a competitive edge. We became the best option for the right type of clients. HubSpot does a great job of promoting its partners, and has been a great boost to our business.",
+      "author": {
+        "name": "Jose Betancur",
+        "role": "Regional President, Triario",
+        "linkedIn": "https://www.linkedin.com/in/jose-alejandro-betancur-vanegas-34b03b102/"
+      },
+      "audio": { "durationSeconds": 35 }
+    },
+    "jorge-garagarza-aligned": {
+      "title": "Aligned with our target market, with tremendous growth ahead",
+      "quote": "HubSpot's vision aligned exactly with our target market. In 2024, we started working more and more towards conquering the mid and upmarket in Mexico, and the plans we have for the future are huge. We believe that tremendous growth is coming along with our partnership.",
+      "author": {
+        "name": "Jorge Garagarza",
+        "role": "CEO, Zubia",
+        "linkedIn": "https://www.linkedin.com/in/jorgegaragarza/"
+      },
+      "audio": { "durationSeconds": 37 }
+    }
+  }
+}

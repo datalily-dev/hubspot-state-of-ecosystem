@@ -3,42 +3,36 @@ import styles from './FilterChip.module.css';
 /**
  * FilterChip — a single toggleable filter pill.
  *
- * Visual states (per Figma):
- *   - default:  cream background, dark teal border + text  (idle, available)
- *   - selected: dark teal background, cream text           (chosen)
- *   - dimmed:   cream background, light gray border + text (sibling option
- *               available but not chosen — still clickable)
- *   - disabled: same as dimmed but non-interactive
- *
- * @param {{
- *   label: string,
- *   selected?: boolean,
- *   dimmed?: boolean,
- *   disabled?: boolean,
- *   onClick?: () => void,
- * }} props
+ * Visual states (Figma FilterChip):
+ *   - enabled:  cream background, teal border + text
+ *   - active:   teal background, cream text
+ *   - disabled: gray border + text, non-interactive
  */
 export default function FilterChip({
   label,
   selected = false,
-  dimmed = false,
   disabled = false,
   onClick,
 }) {
   const className = [
     styles.chip,
     selected && styles.selected,
-    dimmed && !selected && styles.dimmed,
     disabled && styles.disabled,
   ]
     .filter(Boolean)
     .join(' ');
 
+  const handleClick = (event) => {
+    onClick?.();
+    // Drop focus/hover fill after toggling off so the pill returns to outlined style.
+    if (selected) event.currentTarget.blur();
+  };
+
   return (
     <button
       type="button"
       className={className}
-      onClick={onClick}
+      onClick={handleClick}
       aria-pressed={selected}
       disabled={disabled}
     >

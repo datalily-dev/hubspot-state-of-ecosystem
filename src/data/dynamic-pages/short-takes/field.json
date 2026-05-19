@@ -1,0 +1,39 @@
+{
+  "tabLabel": "From the Field",
+  "heading": "Global Perspectives from the Ecosystem",
+  "quotes": [
+    {
+      "id": "duncan-lennox",
+      "title": "Building for a thriving ecosystem",
+      "quote": "We built our whole business on the notion of working with a thriving partner ecosystem. We're very motivated to make sure that we're not just building a product portfolio that solves our customer's problems, but that enables our partners to be successful as well.",
+      "author": {
+        "name": "Duncan Lennox",
+        "role": "Chief Product & Technology Officer, HubSpot",
+        "linkedIn": "https://www.linkedin.com/in/lennox/"
+      },
+      "audio": { "durationSeconds": 47 }
+    },
+    {
+      "id": "sandhya-hegde",
+      "title": "Data moats in the AI era",
+      "quote": "Platforms with data moats like Hubspot will continue to thrive. I'd add that the same logic applies to everything inside those platforms. If you're an app or a service that exists as a feature on top of someone else's data, ask yourself whether AI makes you more valuable—or redundant.",
+      "author": {
+        "name": "Sandhya Hegde",
+        "role": "CEO and Founder of Calibre Labs",
+        "linkedIn": "https://www.linkedin.com/in/sandhyahegde/"
+      },
+      "audio": { "durationSeconds": 38 }
+    },
+    {
+      "id": "zack-kass",
+      "title": "Platforms should earn your commitment",
+      "quote": "The State of Ecosystems report looks at the intersection of trust, context, and proof as the foundation of a successful partner ecosystem, drawing on HubSpot's breadth of partners, depth of relationships, and track record of translating platform capability into customer outcomes. The data points to a very rare convergence, the right platform, the right moment, and the right market.",
+      "author": {
+        "name": "Zack Kass",
+        "role": "AI Futurist, Author, Keynote Speaker, and the former Head of Go-to-Market at OpenAI",
+        "linkedIn": "https://www.linkedin.com/in/zackkass/"
+      },
+      "audio": { "durationSeconds": 34 }
+    }
+  ]
+}

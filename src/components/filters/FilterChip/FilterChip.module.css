@@ -1,16 +1,15 @@
-/* ── Filter pill (3 visual states) ── */
+/* Filter pill — Figma FilterChip: enabled / active / disabled */
 .chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 90px;
   height: 36px;
-  padding: 0 var(--space-5);
-  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-6);
+  border-radius: 30px;
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  line-height: 1;
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.375;
   background: var(--color-cream);
   color: var(--color-teal-dark);
   border: 1px solid var(--color-teal-dark);
@@ -20,12 +19,14 @@
     border-color var(--duration-fast) var(--ease-out);
 }
 
-.chip:hover:not(:disabled) {
-  background: var(--color-teal-dark);
-  color: var(--color-cream);
+/* Unselected hover — must not mimic .selected or deselect looks broken */
+.chip:hover:not(:disabled):not(.selected) {
+  background: rgb(4 39 41 / 0.08);
+  color: var(--color-teal-dark);
+  border-color: var(--color-teal-dark);
 }
 
-/* Selected — solid dark teal pill */
+/* Active — solid teal pill, cream text */
 .selected {
   background: var(--color-teal-dark);
   color: var(--color-cream);
@@ -37,23 +38,11 @@
   color: var(--color-cream);
 }
 
-/* Dimmed — sibling option, still clickable but visually de-emphasised */
-.dimmed {
-  color: #9F9F9F;
-  border-color: #9F9F9F;
-}
-
-.dimmed:hover:not(:disabled) {
-  background: var(--color-teal-dark);
-  color: var(--color-cream);
-  border-color: var(--color-teal-dark);
-}
-
-/* Hard disabled — non-interactive */
+/* Disabled — gray border and text (Technology partner selected) */
 .disabled,
 .disabled:hover {
   background: var(--color-cream);
-  color: #C9C9C9;
-  border-color: #D6D6D6;
+  color: #9f9f9f;
+  border-color: #9f9f9f;
   cursor: not-allowed;
 }

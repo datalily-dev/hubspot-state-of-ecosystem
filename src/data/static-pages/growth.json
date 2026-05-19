@@ -1,0 +1,217 @@
+{
+  "label": "Growth",
+  "heading": "The next big plays for partners to grow with HubSpot",
+  "tabs": [
+    {
+      "id": "mid-market",
+      "tabLabel": "Mid-Market Momentum",
+      "eyebrow": "Mid-Market Momentum",
+      "heading": "HubSpot is seeing mid-market momentum",
+      "body": [
+        "The highest-margin work is in mid-market accounts (200–2,000 employees). IDC projects the mid-market opportunity alone will exceed $11B by 2030, and the momentum is already visible. With complex setups, they need partners to help them scale:",
+        "HubSpot is also now available on AWS Marketplace, where customers can procure select products via private offers and apply eligible AWS committed cloud spend, removing a procurement barrier that has historically slowed enterprise deals. For services partners, that means faster buying cycles on larger accounts. For ISVs, it signals the kind of enterprise distribution infrastructure that makes building for HubSpot's mid-market customer base a serious product strategy."
+      ],
+      "bullets": [
+        "$10K+ deals grew 41% year-over-year in Q4 2025",
+        "500+ seat HubSpot customers grew 5x in 2025 alone",
+        "Mid-market buyers spend up to $500K annually on implementation and services",
+        "Mid-market accounts use an average of 16+ applications"
+      ],
+      "chart": {
+        "title": "HubSpot Ecosystem Opportunity by Company Size",
+        "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
+        "data": {
+          "years": [2026, 2027, 2028, 2029, 2030],
+          "rowHeaderLabel": "Company size",
+          "series": [
+            {
+              "label": "> 200 employees",
+              "valuesM": [5, 7, 8, 10, 11],
+              "fill": "var(--color-orange)"
+            },
+            {
+              "label": "< 200 employees",
+              "valuesM": [14, 18, 24, 27, 31],
+              "fill": "var(--color-lavender-dark)"
+            }
+          ]
+        }
+      },
+      "cta": {
+        "image": null,
+        "title": "Partner Growth Accelerator",
+        "subtitle": "Live training to build GTM campaigns & unlock MDF",
+        "href": "https://www.hubspot.com/partner-growth-accelerator-solutions-tech",
+        "linkText": "Learn more"
+      }
+    },
+    {
+      "id": "agentic",
+      "tabLabel": "Agentic Acceleration",
+      "eyebrow": "Agentic Acceleration",
+      "heading": "AI-first engagements are the fastest-growing slice of the partner TAM",
+      "body": [
+        "AI-first engagements, where deploying, productizing, or operationalizing AI is the primary deliverable, will grow from $6.7B in 2026 to $18.1B by 2030 — a 28.4% annual growth rate that outpaces the overall TAM.",
+        "79% of elite partners are already building AI-first solutions, and 92% are consulting on AI implementations. The opportunity now is to move from advising to building. HubSpot's expanding MCP support, increasingly sophisticated APIs, and growing surface area for agentic development mean partners — whether delivering services or shipping software — have the platform infrastructure to embed AI directly into customer workflows, build proprietary agent frameworks, and package reusable IP that compounds in value over time.",
+        "The partners who act now will establish the technical depth and customer relationships that are hardest to replicate."
+      ],
+      "bullets": [],
+      "chart": {
+        "title": "HubSpot Ecosystem Opportunity by Focus",
+        "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
+        "data": {
+          "years": [2026, 2027, 2028, 2029, 2030],
+          "rowHeaderLabel": "Focus",
+          "series": [
+            {
+              "label": "AI Enhanced",
+              "valuesM": [12, 16, 20, 22, 24],
+              "fill": "var(--color-lavender)"
+            },
+            {
+              "label": "AI First",
+              "valuesM": [7, 9, 12, 15, 18],
+              "fill": "var(--color-orange)"
+            }
+          ]
+        }
+      },
+      "cta": {
+        "image": null,
+        "title": "HubSpot AI Transformation Playbook",
+        "subtitle": "Forward-deployed AI playbook for partners",
+        "href": "https://offers.hubspot.com/ai-transformation-playbook-for-partners#widget_1778589175272",
+        "linkText": "Learn more"
+      }
+    },
+    {
+      "id": "marketing",
+      "tabLabel": "Marketing, Transformed",
+      "eyebrow": "Marketing, Transformed",
+      "heading": "Marketing is the single largest opportunity in the ecosystem",
+      "body": [
+        "Marketing partnerships represent $9.95B in 2026, growing to $20.1B by 2030. With the launch of Loop Marketing and HubSpot AEO, the nature of partner engagements is shifting from one-time implementations to ongoing outcome optimization. Partners who design, deploy, and optimize agentic demand engines across the full Loop will own the most durable revenue relationships in the ecosystem.",
+        "The Spring 2026 Essential Apps for Marketers collection — including Reddit for Business, TikTok for Business, Canva, and Vidyard — signals where that demand is already concentrating. Partners who know these tools win the implementations that follow. For ISVs, every essential app is also a signal: this is where customers are already spending, and where purpose-built integrations find their fastest distribution."
+      ],
+      "bullets": [],
+      "chart": {
+        "title": "HubSpot Ecosystem Opportunity by Hub",
+        "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
+        "data": {
+          "years": [2026, 2027, 2028, 2029, 2030],
+          "rowHeaderLabel": "Hub",
+          "series": [
+            {
+              "label": "Commerce",
+              "valuesM": [1, 1, 2, 2, 2],
+              "fill": "var(--color-sage)"
+            },
+            {
+              "label": "Data / Operations",
+              "valuesM": [2, 2, 3, 3, 4],
+              "fill": "var(--color-lavender)"
+            },
+            {
+              "label": "Sales",
+              "valuesM": [2, 3, 4, 5, 6],
+              "fill": "var(--color-pink)"
+            },
+            {
+              "label": "Customer Success",
+              "valuesM": [3, 4, 5, 6, 7],
+              "fill": "var(--color-enabled)"
+            },
+            {
+              "label": "Marketing",
+              "valuesM": [4, 5, 5, 7, 9],
+              "fill": "var(--color-orange)"
+            }
+          ]
+        }
+      },
+      "cta": {
+        "image": null,
+        "title": "Pricing & Packaging Services Tool",
+        "subtitle": "Frameworks to package and price agentic services",
+        "href": "https://www.hubspot.com/partners",
+        "linkText": "Learn more"
+      }
+    },
+    {
+      "id": "specialization",
+      "tabLabel": "Specialized Expertise",
+      "eyebrow": "Specialized Expertise",
+      "heading": "Specialized expertise wins accounts generalists can't serve",
+      "body": [
+        "Partners who combine HubSpot's unified platform with industry-specific agentic solutions and deep understanding of governance, security, and compliance are positioned to win accounts that generalist partners can't serve.",
+        "Geography compounds this advantage. According to IDC, partners with regional specialization can scale faster through focused investment aligned with customer concentration — making geographic depth as strategically valuable as vertical expertise."
+      ],
+      "bullets": [
+        "The Americas account for 58% of the total partner TAM — with the US alone representing $9.8B of the $19.1B opportunity",
+        "Europe contributes $6.1B, and is projected to reach $13.4B by 2030",
+        "APAC markets are smaller in absolute terms but tracking consistent growth, with ANZ, Japan, and the rest of APeJC collectively representing $1.7B in 2026"
+      ],
+      "chart": {
+        "title": "HubSpot Ecosystem Opportunity by Region",
+        "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
+        "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
+        "data": {
+          "years": [2026, 2027, 2028, 2029, 2030],
+          "rowHeaderLabel": "Region",
+          "series": [
+            {
+              "label": "ANZ",
+              "valuesM": [1, 1, 1, 3, 2],
+              "fill": "var(--data-blue-light)"
+            },
+            {
+              "label": "India",
+              "valuesM": [1, 1, 2, 2, 3],
+              "fill": "var(--data-blue-deep)"
+            },
+            {
+              "label": "Rest of APeJC",
+              "valuesM": [1, 2, 2, 2, 2],
+              "fill": "var(--color-sage)"
+            },
+            {
+              "label": "Canada",
+              "valuesM": [1, 1, 2, 2, 2],
+              "fill": "var(--color-pink)"
+            },
+            {
+              "label": "Europe",
+              "valuesM": [4, 5, 6, 7, 8],
+              "fill": "var(--color-lavender)"
+            },
+            {
+              "label": "Japan",
+              "valuesM": [1, 1, 2, 2, 3],
+              "fill": "var(--color-cream)"
+            },
+            {
+              "label": "LATAM",
+              "valuesM": [3, 3, 4, 4, 5],
+              "fill": "var(--color-enabled)"
+            },
+            {
+              "label": "USA",
+              "valuesM": [8, 11, 13, 15, 17],
+              "fill": "var(--color-orange)"
+            }
+          ]
+        }
+      },
+      "cta": {
+        "image": null,
+        "title": "Industry Playbooks",
+        "subtitle": "Vertical-specific go-to-market resources",
+        "href": "https://www.hubspot.com/partners",
+        "linkText": "Learn more"
+      }
+    }
+  ]
+}

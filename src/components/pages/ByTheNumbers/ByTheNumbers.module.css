@@ -1,40 +1,211 @@
 .page {
-  background-color: var(--color-teal);
-  color: var(--color-cream);
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  background-color: var(--color-cream);
+  color: var(--color-teal-dark);
+  overflow-x: clip;
 }
 
-.inner {
-  padding: var(--space-16) var(--page-gutter);
-  max-width: var(--max-content-width);
-  margin: 0 auto;
+/* ─── Body ─── */
+.body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
   width: 100%;
+  display: flex;
+  align-items: safe center;
+  justify-content: center;
+  padding: var(--space-8) var(--page-gutter);
 }
 
-.label {
+.container {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
   font-size: var(--text-sm);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--color-sage);
-  margin-bottom: var(--space-4);
+  color: var(--color-orange);
+  margin-bottom: var(--space-3);
 }
 
 .heading {
-  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 500;
+  color: var(--color-teal-dark);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
   margin-bottom: var(--space-8);
 }
 
-.filterInfo {
-  font-size: var(--text-lg);
+/* ─── Card grid rows ─── */
+.row {
+  display: grid;
+  gap: var(--space-4);
   margin-bottom: var(--space-4);
-  opacity: 0.9;
 }
 
-.debug {
+/* Top row: 3 columns of equal size, hero feature on left */
+.rowTop {
+  grid-template-columns: 1.4fr 1fr 1.4fr;
+}
+
+/* Bottom row: 3 small + 1 image */
+.rowBottom {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .rowTop,
+  .rowBottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .rowTop,
+  .rowBottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Card ─── */
+.card {
+  position: relative;
+  background: var(--color-orange);
+  color: var(--color-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  overflow: hidden;
+}
+
+.size_lg {
+  min-height: 280px;
+}
+
+.size_md {
+  min-height: 280px;
+  align-items: center;
+  text-align: center;
+  padding-top: var(--space-10);
+}
+
+.size_sm {
+  min-height: 220px;
+}
+
+.cardIcon {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  width: 24px;
+  height: 24px;
+  color: var(--color-cream);
+  display: block;
+}
+
+.cardIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cardValue {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--color-cream);
+  margin-top: auto;
+}
+
+.size_lg .cardValue {
+  font-size: clamp(3rem, 6.5vw, 6rem);
+}
+
+.size_md .cardValue {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  margin-top: 0;
+  border-bottom: 1px solid rgba(248, 245, 238, 0.45);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-4);
+  width: 100%;
+}
+
+.size_sm .cardValue {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.cardDescription {
+  font-family: var(--font-sans);
   font-size: var(--text-sm);
-  background: rgb(0 0 0 / 0.3);
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  margin-top: var(--space-4);
+  line-height: var(--leading-snug);
+  color: var(--color-cream);
+  margin-top: var(--space-3);
+  max-width: 32ch;
+}
+
+.size_md .cardDescription {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.cardLink {
+  color: var(--color-cream);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cardLink:hover {
+  opacity: 0.85;
+}
+
+/* ─── Image card ─── */
+.cardImage {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 39, 41, 0) 40%,
+      rgba(4, 39, 41, 0.65) 100%
+    ),
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(255, 158, 121, 0.55) 0%,
+      transparent 60%
+    ),
+    linear-gradient(135deg, var(--color-magenta), var(--color-teal-dark));
+  padding: var(--space-5);
+  justify-content: flex-end;
+  min-height: 220px;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+.imageContent {
+  position: relative;
+  z-index: 1;
+}
+
+.imageHeading {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-cream);
+}
+
+.imageSubtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-cream);
+  opacity: 0.8;
+  margin-top: var(--space-1);
 }
