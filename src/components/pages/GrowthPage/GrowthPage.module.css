@@ -451,12 +451,12 @@
 }
 
 .viewPill {
-  background: var(--color-teal); /* HubSpot Light Teal #0A4043 */
+  background: var(--color-teal);
   color: var(--color-sage);
 }
 
 .viewPill:hover {
-  background: #0e565a;
+  background: var(--color-teal-active);
   color: var(--color-cream);
 }
 

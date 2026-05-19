@@ -52,8 +52,14 @@ https://example.com/#partnerType=solutions&segment=smb&region=nam
 src/
 ├── components/
 │   ├── common/
-│   │   ├── PageShell/        # Wraps every page (consistent structure)
-│   │   └── ScrollManager/    # Per-page scroll behavior (advance vs in-page)
+│   │   ├── PageShell/        # Page layout wrapper (title region, min-height, etc.)
+│   │   ├── SlideDeck/        # Horizontal deck; hash anchors ↔ slide index
+│   │   ├── TopNav/           # Persistent header
+│   │   ├── PageNav/          # Per-page prev/next + dot pager
+│   │   ├── Tabs/             # Reusable tab bar (Short Takes, Growth)
+│   │   ├── Dropdown/         # Reusable dropdown (Growth area picker)
+│   │   ├── AudioPlayer/      # Quote audio player (Short Takes, Insider)
+│   │   └── VideoHero/        # Shared video poster + player (Foreword, Vision, Insider)
 │   ├── pages/                # One component per page
 │   │   ├── CoverPage/
 │   │   ├── NavigationPage/
@@ -67,17 +73,21 @@ src/
 │       ├── FilterModal/      # Hierarchical filter selection overlay
 │       └── FilterChip/       # Individual filter toggle chip
 ├── context/
-│   └── FilterContext.jsx     # App-wide filter state + URL sync
+│   ├── FilterContext.jsx     # App-wide filter state + URL sync
+│   ├── SlideDeckContext.jsx  # Active slide index + theme hints for chrome
+│   └── PageIdContext.jsx     # Stable per-page id for nav highlighting
 ├── hooks/
 │   ├── useFilterState.js     # Two-stage filter state (pending → confirmed)
 │   ├── useUrlState.js        # URL hash ↔ filter state sync
-│   └── useScrollBehavior.js  # Throttled scroll handler per page
+│   └── useEntranceAnimation.js  # IntersectionObserver-driven enter animations
 ├── data/
 │   ├── filters.json          # All valid filter definitions + IDs
-│   ├── static-pages/         # Content for pages 2 & 3
-│   └── dynamic-pages/        # Per-filter JSON for pages 4 & 5
+│   ├── dynamicContent.js     # Helpers that resolve filterId → page content
+│   ├── static-pages/         # Global (unfiltered) page content
+│   └── dynamic-pages/        # Per-filter content for pages 4 & 5
 ├── styles/
 │   ├── tokens.css            # Design tokens (colors, spacing, type, etc.)
+│   ├── fonts.css             # @font-face declarations
 │   └── global.css            # Reset + global styles (imports tokens)
 └── utils/
     └── url.js                # URL hash parsing, building, and filter ID derivation
@@ -89,56 +99,21 @@ src/
 
 ### Updating Dynamic Page Content (Pages 4 & 5)
 
-Dynamic content lives in `src/data/dynamic-pages/`. One JSON file per filter combination.
+Dynamic content lives in `src/data/dynamic-pages/` and is resolved through
+`src/data/dynamicContent.js` (`getByTheNumbers(filterId)`, `getShortTakes(filterId)`).
+Each section uses a shared "library + byFilterId" shape so every unit is
+written once and referenced from any of the 17 filter variants. Unknown
+`filterId`s fall back to the `global` variant.
 
-**File naming:** `{filterId}.json`
+See [`src/data/dynamic-pages/README.md`](src/data/dynamic-pages/README.md)
+for the data model, conventions, and how to add or edit content.
 
-All valid filter IDs:
+### Updating Static Page Content
 
-```
-global
-technology
-solutions
-solutions-smb
-solutions-upmarket
-solutions-nam  /  solutions-emea  /  solutions-japac  /  solutions-latam
-solutions-smb-nam  /  solutions-smb-emea  / ...  (8 combinations)
-solutions-upmarket-nam  /  ...  (4 combinations)
-```
-
-**Data model:**
-
-```json
-{
-  "id": "solutions-smb-nam",
-  "label": "Solutions Partner / SMB / NAM",
-  "byTheNumbers": {
-    "headline": "The HubSpot ecosystem at a glance",
-    "stats": [
-      {
-        "value": "$42B",
-        "label": "market opportunity at a 21.8% CAGR",
-        "source": "IDC",
-        "url": "https://..."
-      }
-    ]
-  },
-  "shortTakes": {
-    "experts": [
-      { "name": "Jane Doe", "title": "CEO, Acme", "quote": "..." }
-    ],
-    "partners": [
-      { "name": "John Smith", "company": "Beta Co", "quote": "..." }
-    ]
-  }
-}
-```
-
-**To add a new filter combination:** create the JSON file and register the ID in `src/data/filters.json`.
-
-### Updating Static Page Content (Pages 2 & 3)
-
-Static content will live in `src/data/static-pages/` once those pages are built out.
+Global page content (Navigation, Growth, Insider Insights) lives in
+`src/data/static-pages/` (`navigationToc.js`, `growth.json`,
+`insider-insights.json`). Cover / Foreword / Vision body copy is currently
+in JSX — it ships into HubSpot CMS downstream where it becomes editable.
 
 ### Changing Colors or Typography
 

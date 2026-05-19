@@ -140,84 +140,8 @@
 }
 
 /* ─── Video placeholder (Figma 2193:1835) ─── */
-
-/* Active video player — shown when VISION_VIDEO_SRC is set and user clicked play */
-.videoContainer {
-  position: relative;
-  width: 100%;
+.video {
   aspect-ratio: 714 / 396;
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--color-teal-dark);
-}
-
-.videoPlayer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Thumbnail — shown while no video src is active (Figma 2193:1835) */
-.videoThumb {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 714 / 396;
-  border: none;
-  padding: 0;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--color-teal-dark);
-}
-
-.videoThumb:focus-visible {
-  outline: 3px solid var(--color-orange);
-  outline-offset: 2px;
-}
-
-.videoPhoto {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Bottom shadow that fades over the lower portion of the thumbnail (Figma
-   2193:1839 — mix-blend multiply white→#6b6969→#393838). */
-.videoShadow {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 23.48%;
-  background: linear-gradient(
-    to bottom,
-    #fff 0%,
-    #6b6969 60%,
-    #393838 100%
-  );
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
-.playButton {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(56px, calc(var(--vision-w) * 78 / 1440), 78px);
-  height: auto;
-  transition: transform var(--duration-fast) var(--ease-out);
-}
-
-.videoThumb:hover .playButton {
-  transform: translate(-50%, -50%) scale(1.06);
 }
 
 /* ─── Body (Figma 2193:1834 — text/md/book, 18/24) ─── */

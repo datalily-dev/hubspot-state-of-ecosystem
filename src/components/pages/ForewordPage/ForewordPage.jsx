@@ -1,25 +1,14 @@
-import { useState } from 'react';
 import PageShell from '../../common/PageShell/PageShell';
+import VideoHero from '../../common/VideoHero/VideoHero';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/foreword/gradient-a.svg';
 import gradientB from '../../../assets/foreword/gradient-b.svg';
 import forewordVideo from '../../../assets/foreword/video.jpg';
 import forewordVideoSrc from '../../../assets/foreword/HubSpot-Video-Placeholder.mp4';
 import zackKassAvatar from '../../../assets/foreword/zack-kass.webp';
-import playButton from '../../../assets/foreword/play-button.svg';
 import styles from './ForewordPage.module.css';
 
-/**
- * Foreword video source.
- * For YouTube or Vimeo, swap the <video> element below for an <iframe>
- * using the platform's embed URL.
- */
-const FOREWORD_VIDEO_SRC = forewordVideoSrc;
-
-/** Page 3 — Foreword. Letter from Zack Kass. STATIC. */
 export default function ForewordPage() {
-  const [playing, setPlaying] = useState(false);
-
   return (
     <PageShell id="foreword" className={styles.page}>
       <div className={styles.gradients} aria-hidden="true">
@@ -62,43 +51,14 @@ export default function ForewordPage() {
             <p>And so the center of gravity shifts.</p>
           </div>
 
-          {FOREWORD_VIDEO_SRC && playing ? (
-            <div className={styles.videoContainer} role="region" aria-label="Foreword video">
-              {/* Native video — swap for <iframe> if using YouTube / Vimeo */}
-              <video
-                className={styles.videoPlayer}
-                controls
-                autoPlay
-                playsInline
-                src={FOREWORD_VIDEO_SRC}
-                poster={forewordVideo}
-              />
-            </div>
-          ) : (
-            <button
-              type="button"
-              className={styles.videoThumb}
-              aria-label="Play foreword video"
-              {...(FOREWORD_VIDEO_SRC ? { onClick: () => setPlaying(true) } : {})}
-            >
-              <img
-                className={styles.videoPhoto}
-                src={forewordVideo}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-              <span className={styles.videoShadow} aria-hidden="true" />
-              <img
-                className={styles.playButton}
-                src={playButton}
-                alt=""
-                width={78}
-                height={78}
-                aria-hidden="true"
-              />
-            </button>
-          )}
+          <VideoHero
+            className={styles.video}
+            src={forewordVideoSrc}
+            poster={forewordVideo}
+            regionLabel="Foreword video"
+            playLabel="Play foreword video"
+            thumbScaleVar="--foreword-w"
+          />
 
           <div className={styles.body}>
             <p>

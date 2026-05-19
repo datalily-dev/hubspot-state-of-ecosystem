@@ -204,6 +204,7 @@ export default function Dropdown({
         ref={triggerRef}
         type="button"
         id={baseId}
+        role="combobox"
         className={styles.trigger}
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -252,6 +253,8 @@ export default function Dropdown({
             const isSelected = option.id === value;
             const isActive = index === activeIndex;
             return (
+              // Keyboard navigation/selection is handled at the listbox level via handleListKeyDown.
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
               <li
                 key={option.id}
                 id={`${baseId}-option-${option.id}`}

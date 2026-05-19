@@ -73,11 +73,11 @@
 }
 
 .bar .tab {
-  background: #0c4d51;
+  background: var(--color-teal-hover);
   color: var(--color-sage);
 }
 
 .bar .tab:hover {
-  background: #0e565a;
+  background: var(--color-teal-active);
   color: var(--color-cream);
 }

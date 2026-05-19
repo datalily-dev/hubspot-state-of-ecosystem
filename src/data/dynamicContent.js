@@ -54,10 +54,14 @@ export function getShortTakes(filterId) {
     label: SHORT_TAKES_LABEL,
     tabs: {
       field: {
+        label: fieldData.tabLabel,
         heading: fieldData.heading,
         quotes: fieldData.quotes,
       },
-      partners: partnersPanel,
+      partners: {
+        label: partnersData.tabLabel,
+        ...partnersPanel,
+      },
     },
   };
 }

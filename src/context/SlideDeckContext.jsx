@@ -1,10 +1,14 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 
 const SlideDeckContext = createContext(null);
 
 export function SlideDeckProvider({ activeAnchor, slideTheme, children }) {
+  const value = useMemo(
+    () => ({ activeAnchor, slideTheme }),
+    [activeAnchor, slideTheme],
+  );
   return (
-    <SlideDeckContext.Provider value={{ activeAnchor, slideTheme }}>
+    <SlideDeckContext.Provider value={value}>
       {children}
     </SlideDeckContext.Provider>
   );

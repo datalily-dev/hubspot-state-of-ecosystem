@@ -1,21 +1,12 @@
-import { useState } from 'react';
 import PageShell from '../../common/PageShell/PageShell';
+import VideoHero from '../../common/VideoHero/VideoHero';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/vision/gradient-a.svg';
 import gradientB from '../../../assets/vision/gradient-b.svg';
 import angieOdowdAvatar from '../../../assets/vision/angie-odowd.webp';
 import visionVideo from '../../../assets/vision/video.jpg';
 import visionVideoSrc from '../../../assets/foreword/HubSpot-Video-Placeholder.mp4';
-import playButton from '../../../assets/foreword/play-button.svg';
 import styles from './VisionPage.module.css';
-
-/**
- * Vision video source.
- * Set to a video URL to enable playback (MP4 / HLS).
- * For YouTube or Vimeo, swap the <video> element below for an <iframe>
- * using the platform's embed URL.
- */
-const VISION_VIDEO_SRC = visionVideoSrc;
 
 /**
  * Page 6 — Vision.
@@ -23,8 +14,6 @@ const VISION_VIDEO_SRC = visionVideoSrc;
  * Layout reference: Figma 2193:1823.
  */
 export default function VisionPage() {
-  const [playing, setPlaying] = useState(false);
-
   return (
     <PageShell id="vision" className={styles.page}>
       <div className={styles.gradients} aria-hidden="true">
@@ -51,42 +40,14 @@ export default function VisionPage() {
 
           <p className={styles.subhead}>When partners thrive, customers win.</p>
 
-          {VISION_VIDEO_SRC && playing ? (
-            <div className={styles.videoContainer} role="region" aria-label="Vision video">
-              <video
-                className={styles.videoPlayer}
-                controls
-                autoPlay
-                playsInline
-                src={VISION_VIDEO_SRC}
-                poster={visionVideo}
-              />
-            </div>
-          ) : (
-            <button
-              type="button"
-              className={styles.videoThumb}
-              aria-label="Play vision video from Angie O'Dowd"
-              {...(VISION_VIDEO_SRC ? { onClick: () => setPlaying(true) } : {})}
-            >
-              <img
-                className={styles.videoPhoto}
-                src={visionVideo}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-              <span className={styles.videoShadow} aria-hidden="true" />
-              <img
-                className={styles.playButton}
-                src={playButton}
-                alt=""
-                width={78}
-                height={78}
-                aria-hidden="true"
-              />
-            </button>
-          )}
+          <VideoHero
+            className={styles.video}
+            src={visionVideoSrc}
+            poster={visionVideo}
+            regionLabel="Vision video"
+            playLabel="Play vision video from Angie O'Dowd"
+            thumbScaleVar="--vision-w"
+          />
 
           <div className={styles.body}>
             <p>

@@ -19,7 +19,7 @@
   padding: 12px 16px;
   border-radius: 10px;
   border: 1px solid rgba(248, 245, 238, 0.18);
-  background: #0c4d51;
+  background: var(--color-teal-hover);
   color: var(--color-cream);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -33,7 +33,7 @@
 }
 
 .trigger:hover {
-  background: #0e565a;
+  background: var(--color-teal-active);
 }
 
 .trigger:focus-visible {
@@ -69,7 +69,7 @@
   margin: 0;
   padding: 6px;
   list-style: none;
-  background: #0c4d51;
+  background: var(--color-teal-hover);
   border: 1px solid rgba(248, 245, 238, 0.18);
   border-radius: 10px;
   box-shadow: 0 12px 32px rgba(4, 39, 41, 0.32);

@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import PageShell from '../../common/PageShell/PageShell';
 import AudioPlayer from '../../common/AudioPlayer/AudioPlayer';
+import VideoHero from '../../common/VideoHero/VideoHero';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/vision/gradient-a.svg';
 import gradientB from '../../../assets/vision/gradient-b.svg';
-import playButton from '../../../assets/foreword/play-button.svg';
 import insiderVideoSrc from '../../../assets/foreword/HubSpot-Video-Placeholder.mp4';
 import adamBleibtreu from '../../../assets/insider-insights/adam-bleibtreu.webp';
 import camielFreriks from '../../../assets/insider-insights/camiel-freriks.webp';
@@ -41,68 +40,6 @@ const AUDIO = {
   'triario-healthcare': triarioAudio,
   'smartbug-brightstar': smartbugAudio,
 };
-
-/**
- * Insider Insights video source.
- * Set to a video URL (MP4 / HLS) to enable playback. For YouTube or Vimeo,
- * swap the <video> element below for an <iframe> using the embed URL.
- */
-const INSIDER_VIDEO_SRC = insiderVideoSrc;
-
-function VideoHero({ video }) {
-  const [playing, setPlaying] = useState(false);
-  const showPlayer = Boolean(INSIDER_VIDEO_SRC) && playing;
-
-  if (showPlayer) {
-    return (
-      <div
-        className={styles.videoContainer}
-        role="region"
-        aria-label="Partner story video"
-      >
-        <video
-          className={styles.videoPlayer}
-          controls
-          autoPlay
-          playsInline
-          src={INSIDER_VIDEO_SRC}
-          {...(video?.thumbnail ? { poster: video.thumbnail } : {})}
-        />
-      </div>
-    );
-  }
-
-  return (
-    <button
-      type="button"
-      className={styles.videoThumb}
-      aria-label={video?.title ? `Play video: ${video.title}` : 'Play partner story video'}
-      {...(INSIDER_VIDEO_SRC ? { onClick: () => setPlaying(true) } : {})}
-    >
-      {video?.thumbnail && (
-        <img
-          className={styles.videoPhoto}
-          src={video.thumbnail}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      )}
-      <span className={styles.videoShadow} aria-hidden="true" />
-      <img
-        className={styles.playButton}
-        src={playButton}
-        alt=""
-        width={100}
-        height={100}
-        aria-hidden="true"
-      />
-      {!video?.thumbnail && (
-        <span className={styles.videoPlaceholderLabel}>Video placeholder</span>
-      )}
-    </button>
-  );
-}
 
 function StoryRow({ story }) {
   const { author, audio } = story;
@@ -218,7 +155,15 @@ export default function InsiderInsights() {
           </header>
 
           <div className={styles.videoWrap}>
-            <VideoHero video={video} />
+            <VideoHero
+              className={styles.video}
+              src={insiderVideoSrc}
+              poster={video?.thumbnail}
+              regionLabel="Partner story video"
+              playLabel={video?.title ? `Play video: ${video.title}` : 'Play partner story video'}
+              playButtonSize={100}
+              thumbScaleVar="--insider-w"
+            />
           </div>
 
           <ul className={styles.stories}>

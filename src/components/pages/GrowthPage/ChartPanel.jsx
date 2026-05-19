@@ -17,7 +17,8 @@ const VIEW_TABS = [
  * — orange active pill + dark-teal inactive pill with sage text), and the
  * stacked bar + table when `chart.data` includes `years` and `series`.
  *
- * @param {{ chart: { title: string, source?: string, sourceLinkText?: string, sourceHref?: string, data?: object } }} props
+ * @param {{ chart: { title: string, source?: string, sourceLinkText?: string,
+ *   sourceHref?: string, data?: object } }} props
  */
 function renderChartSource(source, sourceHref, sourceLinkText) {
   if (!sourceHref) return source;
@@ -101,13 +102,13 @@ export default function ChartPanel({ chart }) {
           role="region"
           aria-label={view === 'chart' ? `${title}, chart` : `${title}, data table`}
         >
-          {showStackedViz ? (
-            view === 'chart' ? (
-              <GrowthStackedOpportunityViz data={data} title={title} />
-            ) : (
-              <GrowthStackedOpportunityTable data={data} />
-            )
-          ) : (
+          {showStackedViz && view === 'chart' && (
+            <GrowthStackedOpportunityViz data={data} title={title} />
+          )}
+          {showStackedViz && view !== 'chart' && (
+            <GrowthStackedOpportunityTable data={data} />
+          )}
+          {!showStackedViz && (
             <div
               className={styles.chartCanvas}
               role="img"

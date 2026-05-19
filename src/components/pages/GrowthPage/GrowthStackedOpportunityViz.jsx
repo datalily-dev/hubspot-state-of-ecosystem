@@ -26,7 +26,7 @@ export function formatOpportunityValue(m) {
 
 function columnTotals(years, series) {
   return years.map((_, i) =>
-    series.reduce((sum, s) => sum + (s.valuesM[i] ?? 0), 0)
+    series.reduce((sum, s) => sum + (s.valuesM[i] ?? 0), 0),
   );
 }
 
@@ -56,7 +56,7 @@ export function validateStackedData(data) {
       typeof s.fill === 'string' &&
       Array.isArray(s.valuesM) &&
       s.valuesM.length === n &&
-      s.valuesM.every((v) => typeof v === 'number' && !Number.isNaN(v))
+      s.valuesM.every((v) => typeof v === 'number' && !Number.isNaN(v)),
   );
 }
 

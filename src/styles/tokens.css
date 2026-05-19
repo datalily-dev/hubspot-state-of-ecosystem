@@ -2,6 +2,8 @@
   /* ─── Brand Colors ─── */
   --color-teal:        #0A4043;
   --color-teal-dark:   #042729;
+  --color-teal-hover:  #0c4d51;
+  --color-teal-active: #0e565a;
   --color-orange:      #FF4800;
   --color-orange-dark: #8D2600;
   --color-cream:       #F8F5EE;

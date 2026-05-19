@@ -57,9 +57,13 @@ export default function Tabs({
     if (next) onChange(next.id);
   };
 
+  let variantClass = styles.dark;
+  if (variant === 'bar') variantClass = styles.bar;
+  else if (variant === 'light') variantClass = styles.light;
+
   const rootClass = [
     styles.tablist,
-    variant === 'bar' ? styles.bar : variant === 'light' ? styles.light : styles.dark,
+    variantClass,
     className,
   ]
     .filter(Boolean)

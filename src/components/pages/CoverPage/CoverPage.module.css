@@ -200,7 +200,7 @@
   flex-shrink: 0;
 }
 
-/* ─── Column separator (Figma 2192:5806 — #0C4D51 @ 58.33% + 16px) ─── */
+/* ─── Column separator (Figma 2192:5806 — teal-hover @ 58.33% + 16px) ─── */
 .colDivider {
   position: absolute;
   /* Draw above the sticky PageNav footer (z-index var(--z-raised)) so the
@@ -213,7 +213,7 @@
   height: 100vh;
   left: calc(var(--cover-offset-x) + var(--cover-w) * 856 / 1440);
   width: 1px;
-  background: #0c4d51;
+  background: var(--color-teal-hover);
   pointer-events: none;
 }
 
@@ -233,7 +233,7 @@
   flex-direction: column;
   gap: var(--space-2);
   padding-block: 2.125rem;
-  border-bottom: 1px solid #0c4d51;
+  border-bottom: 1px solid var(--color-teal-hover);
 }
 
 .statBlock:last-child {

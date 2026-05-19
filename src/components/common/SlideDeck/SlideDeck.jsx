@@ -316,7 +316,6 @@ export default function SlideDeck({
     deckRef.current?.focus({ preventScroll: true });
   }, []);
 
-  // Keep deck in sync with hash changes (anchor clicks, back/forward).
   useEffect(() => {
     const handleHashChange = () => {
       const next = indexFromHash(window.location.hash, anchors);
@@ -530,32 +529,32 @@ export default function SlideDeck({
           style={trackStyle}
           data-mode={transitionMode || undefined}
         >
-        {slides.map((child, i) => (
-          <div
-            key={child.key ?? i}
-            ref={(el) => {
+          {slides.map((child, i) => (
+            <div
+              key={child.key ?? i}
+              ref={(el) => {
               slideRefs.current[i] = el;
             }}
-            className={styles.slide}
-            style={{ '--page-bg-color': bgColors[i] || 'var(--color-cream)' }}
-            data-active={i === activeIndex}
-            inert={i !== activeIndex}
-          >
-            {cloneElement(child)}
-            {/* Per-slide PageNav anchored to the very bottom of the page
+              className={styles.slide}
+              style={{ '--page-bg-color': bgColors[i] || 'var(--color-cream)' }}
+              data-active={i === activeIndex}
+              inert={i !== activeIndex}
+            >
+              {cloneElement(child)}
+              {/* Per-slide PageNav anchored to the very bottom of the page
                 content (in normal flow — NOT sticky). On short pages it
                 sits at the viewport bottom because PageShell's min-height
                 is sized to leave room for it. On tall, scrollable pages
                 the user scrolls through the content first and the bar
                 appears at the end of the scroll, matching the design. */}
-            <div className={styles.pageNavFooter}>
-              <PageNav
-                activeIndex={i}
-                total={total}
-                variant={variants[i] || 'light'}
-              />
+              <div className={styles.pageNavFooter}>
+                <PageNav
+                  activeIndex={i}
+                  total={total}
+                  variant={variants[i] || 'light'}
+                />
+              </div>
             </div>
-          </div>
         ))}
         </div>
       </div>

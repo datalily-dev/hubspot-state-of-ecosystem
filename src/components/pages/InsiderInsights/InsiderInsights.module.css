@@ -135,36 +135,11 @@
   justify-content: center;
 }
 
-.videoContainer,
-.videoThumb {
-  position: relative;
+.video {
   width: 100%;
   max-width: calc(var(--insider-w) * 898 / 1440);
   aspect-ratio: 898 / 503;
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--color-teal-dark);
-}
-
-.videoContainer {
-  background: var(--color-teal-dark);
-}
-
-.videoPlayer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Placeholder thumbnail — shown while no video src is active. Same
-   subtle teal/orange tint as Vision so it reads as "video goes here". */
-.videoThumb {
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  /* Subtle teal/orange tint so the placeholder reads as "video goes here". */
   background:
     radial-gradient(
       circle at 50% 55%,
@@ -176,68 +151,6 @@
       var(--color-teal) 0%,
       var(--color-teal-dark) 100%
     );
-}
-
-.videoThumb:focus-visible {
-  outline: 3px solid var(--color-orange);
-  outline-offset: 2px;
-}
-
-.videoPhoto {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Bottom shadow that fades over the lower portion of the thumbnail
-   (Figma 2193:2543 — mix-blend multiply white → #6b6969 → #393838). */
-.videoShadow {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 23.48%;
-  background: linear-gradient(
-    to bottom,
-    #fff 0%,
-    #6b6969 60%,
-    #393838 100%
-  );
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
-.playButton {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* Figma play button is 100×100 on this page (vs 78 on Foreword/Vision). */
-  width: clamp(64px, calc(var(--insider-w) * 100 / 1440), 100px);
-  height: auto;
-  transition: transform var(--duration-fast) var(--ease-out);
-}
-
-.videoThumb:hover .playButton {
-  transform: translate(-50%, -50%) scale(1.06);
-}
-
-.videoPlaceholderLabel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12px;
-  text-align: center;
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-cream);
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 /* ─── Stories list (Figma 2193:2532 "partners") ─── */

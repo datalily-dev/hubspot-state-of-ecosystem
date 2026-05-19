@@ -59,8 +59,6 @@ export default function TopNav() {
   // SlideDeck's `landAt: 'bottom'`, so assuming scrollTop = 0 would leave
   // the nav transparent over content.
   useEffect(() => {
-    // The slide's scroll container is the parent <div> wrapping each
-    // PageShell <section id={anchor}> inside SlideDeck.
     const section = document.getElementById(activeAnchor);
     const scroller = section?.parentElement ?? null;
     if (!scroller) return undefined;

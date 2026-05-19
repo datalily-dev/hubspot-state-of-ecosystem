@@ -83,8 +83,9 @@ export default function GrowthPage() {
   const tabDefs = tabs.map((t) => ({ id: t.id, label: t.tabLabel }));
   const active = tabs.find((t) => t.id === activeTabId) || tabs[0];
 
-  // SlideDeck keeps all pages mounted; remount chart/content animations when
-  // navigating back to this slide (tab changes already bump animKey below).
+  // SlideDeck keeps every page mounted, so entrance animations don't re-fire
+  // on revisit. Bumping animKey on return forces a fresh mount of the chart
+  // and content blocks so their animations replay.
   useEffect(() => {
     if (activeAnchor === 'growth' && prevAnchorRef.current !== 'growth') {
       setAnimKey((k) => k + 1);

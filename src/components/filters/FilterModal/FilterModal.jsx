@@ -151,7 +151,7 @@ export default function FilterModal({ isOpen, onClose }) {
 
         <div className={styles.body}>
           <h2 id="filter-modal-title" className={styles.title}>
-            Customize your own experience
+            Customize your experience
           </h2>
 
           <div className={styles.sections}>

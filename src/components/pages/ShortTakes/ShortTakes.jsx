@@ -43,11 +43,6 @@ import joseBetancurAudio from '../../../assets/audio/Triario - Solutions Partner
 import jorgeGaragarzaAudio from '../../../assets/audio/Zubia - Solutions Partner - LATAM - SmB - Partner Program.m4a';
 import styles from './ShortTakes.module.css';
 
-const TABS = [
-  { id: 'field', label: 'From the Field' },
-  { id: 'partners', label: 'From Partners' },
-];
-
 /** Headshots keyed by quote id (field + partners). */
 const AVATARS = {
   'duncan-lennox': duncanLennox,
@@ -112,7 +107,7 @@ function QuoteCard({ quote }) {
               <img
                 className={styles.avatar}
                 src={avatarSrc}
-                alt=""
+                alt={author.name}
                 width={80}
                 height={80}
                 loading="lazy"
@@ -171,7 +166,11 @@ export default function ShortTakes() {
   const { filterId } = useFilters();
   const shortTakes = getShortTakes(filterId);
 
-  const [activeTab, setActiveTab] = useState(TABS[0].id);
+  const tabs = [
+    { id: 'field', label: shortTakes.tabs.field.label },
+    { id: 'partners', label: shortTakes.tabs.partners.label },
+  ];
+  const [activeTab, setActiveTab] = useState(tabs[0].id);
   const panel = shortTakes.tabs[activeTab];
 
   return (
@@ -199,7 +198,7 @@ export default function ShortTakes() {
           <div className={styles.tabSection}>
             <div className={styles.tabRow}>
               <Tabs
-                tabs={TABS}
+                tabs={tabs}
                 activeId={activeTab}
                 onChange={setActiveTab}
                 ariaLabel="Short takes audience"
