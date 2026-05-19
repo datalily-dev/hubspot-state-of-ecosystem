@@ -1,76 +1,226 @@
+/* Figma Vision artboard (2193:1823) — 1440×2180 reference */
 .page {
   position: relative;
+  --vision-w: var(--content-vw);
+  --vision-offset-x: calc((100vw - var(--vision-w)) / 2);
   background-color: var(--color-cream);
   color: var(--color-teal-dark);
   overflow-x: clip;
 }
 
+/* ─── Decorative background gradients (Figma 2193:1824, 2193:1825) ───
+   Two soft orange blob shapes at 5% opacity. B sits in the upper-left
+   (rotated and y-flipped), A in the lower-right (rotated -160°).
+   Same SVG-via-<img> pattern as Foreword and By the Numbers — viewBox-only
+   SVGs (no width/height 100%) so height:auto on the img resolves correctly.
+
+   Extend past PageShell's bottom so the lower blob keeps reading into the
+   sticky PageNav footer area instead of clipping. */
+.gradients {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: calc(-1 * var(--page-nav-overlay-height, 92px));
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gradientAWrap,
+.gradientBWrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* B — upper-left blob.
+   Figma: rotated bbox 1921.421×1811.049 @ left=-763, top=168
+   Inner gradient image is 1610.819×1457.845; transform scaleY(-1) rotate(-165.68°). */
+.gradientBWrap {
+  left: calc(var(--vision-offset-x) + var(--vision-w) * -763 / 1440);
+  top: calc(var(--vision-w) * 168 / 1440);
+  width: calc(var(--vision-w) * 1921.421 / 1440);
+  aspect-ratio: 1921.421 / 1811.049;
+}
+
+.gradientBRotate {
+  flex: none;
+  transform: scaleY(-1) rotate(-165.68deg);
+}
+
+.gradientB {
+  display: block;
+  width: calc(var(--vision-w) * 1610.819 / 1440);
+  height: auto;
+  max-width: none;
+}
+
+/* A — lower-right blob.
+   Figma: rotated bbox 1846.883×1784.908 @ left=calc(33.33%+69.7px), top=1307.01
+   33.33% of 1440 = 480, +69.7 = 549.7
+   Inner gradient image is 1468.62×1364.925; transform rotate(-160°). */
+.gradientAWrap {
+  left: calc(var(--vision-offset-x) + var(--vision-w) * 549.7 / 1440);
+  top: calc(var(--vision-w) * 1307.01 / 1440);
+  width: calc(var(--vision-w) * 1846.883 / 1440);
+  aspect-ratio: 1846.883 / 1784.908;
+}
+
+.gradientARotate {
+  flex: none;
+  transform: rotate(-160deg);
+}
+
+.gradientA {
+  display: block;
+  width: calc(var(--vision-w) * 1468.62 / 1440);
+  height: auto;
+  max-width: none;
+}
+
 /* ─── Article ─── */
 .article {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
   flex: 1;
   width: 100%;
-  padding: var(--space-8) var(--page-gutter) var(--space-12);
+  /* Figma page content y=110; PageShell already reserves 72+32=104px */
+  padding-top: calc(var(--vision-w) * 6 / 1440);
+  padding-right: var(--page-gutter);
+  padding-bottom: var(--space-12);
 }
 
 .container {
-  max-width: 720px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--vision-w) * 48 / 1440);
+  max-width: calc(var(--vision-w) * 714 / 1440);
+  /* Figma content column starts at x=363 in a 1440 frame */
+  margin-left: max(
+    var(--page-gutter),
+    calc(var(--vision-offset-x) + var(--vision-w) * 363 / 1440)
+  );
 }
 
+/* ─── Title (Figma 2193:1830) ─── */
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Figma 2193:1831 — text/md/book, color/orange */
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.3333;
   color: var(--color-orange);
-  margin-bottom: var(--space-4);
+  letter-spacing: 0;
+  margin: 0;
 }
 
+/* Figma 2193:1832 — text/5xl/book, 72/80, color teal-dark */
 .headline {
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5vw, 4rem);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, calc(var(--vision-w) * 72 / 1440), var(--text-7xl));
+  font-weight: 400;
+  line-height: 1.1111;
   color: var(--color-teal-dark);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-6);
+  letter-spacing: 0;
+  margin: 0;
 }
 
+/* Figma 2193:1833 — text/xl/book, 28/36 */
 .subhead {
   font-family: var(--font-sans);
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
+  font-size: clamp(1.25rem, calc(var(--vision-w) * 28 / 1440), 1.75rem);
+  font-weight: 400;
+  line-height: 1.2857; /* 36 / 28 */
   color: var(--color-teal-dark);
-  margin-bottom: var(--space-8);
+  letter-spacing: 0;
+  margin: 0;
 }
 
-/* ─── Video thumbnail ─── */
+/* ─── Video placeholder (Figma 2193:1835) ─── */
+
+/* Active video player — shown when VISION_VIDEO_SRC is set and user clicked play */
+.videoContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 714 / 396;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--color-teal-dark);
+}
+
+.videoPlayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Thumbnail placeholder — shown while no video src is active */
 .videoThumb {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-lg);
+  aspect-ratio: 714 / 396;
+  border: none;
+  padding: 0;
+  border-radius: 10px;
   overflow: hidden;
-  margin: 0 auto var(--space-10);
   cursor: pointer;
-  background: var(--color-teal-dark);
-}
-
-.videoImage {
-  position: absolute;
-  inset: 0;
+  /* Subtle teal/orange placeholder hint behind the play button so the
+     thumbnail reads as "video goes here" without baked-in imagery. */
   background:
     radial-gradient(
-      circle at 30% 40%,
-      rgba(255, 158, 121, 0.45) 0%,
+      circle at 50% 55%,
+      rgba(255, 158, 121, 0.35) 0%,
       transparent 55%
     ),
     linear-gradient(
       135deg,
-      var(--color-magenta) 0%,
+      var(--color-teal) 0%,
       var(--color-teal-dark) 100%
     );
+}
+
+.videoThumb:focus-visible {
+  outline: 3px solid var(--color-orange);
+  outline-offset: 2px;
+}
+
+.videoPhoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Bottom shadow that fades over the lower portion of the thumbnail (Figma
+   2193:1839 — mix-blend multiply white→#6b6969→#393838). */
+.videoShadow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 23.48%;
+  background: linear-gradient(
+    to bottom,
+    #fff 0%,
+    #6b6969 60%,
+    #393838 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 
 .playButton {
@@ -78,13 +228,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-full);
-  background: var(--color-orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: clamp(56px, calc(var(--vision-w) * 78 / 1440), 78px);
+  height: auto;
   transition: transform var(--duration-fast) var(--ease-out);
 }
 
@@ -92,59 +237,77 @@
   transform: translate(-50%, -50%) scale(1.06);
 }
 
-.playIcon {
-  width: 26px;
-  height: 26px;
+/* Optional caption shown beneath the placeholder when no asset is set */
+.videoPlaceholderLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-cream);
-  margin-left: 3px;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-.playIcon path {
-  fill: var(--color-cream);
-}
-
-/* ─── Body ─── */
+/* ─── Body (Figma 2193:1834 — text/md/book, 18/24) ─── */
 .body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-6);
   font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.3333;
   color: var(--color-teal-dark);
-  margin-bottom: var(--space-10);
+  letter-spacing: 0;
+}
+
+.body p {
+  margin: 0;
 }
 
 .takeaways {
+  list-style: decimal;
+  padding-left: 1.6em;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  list-style: decimal;
-  padding-left: var(--space-5);
+  gap: var(--space-6);
 }
 
 .takeaways li {
-  padding-left: var(--space-2);
+  padding-left: var(--space-1);
+}
+
+.takeaways li::marker {
+  font-weight: 500;
 }
 
 .takeaways strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
-/* ─── Author byline ─── */
+/* ─── Author byline (Figma 2193:1840) ─── */
 .byline {
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  margin-top: var(--space-8);
+  margin: 0;
 }
 
 .avatar {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-magenta), var(--color-orange));
+  object-fit: cover;
   flex-shrink: 0;
+  /* Placeholder gradient — replace with a real headshot when available. */
+  background: linear-gradient(135deg, var(--color-magenta), var(--color-orange));
+  display: block;
 }
 
 .bylineText {
@@ -156,12 +319,21 @@
 .bylineName {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
+}
+
+.bylineNameLink {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 500;
+  font-size: 1.75rem; /* 28px */
+  font-weight: 400;
+  line-height: 1.2857; /* 36/28 */
   color: var(--color-teal-dark);
-  line-height: 1.1;
+  text-decoration: none;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.bylineNameLink:hover {
+  opacity: 0.78;
 }
 
 .linkedInLink {
@@ -176,47 +348,50 @@
 }
 
 .linkedInIcon {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 
 .bylineRole {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-base); /* Figma text/sm/book = 16px */
+  font-weight: 400;
+  line-height: 1.375;
   color: var(--color-orange);
 }
 
-/* Short-viewport tightening (≤920px tall): tighten vertical rhythm so more of
-   the body content + byline sits above the fold at 1440×900 laptops. Pairs
-   with tokens.css and SlideDeck.module.css's matching chrome reductions. */
-@media (max-height: 920px) {
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  /* Reflow gradients to lean on the tall mobile body height instead of
+     1440-frame absolute coordinates. */
+  .gradientBWrap {
+    left: calc(var(--vision-offset-x) + var(--vision-w) * -0.5);
+    top: 5%;
+    width: 130%;
+  }
+
+  .gradientAWrap {
+    left: calc(var(--vision-offset-x) + var(--vision-w) * 0.05);
+    top: 60%;
+    width: 130%;
+  }
+
   .article {
+    padding-left: var(--page-gutter);
     padding-top: var(--space-4);
-    padding-bottom: var(--space-8);
+  }
+
+  .container {
+    margin-left: 0;
+    max-width: none;
+    gap: var(--space-8);
   }
 
   .headline {
-    margin-bottom: var(--space-4);
+    font-size: clamp(2rem, 8vw, 2.75rem);
   }
 
   .subhead {
-    margin-bottom: var(--space-4);
-  }
-
-  .videoThumb {
-    margin-bottom: var(--space-6);
-  }
-
-  .body {
-    gap: var(--space-3);
-    margin-bottom: var(--space-6);
-  }
-
-  .takeaways {
-    gap: var(--space-3);
-  }
-
-  .byline {
-    margin-top: var(--space-4);
+    font-size: clamp(1.125rem, 4vw, 1.375rem);
   }
 }

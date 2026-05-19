@@ -208,7 +208,7 @@ export default function SlideDeck({
   }, []);
 
   const goTo = useCallback(
-    (next, { updateHash = true } = {}) => {
+    (next, { updateHash = true, landAt = 'top' } = {}) => {
       const target = clampIndex(next, total);
       const previousIndex = activeIndexRef.current;
       if (previousIndex === target) {
@@ -227,14 +227,28 @@ export default function SlideDeck({
       isAnimating.current = true;
       resetEdgeIntent();
 
+      // Seat the destination slide's scroll position. landAt='bottom' is used
+      // by reverse-direction gestures (wheel/touch/ArrowUp at the top edge of
+      // the current slide) so scrolling up out of one slide reveals the end
+      // of the previous one — preserving scroll continuity. Explicit jumps
+      // (menu, dots, arrow buttons, anchor links) default to 'top'.
+      const seatScroll = () => {
+        const slide = slideRefs.current[target];
+        if (!slide) return;
+        if (landAt === 'bottom') {
+          slide.scrollTop = Math.max(0, slide.scrollHeight - slide.clientHeight);
+        } else {
+          slide.scrollTop = 0;
+        }
+      };
+
       // Reduced-motion path — instant snap, no animation.
       if (prefersReducedMotion.current) {
         setTransitionMode(null);
         setFadePhase(null);
         activeIndexRef.current = target;
         setActiveIndex(target);
-        const slide = slideRefs.current[target];
-        if (slide) slide.scrollTop = 0;
+        seatScroll();
         isAnimating.current = false;
         resetEdgeIntent();
         return;
@@ -254,11 +268,7 @@ export default function SlideDeck({
         setFadePhase(null);
         activeIndexRef.current = target;
         setActiveIndex(target);
-        // Reset destination scroll position so both forward and back hops
-        // land at the top of the new slide; the push animation reads more
-        // like "next page" than "continuing scroll".
-        const slide = slideRefs.current[target];
-        if (slide) slide.scrollTop = 0;
+        seatScroll();
 
         const finish = window.setTimeout(() => {
           setTransitionMode(null);
@@ -282,8 +292,7 @@ export default function SlideDeck({
       const swap = window.setTimeout(() => {
         activeIndexRef.current = target;
         setActiveIndex(target);
-        const slide = slideRefs.current[target];
-        if (slide) slide.scrollTop = 0;
+        seatScroll();
         setFadePhase('in');
       }, FADE_HALF_MS);
 
@@ -341,7 +350,7 @@ export default function SlideDeck({
       const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
       if (horizontal) {
         if (event.deltaX > WHEEL_THRESHOLD) goTo(activeIndex + 1);
-        else if (event.deltaX < -WHEEL_THRESHOLD) goTo(activeIndex - 1);
+        else if (event.deltaX < -WHEEL_THRESHOLD) goTo(activeIndex - 1, { landAt: 'bottom' });
         return;
       }
 
@@ -384,7 +393,7 @@ export default function SlideDeck({
       }
 
       if (goingDown) goTo(activeIndex + 1);
-      else goTo(activeIndex - 1);
+      else goTo(activeIndex - 1, { landAt: 'bottom' });
     },
     [activeIndex, goTo, resetEdgeIntent],
   );
@@ -415,7 +424,7 @@ export default function SlideDeck({
     if (delta > 0 && isAtBottom(slide)) {
       goTo(activeIndex + 1);
     } else if (delta < 0 && isAtTop(slide)) {
-      goTo(activeIndex - 1);
+      goTo(activeIndex - 1, { landAt: 'bottom' });
     }
   }, [activeIndex, goTo]);
 
@@ -445,7 +454,7 @@ export default function SlideDeck({
         case 'ArrowUp':
           if (isAtTop(slide)) {
             event.preventDefault();
-            goTo(activeIndex - 1);
+            goTo(activeIndex - 1, { landAt: 'bottom' });
           }
           break;
         case 'Home':

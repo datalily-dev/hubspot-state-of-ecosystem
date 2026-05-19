@@ -1,48 +1,120 @@
+import { useState } from 'react';
 import PageShell from '../../common/PageShell/PageShell';
-import PlayIcon from '../../../assets/icon/play.svg?react';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
+import gradientA from '../../../assets/vision/gradient-a.svg';
+import gradientB from '../../../assets/vision/gradient-b.svg';
+import angieOdowdAvatar from '../../../assets/vision/angie-odowd.jpg';
+import playButton from '../../../assets/foreword/play-button.svg';
 import styles from './VisionPage.module.css';
+
+/**
+ * Vision video source.
+ * Set to a video URL to enable playback (MP4 / HLS).
+ * For YouTube or Vimeo, swap the <video> element below for an <iframe>
+ * using the platform's embed URL.
+ */
+const VISION_VIDEO_SRC = '';
+
+/**
+ * Vision video poster image (placeholder thumbnail).
+ * Drop a JPG into src/assets/vision/ and import it here when artwork is
+ * available — until then the CSS placeholder reads as "video goes here".
+ */
+const VISION_VIDEO_POSTER = '';
+
+const ANGIE_AVATAR_SRC = angieOdowdAvatar;
 
 /**
  * Page 6 — Vision.
  * Angie O'Dowd's letter on the State of the HubSpot ecosystem. GLOBAL.
+ * Layout reference: Figma 2193:1823.
  */
 export default function VisionPage() {
+  const [playing, setPlaying] = useState(false);
+
+  const showPlayer = Boolean(VISION_VIDEO_SRC) && playing;
+
   return (
     <PageShell id="vision" className={styles.page}>
+      <div className={styles.gradients} aria-hidden="true">
+        <div className={styles.gradientBWrap}>
+          <div className={styles.gradientBRotate}>
+            <img className={styles.gradientB} src={gradientB} alt="" />
+          </div>
+        </div>
+        <div className={styles.gradientAWrap}>
+          <div className={styles.gradientARotate}>
+            <img className={styles.gradientA} src={gradientA} alt="" />
+          </div>
+        </div>
+      </div>
+
       <article className={styles.article}>
         <div className={styles.container}>
-          <p className={styles.eyebrow}>Vision</p>
-
-          <h1 className={styles.headline}>
-            Angie O&rsquo;Dowd on the State of the HubSpot ecosystem
-          </h1>
+          <header className={styles.titleBlock}>
+            <p className={styles.eyebrow}>Vision</p>
+            <h1 className={styles.headline}>
+              Angie O&rsquo;Dowd on the State of the HubSpot ecosystem
+            </h1>
+          </header>
 
           <p className={styles.subhead}>When partners thrive, customers win.</p>
 
-          {/* ── Video thumbnail ── */}
-          <button
-            type="button"
-            className={styles.videoThumb}
-            aria-label="Play vision video from Angie O'Dowd"
-          >
-            <span className={styles.videoImage} aria-hidden="true" />
-            <span className={styles.playButton} aria-hidden="true">
-              <PlayIcon className={styles.playIcon} focusable="false" />
-            </span>
-          </button>
+          {showPlayer ? (
+            <div className={styles.videoContainer} role="region" aria-label="Vision video">
+              <video
+                className={styles.videoPlayer}
+                controls
+                autoPlay
+                playsInline
+                src={VISION_VIDEO_SRC}
+                {...(VISION_VIDEO_POSTER ? { poster: VISION_VIDEO_POSTER } : {})}
+              />
+            </div>
+          ) : (
+            <button
+              type="button"
+              className={styles.videoThumb}
+              aria-label="Play vision video from Angie O'Dowd"
+              {...(VISION_VIDEO_SRC ? { onClick: () => setPlaying(true) } : {})}
+            >
+              {VISION_VIDEO_POSTER && (
+                <img
+                  className={styles.videoPhoto}
+                  src={VISION_VIDEO_POSTER}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <span className={styles.videoShadow} aria-hidden="true" />
+              <img
+                className={styles.playButton}
+                src={playButton}
+                alt=""
+                width={78}
+                height={78}
+                aria-hidden="true"
+              />
+              {!VISION_VIDEO_POSTER && (
+                <span className={styles.videoPlaceholderLabel}>
+                  Video placeholder
+                </span>
+              )}
+            </button>
+          )}
 
           <div className={styles.body}>
             <p>
-              Everything in this report&mdash;and Zack&rsquo;s foreword&mdash;call out what
-              we&rsquo;ve always known to be true:
+              Everything in this report&mdash;and Zack&rsquo;s foreword&mdash;call out
+              what we&rsquo;ve always known to be true:
             </p>
 
             <p>When partners thrive, customers win.</p>
 
             <p>
-              I believe that not only does that conviction <em>hold</em> in the
-              agentic era, it will define it.
+              I believe that not only does that conviction hold in the agentic
+              era, it will define it.
             </p>
 
             <p>
@@ -52,17 +124,17 @@ export default function VisionPage() {
             </p>
 
             <p>
-              The next section speaks to the revenue opportunity ahead, but
-              these are the takeaways that characterize the State of
-              HubSpot&rsquo;s ecosystem:
+              The next section speaks to the revenue opportunity ahead, but these
+              are the takeaways that characterize the State of HubSpot&rsquo;s
+              ecosystem:
             </p>
 
             <ol className={styles.takeaways}>
               <li>
                 <strong>Industry-leading and growing at an impressive clip:</strong>{' '}
-                Partnership Leaders named HubSpot a Top 10 ecosystem in the
-                world, with an IDC-defined $42B in partner opportunity by 2030
-                at 21.8% CAGR.
+                Partnership Leaders named HubSpot a Top 10 ecosystem in the world,
+                with an IDC-defined $42B in partner opportunity by 2030 at 21.8%
+                CAGR.
               </li>
               <li>
                 <strong>Driving upmarket and aligned in GTM and product:</strong>{' '}
@@ -71,10 +143,10 @@ export default function VisionPage() {
                 the AWS marketplace.
               </li>
               <li>
-                <strong>Guided by three principles:</strong> Customer value
-                above all; Open by design; and trusted by default. These are
-                deliberate choices about the kind of platform we want to
-                be&mdash;and how we build with you.
+                <strong>Guided by three principles:</strong> Customer value above
+                all; Open by design; and trusted by default. These are deliberate
+                choices about the kind of platform we want to be&mdash;and how we
+                build with you.
               </li>
             </ol>
 
@@ -85,17 +157,35 @@ export default function VisionPage() {
             </p>
 
             <p>
-              Our partners have led customers through every shift. This moment
-              is ours to win&mdash;together.
+              Our partners have led customers through every shift. This moment is
+              ours to win&mdash;together.
             </p>
           </div>
 
-          {/* ── Author byline ── */}
           <figure className={styles.byline}>
-            <span className={styles.avatar} aria-hidden="true" />
+            {ANGIE_AVATAR_SRC ? (
+              <img
+                className={styles.avatar}
+                src={ANGIE_AVATAR_SRC}
+                alt="Angie O'Dowd"
+                width={80}
+                height={80}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span className={styles.avatar} aria-hidden="true" />
+            )}
             <figcaption className={styles.bylineText}>
               <span className={styles.bylineName}>
-                Angie O&rsquo;Dowd
+                <a
+                  href="https://www.linkedin.com/in/angieodowd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.bylineNameLink}
+                >
+                  Angie O&rsquo;Dowd
+                </a>
                 <a
                   href="https://www.linkedin.com/in/angieodowd"
                   target="_blank"
@@ -113,7 +203,6 @@ export default function VisionPage() {
           </figure>
         </div>
       </article>
-
     </PageShell>
   );
 }
