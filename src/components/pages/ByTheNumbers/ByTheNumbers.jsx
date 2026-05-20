@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PageShell from '../../common/PageShell/PageShell';
 import { useFilters } from '../../../context/FilterContext';
+import { useSlideDeck } from '../../../context/SlideDeckContext';
 import { getByTheNumbers } from '../../../data/dynamicContent';
 import gradientA from '../../../assets/by-the-numbers/gradient-a.svg';
 import gradientB from '../../../assets/by-the-numbers/gradient-b.svg';
@@ -9,8 +10,12 @@ import styles from './ByTheNumbers.module.css';
 
 const SLIDE_INTERVAL_MS = 4000;
 
+// Brief hold after the slide lands (SlideDeck push is 500ms) before tiles animate.
+const TILE_ENTRANCE_DELAY_MS = 200;
+const TILE_STAGGER_MS = 215;
+
 /** Partner carousel (Figma 2329:5670 + *-desktop frames). */
-function PartnerCarousel({ eyebrow, label }) {
+function PartnerCarousel({ eyebrow, label, entranceClassName = '', entranceStyle }) {
   const [index, setIndex] = useState(0);
   const count = PARTNER_SLIDES.length;
 
@@ -24,7 +29,8 @@ function PartnerCarousel({ eyebrow, label }) {
 
   return (
     <div
-      className={`${styles.card} ${styles.cardImage}`}
+      className={`${styles.card} ${styles.cardImage} ${entranceClassName}`}
+      style={entranceStyle}
       role="img"
       aria-label={label}
       aria-live="polite"
@@ -76,10 +82,17 @@ function StatValue({ stat }) {
   return <p className={styles.cardValue}>{stat.value}</p>;
 }
 
-function StatCard({ stat }) {
+function StatCard({ stat, entranceClassName = '', entranceStyle }) {
   if (stat.size === 'image') {
     const overlayLabel = [stat.value, stat.description].filter(Boolean).join(' — ');
-    return <PartnerCarousel eyebrow={stat.value} label={overlayLabel} />;
+    return (
+      <PartnerCarousel
+        eyebrow={stat.value}
+        label={overlayLabel}
+        entranceClassName={entranceClassName}
+        entranceStyle={entranceStyle}
+      />
+    );
   }
 
   const valueVariantClass = stat.valueVariant
@@ -88,7 +101,8 @@ function StatCard({ stat }) {
 
   return (
     <div
-      className={`${styles.card} ${styles[`size_${stat.size}`]}${valueVariantClass ? ` ${valueVariantClass}` : ''}`}
+      className={`${styles.card} ${styles[`size_${stat.size}`]}${valueVariantClass ? ` ${valueVariantClass}` : ''} ${entranceClassName}`}
+      style={entranceStyle}
     >
       <StatValue stat={stat} />
       <p className={styles.cardDescription}>
@@ -123,10 +137,47 @@ function StatCard({ stat }) {
  */
 export default function ByTheNumbers() {
   const { filterId } = useFilters();
+  const { activeAnchor } = useSlideDeck();
+  const isPageActive = activeAnchor === 'by-the-numbers';
+  const [tilesReady, setTilesReady] = useState(false);
+  const [animKey, setAnimKey] = useState(0);
   const byTheNumbers = getByTheNumbers(filterId);
 
   const top = byTheNumbers.stats.slice(0, 3);
   const bottom = byTheNumbers.stats.slice(3);
+
+  // SlideDeck keeps every page mounted — defer tile animation until this slide
+  // is active and the deck transition has finished.
+  useEffect(() => {
+    if (!isPageActive) {
+      return undefined;
+    }
+
+    setTilesReady(false);
+
+    const reduced =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced) {
+      setTilesReady(true);
+      setAnimKey((k) => k + 1);
+      return undefined;
+    }
+
+    const id = window.setTimeout(() => {
+      setTilesReady(true);
+      setAnimKey((k) => k + 1);
+    }, TILE_ENTRANCE_DELAY_MS);
+
+    return () => window.clearTimeout(id);
+  }, [isPageActive, filterId]);
+
+  const tileFadeClass = [styles.tileFade, tilesReady && styles.tileFadeVisible]
+    .filter(Boolean)
+    .join(' ');
+
+  const tileDelay = (index) => `${index * TILE_STAGGER_MS}ms`;
 
   return (
     <PageShell id="by-the-numbers" className={styles.page}>
@@ -151,14 +202,24 @@ export default function ByTheNumbers() {
           </header>
 
           <div className={`${styles.row} ${styles.rowTop}`}>
-            {top.map((stat) => (
-              <StatCard key={stat.id} stat={stat} />
+            {top.map((stat, i) => (
+              <StatCard
+                key={`${stat.id}-${animKey}`}
+                stat={stat}
+                entranceClassName={tileFadeClass}
+                entranceStyle={{ '--tile-delay': tileDelay(i) }}
+              />
             ))}
           </div>
 
           <div className={`${styles.row} ${styles.rowBottom}${bottom.length === 3 ? ` ${styles.rowBottomThree}` : ''}`}>
-            {bottom.map((stat) => (
-              <StatCard key={stat.id} stat={stat} />
+            {bottom.map((stat, i) => (
+              <StatCard
+                key={`${stat.id}-${animKey}`}
+                stat={stat}
+                entranceClassName={tileFadeClass}
+                entranceStyle={{ '--tile-delay': tileDelay(top.length + i) }}
+              />
             ))}
           </div>
         </div>
