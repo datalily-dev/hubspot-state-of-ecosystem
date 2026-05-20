@@ -2,7 +2,11 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { usePageId } from '../../../context/PageIdContext';
 import { useSlideDeckOptional } from '../../../context/SlideDeckContext';
 import AudioWavesIcon from '../../../assets/icon/audio-1.svg?react';
+import SeekBackwardIcon from '../../../assets/icon/seek-backward.svg?react';
+import SeekForwardIcon from '../../../assets/icon/seek-forward.svg?react';
 import styles from './AudioPlayer.module.css';
+
+const SKIP_SECONDS = 5;
 
 const STOP_ICON = (
   <svg
@@ -42,6 +46,7 @@ function formatTime(seconds) {
  * Visual states match the Figma comp:
  *   • Idle — circular play icon + audio-waves art + "Play audio · 0:38"
  *   • Playing — circular stop icon + animated waveform + "0:15 / 0:47"
+ *     plus skip-back / skip-forward 5-second controls.
  *
  * Behaviours:
  *   • Pauses automatically when scrolled out of frame (IntersectionObserver).
@@ -66,6 +71,10 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(durationSeconds || 0);
+  // Tracks which skip button just fired so we can flash it briefly as
+  // click feedback (back to idle on its own, no lingering :hover state).
+  const [pressedSkip, setPressedSkip] = useState(null);
+  const pressTimerRef = useRef(null);
   const labelId = useId();
   const pageId = usePageId();
   const slideDeck = useSlideDeckOptional();
@@ -126,6 +135,16 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
     };
   }, []);
 
+  useEffect(() => () => {
+    if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
+  }, []);
+
+  const flashSkip = (which) => {
+    setPressedSkip(which);
+    if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
+    pressTimerRef.current = setTimeout(() => setPressedSkip(null), 120);
+  };
+
   const handlePlay = () => {
     setIsPlaying(true);
     if (activePlayer && activePlayer !== audioRef.current) {
@@ -170,6 +189,16 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
     }
   };
 
+  // Seek by ±N seconds, clamped to [0, duration]. Used by the skip buttons.
+  const seekBy = (delta) => {
+    const audio = audioRef.current;
+    if (!audio || !hasSrc) return;
+    const max = Number.isFinite(audio.duration) ? audio.duration : duration;
+    const next = Math.min(Math.max(0, audio.currentTime + delta), max || 0);
+    audio.currentTime = next;
+    setCurrentTime(next);
+  };
+
   const timeLabel = isPlaying
     ? `${formatTime(currentTime)} / ${formatTime(duration)}`
     : `Play audio  ${formatTime(duration)}`;
@@ -178,43 +207,99 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
     styles.player,
     size === 'sm' ? styles.playerSm : '',
     isPlaying ? styles.playing : '',
+    !hasSrc ? styles.disabled : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const skipBtnClass = [styles.skipBtn, size === 'sm' ? styles.skipBtnSm : '']
+    .filter(Boolean)
+    .join(' ');
+
+  const skipGroupClass = [
+    styles.skipGroup,
+    size === 'sm' ? styles.skipGroupSm : '',
   ]
     .filter(Boolean)
     .join(' ');
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
-      <button
-        type="button"
-        className={playerClass}
-        onClick={togglePlay}
-        aria-label={label}
-        aria-pressed={isPlaying}
-        aria-describedby={labelId}
-        disabled={!hasSrc}
-      >
-        <span className={styles.iconBubble} aria-hidden="true">
-          {isPlaying ? STOP_ICON : PLAY_ICON}
-        </span>
-
-        {isPlaying ? (
-          <span className={styles.waves} aria-hidden="true">
-            {Array.from({ length: 14 }, (_, i) => (
-              <span
-                key={i}
-                className={styles.wave}
-                style={{ animationDelay: `${i * 80}ms` }}
-              />
-            ))}
+      <div className={playerClass} role="group" aria-label={label}>
+        <button
+          type="button"
+          className={styles.mainBtn}
+          onClick={(event) => {
+            togglePlay();
+            event.currentTarget.blur();
+          }}
+          aria-label={isPlaying ? 'Pause audio' : label}
+          aria-pressed={isPlaying}
+          aria-describedby={labelId}
+          disabled={!hasSrc}
+        >
+          <span className={styles.iconBubble} aria-hidden="true">
+            {isPlaying ? STOP_ICON : PLAY_ICON}
           </span>
-        ) : (
-          <AudioWavesIcon className={styles.wavesIdle} aria-hidden="true" focusable="false" />
-        )}
 
-        <span className={styles.time} id={labelId}>
-          {timeLabel}
+          {isPlaying ? (
+            <span className={styles.waves} aria-hidden="true">
+              {Array.from({ length: 14 }, (_, i) => (
+                <span
+                  key={i}
+                  className={styles.wave}
+                  style={{ animationDelay: `${i * 80}ms` }}
+                />
+              ))}
+            </span>
+          ) : (
+            <AudioWavesIcon className={styles.wavesIdle} aria-hidden="true" focusable="false" />
+          )}
+
+          <span className={styles.time} id={labelId}>
+            {timeLabel}
+          </span>
+        </button>
+      </div>
+
+      {hasSrc && isPlaying && (
+        <span className={skipGroupClass}>
+          <button
+            type="button"
+            className={`${skipBtnClass}${pressedSkip === 'back' ? ` ${styles.skipBtnPressed}` : ''}`}
+            onClick={(event) => {
+              seekBy(-SKIP_SECONDS);
+              flashSkip('back');
+              event.currentTarget.blur();
+            }}
+            aria-label="Jump back 5 seconds"
+            title="Jump back 5 seconds"
+          >
+            <SeekBackwardIcon
+              className={styles.skipIcon}
+              aria-hidden="true"
+              focusable="false"
+            />
+          </button>
+          <button
+            type="button"
+            className={`${skipBtnClass}${pressedSkip === 'forward' ? ` ${styles.skipBtnPressed}` : ''}`}
+            onClick={(event) => {
+              seekBy(SKIP_SECONDS);
+              flashSkip('forward');
+              event.currentTarget.blur();
+            }}
+            aria-label="Jump forward 5 seconds"
+            title="Jump forward 5 seconds"
+          >
+            <SeekForwardIcon
+              className={styles.skipIcon}
+              aria-hidden="true"
+              focusable="false"
+            />
+          </button>
         </span>
-      </button>
+      )}
 
       {hasSrc && (
         // Audio quotes are short pull-quotes whose full text is already

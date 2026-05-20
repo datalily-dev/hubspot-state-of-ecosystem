@@ -1,12 +1,14 @@
 .wrapper {
   display: inline-flex;
+  position: relative;
 }
 
+/* The outer pill is now a `role="group"` div containing the main
+   play/pause button plus the skip-back / skip-forward buttons. */
 .player {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: 4px 16px 4px 4px;
+  padding: 4px;
   height: 44px;
   background: var(--color-orange);
   color: var(--color-cream);
@@ -19,13 +21,37 @@
   min-width: 168px;
 }
 
-.player:disabled {
-  cursor: default;
+.player.disabled {
   opacity: 0.85;
 }
 
-.player:hover:not(:disabled) {
+/* Darken only while the button is actively being pressed — avoids the pill
+   appearing "stuck" in a dark state after a click while the mouse sits
+   over the button. */
+.player:not(.disabled):active {
   background: var(--color-orange-dark);
+}
+
+/* Main play/pause button — fills most of the pill so the click target
+   stays as large as the original single-button pill. */
+.mainBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-2) 0 0;
+  height: 100%;
+  flex: 1 1 auto;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  border-radius: var(--radius-full);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mainBtn:disabled {
+  cursor: default;
 }
 
 .iconBubble {
@@ -71,15 +97,70 @@
   flex-shrink: 0;
 }
 
+/* ─── Skip back / skip forward 5s controls ─── */
+/* Positioned absolutely to the right of the pill so the pill (and play
+   button) keep their idle position when audio starts — the controls extend
+   rightward beyond the pill without re-flowing surrounding layout. */
+.skipGroup {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  margin-left: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  background: var(--color-orange);
+  color: var(--color-cream);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.skipGroupSm {
+  padding: 3px 6px;
+}
+
+.skipBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-cream);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+/* Brief flash applied via JS for ~220ms after a click. We deliberately do
+   NOT use :hover/:focus/:active styles here — on desktop the cursor sits
+   on top of the button after a click, which would leave it "stuck" lit;
+   on touch :hover lingers until the next tap. The JS-driven class
+   guarantees the lit state always self-clears. */
+.skipBtn.skipBtnPressed {
+  background: var(--color-cream);
+  color: var(--color-orange);
+}
+
+.skipBtn:focus-visible {
+  outline: 2px solid var(--color-cream);
+  outline-offset: 2px;
+}
+
 /* Compact variant — used on Insider Insights story rows. Same anatomy, just
    smaller padding, smaller bubble, and a tighter min-width to fit alongside
    the story copy. */
 .playerSm {
-  padding: 3px 14px 3px 3px;
+  padding: 3px;
   height: 36px;
   min-width: 140px;
   font-size: var(--text-xs);
-  gap: var(--space-2);
 }
 
 .playerSm .iconBubble {
@@ -94,6 +175,26 @@
 
 .playerSm .waves {
   height: 16px;
+}
+
+.playerSm .mainBtn {
+  gap: var(--space-2);
+}
+
+.skipBtnSm {
+  width: 30px;
+  height: 30px;
+}
+
+.skipIcon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.skipBtnSm .skipIcon {
+  width: 18px;
+  height: 18px;
 }
 
 .wave {
