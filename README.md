@@ -22,13 +22,13 @@ npm run lint:css  # Stylelint
 | # | Page | Type | Notes |
 |---|------|------|-------|
 | 1 | Cover | Static | Landing + filter modal trigger |
-| 2 | Navigation | Static | Table of contents |
+| 2 | Navigation | Static | Table of contents + partner-story video |
 | 3 | Foreword | Static | Letter from Zack Kass, OpenAI |
 | 4 | By the Numbers | Dynamic | 17 filter variants, JSON-driven |
 | 5 | Short Takes | Dynamic | 17 filter variants, Experts + Partners tabs |
 | 6 | Vision | Global | Angie O'Dowd on the ecosystem |
 | 7 | Growth | Global | 4 strategic areas |
-| 8 | Insider Insights | Global | Partner case studies + video |
+| 8 | Insider Insights | Global | Partner case studies |
 
 ### Filter System
 
@@ -110,10 +110,24 @@ for the data model, conventions, and how to add or edit content.
 
 ### Updating Static Page Content
 
-Global page content (Navigation, Growth, Insider Insights) lives in
-`src/data/static-pages/` (`navigationToc.js`, `growth.json`,
-`insider-insights.json`). Cover / Foreword / Vision body copy is currently
-in JSX — it ships into HubSpot CMS downstream where it becomes editable.
+Global (unfiltered) page content lives in `src/data/static-pages/`:
+
+| File | Edits |
+|------|-------|
+| `navigationToc.js`     | Table-of-contents entries on the Navigation page |
+| `growth.json`          | All four Growth tabs (eyebrow, body, bullets, chart, CTA) |
+| `insider-insights.json`| Section heading, video, and the array of partner stories |
+
+See [`src/data/static-pages/README.md`](src/data/static-pages/README.md)
+for the per-file schema and instructions on adding/editing entries.
+
+Cover / Foreword / Vision body copy is currently kept in JSX — it ships
+into HubSpot CMS downstream where it becomes editable. To edit before
+hand-off, change the copy directly in:
+
+- `src/components/pages/CoverPage/CoverPage.jsx`
+- `src/components/pages/ForewordPage/ForewordPage.jsx`
+- `src/components/pages/VisionPage/VisionPage.jsx`
 
 ### Changing Colors or Typography
 
