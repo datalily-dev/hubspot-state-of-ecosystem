@@ -36,7 +36,7 @@ The filter is hierarchical (not flat):
 
 ```
 Level 1 — Partner Type:   Technology | Solutions
-Level 2 — Segment:        SMB | Upmarket       (Solutions only)
+Level 2 — Segment:        Small business | Mid-market  (Solutions only)
 Level 3 — Region:         NAM | EMEA | JAPAC | LATAM  (Solutions only)
 ```
 

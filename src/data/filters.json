@@ -4,8 +4,8 @@
     { "id": "solutions",  "label": "Solutions Partner"  }
   ],
   "segments": [
-    { "id": "smb",       "label": "SMB"       },
-    { "id": "upmarket",  "label": "Upmarket"  }
+    { "id": "smb",       "label": "Small business"       },
+    { "id": "upmarket",  "label": "Mid-market"  }
   ],
   "regions": [
     { "id": "nam",   "label": "NAM"   },

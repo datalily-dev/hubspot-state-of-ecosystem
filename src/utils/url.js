@@ -1,3 +1,5 @@
+import filtersData from '../data/filters.json';
+
 /**
  * Parses a URL hash string into a structured filter object.
  * @param {string} hash - e.g. "#partnerType=solutions&segment=smb&region=nam"
@@ -44,16 +46,19 @@ export function buildFilterId({ partnerType, segment, region }) {
   return 'global';
 }
 
-const PARTNER_LABELS = {
-  technology: 'Technology partner',
-  solutions: 'Solutions partner',
-};
-const SEGMENT_LABELS = { smb: 'SMB', upmarket: 'Upmarket' };
-const REGION_LABELS = { nam: 'NAM', emea: 'EMEA', japac: 'JAPAC', latam: 'LATAM' };
+const PARTNER_LABELS = Object.fromEntries(
+  filtersData.partnerTypes.map(({ id, label }) => [id, label]),
+);
+const SEGMENT_LABELS = Object.fromEntries(
+  filtersData.segments.map(({ id, label }) => [id, label]),
+);
+const REGION_LABELS = Object.fromEntries(
+  filtersData.regions.map(({ id, label }) => [id, label]),
+);
 
 /**
  * Builds the human-readable summary shown on the cover page after a user
- * applies filters (e.g. "Solutions partner / SMB / EMEA").
+ * applies filters (e.g. "Solutions Partner / Small business / EMEA").
  * Returns an empty string when no filters are applied.
  * @param {{ partnerType: string|null, segment: string|null, region: string|null }} filters
  * @returns {string}
