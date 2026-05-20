@@ -129,7 +129,7 @@
   color: var(--color-cream);
   line-height: 1.2857;
   letter-spacing: 0;
-  max-width: 28.125rem; /* 450px */
+  max-width: 32rem; /* 512px */
 }
 
 .customizeGroup {

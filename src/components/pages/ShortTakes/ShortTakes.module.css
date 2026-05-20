@@ -174,17 +174,17 @@
   font-size: var(--text-base);
   font-style: italic;
   color: rgba(248, 245, 238, 0.7);
-  text-align: center;
+  text-align: left;
   padding: var(--space-8) 0;
   max-width: 60ch;
-  margin: 0 auto;
+  margin: 0;
   line-height: var(--leading-relaxed);
 }
 
 .quote {
   width: 100%;
   max-width: calc(var(--st-w) * 712 / 1440);
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 .quoteInner {
