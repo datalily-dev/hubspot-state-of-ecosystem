@@ -233,84 +233,31 @@
   line-height: 1.375;
 }
 
-/* ─── CTA card (Figma 2316:3209 — 436×164, photo masked left, copy overlay) ─── */
+/* ─── CTA card (image removed; centered copy block on magenta backdrop) ─── */
 .ctaCard {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   max-width: calc(var(--gw) * 436 / 1440);
-  min-height: calc(var(--gw) * 164 / 1440);
-  padding: calc(var(--gw) * 16 / 1440) calc(var(--gw) * 41 / 1440)
-    calc(var(--gw) * 20 / 1440);
+  padding: calc(var(--gw) * 16 / 1440) calc(var(--gw) * 24 / 1440);
   color: var(--color-cream);
+  background: var(--color-magenta);
   border-radius: 10px;
   overflow: hidden;
   margin-top: 0;
+  text-align: center;
 }
 
-.ctaBackdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: var(--color-magenta);
-}
-
-/* Figma 2316:3212 — 127×164 mask group with rounded top-left corner. */
-.ctaPhotoFrame {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: calc(var(--gw) * 127 / 1440);
-  height: 100%;
-  overflow: hidden;
-  -webkit-mask-image: url('../../../assets/growth/cta-photo-mask.svg');
-  -webkit-mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-image: url('../../../assets/growth/cta-photo-mask.svg');
-  mask-size: 100% 100%;
-  mask-repeat: no-repeat;
-}
-
-/* Figma 2316:3214 — 248×169 photo at (-7, -3), rotated 180° + flipped Y. */
-.ctaPhotoInner {
-  position: absolute;
-  left: calc(var(--gw) * -7 / 1440);
-  top: calc(var(--gw) * -3 / 1440);
-  width: calc(var(--gw) * 248 / 1440);
-  aspect-ratio: 248 / 169;
-  transform: rotate(180deg) scaleY(-1);
-}
-
-.ctaPhoto {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  pointer-events: none;
-}
-
-.ctaPhotoPlaceholder {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: calc(var(--gw) * 127 / 1440);
-  height: 100%;
-  background: linear-gradient(135deg, var(--color-enabled), var(--color-orange-dark));
-  border-radius: 10px 0 0 10px;
-}
-
-/* Figma 2316:3215 — 239×123 copy block aligned to the right inset. */
 .ctaBody {
   position: relative;
   z-index: 1;
-  width: calc(var(--gw) * 239 / 1440);
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: calc(var(--gw) * 9 / 1440);
-  align-items: flex-start;
+  align-items: center;
 }
 
 .ctaTextGroup {
@@ -318,6 +265,7 @@
   flex-direction: column;
   gap: calc(var(--gw) * 6 / 1440);
   width: 100%;
+  align-items: center;
 }
 
 .ctaTitle {
@@ -327,6 +275,7 @@
   line-height: 1.1667; /* 21/18 */
   color: var(--color-cream);
   margin: 0;
+  width: 300px;
 }
 
 .ctaSubtitle {
@@ -336,7 +285,6 @@
   line-height: 1.375; /* 22/16 */
   color: var(--color-cream);
   margin: 0;
-  max-width: calc(var(--gw) * 227 / 1440);
 }
 
 .ctaButton {
@@ -359,28 +307,6 @@
 
 .ctaButton:hover {
   background: var(--color-orange-dark);
-}
-
-/* Agentic tab CTA (Figma 2316:3651 — 436×180, playbook photo, no flip) */
-.ctaCardTall {
-  min-height: calc(var(--gw) * 180 / 1440);
-}
-
-.ctaCardTall .ctaPhotoFrame {
-  -webkit-mask-image: url('../../../assets/growth/cta-photo-mask-agentic.svg');
-  mask-image: url('../../../assets/growth/cta-photo-mask-agentic.svg');
-}
-
-.ctaCardTall .ctaPhotoInner {
-  left: calc(var(--gw) * -96 / 1440);
-  top: calc(var(--gw) * 1 / 1440);
-  width: calc(var(--gw) * 260 / 1440);
-  aspect-ratio: 259.912 / 176.986;
-  transform: none;
-}
-
-.ctaCardTall .ctaBody {
-  gap: calc(var(--gw) * 12 / 1440);
 }
 
 /* ─── Right column / chart panel ─── */
@@ -578,29 +504,7 @@
 
   .ctaCard {
     max-width: none;
-    min-height: 0;
-    padding: var(--space-4) var(--space-5) var(--space-5);
-  }
-
-  .ctaBody {
-    width: min(100%, 239px);
-  }
-
-  .ctaPhotoFrame,
-  .ctaPhotoPlaceholder {
-    width: 127px;
-  }
-
-  .ctaPhotoInner {
-    left: -7px;
-    top: -3px;
-    width: 248px;
-  }
-
-  .ctaCardTall .ctaPhotoInner {
-    left: -96px;
-    top: 1px;
-    width: 260px;
+    padding: var(--space-4) var(--space-5);
   }
 }
 
@@ -610,7 +514,7 @@
    • Body padding pulls in to a 20px page edge so the chart and copy
      stretch closer to the viewport edges.
    • Tabs → content gap = 30px.
-   • CTA card: 32px top spacer, image removed (mid-market + agentic). */
+   • CTA card: 32px top spacer. */
 @media (width <= 640px) {
   .body {
     padding-left: 20px;
@@ -648,16 +552,6 @@
 
   .ctaCard {
     margin-top: 32px;
-    padding-left: var(--space-5);
-  }
-
-  .ctaPhotoFrame,
-  .ctaPhotoPlaceholder {
-    display: none;
-  }
-
-  .ctaBody {
-    width: 100%;
   }
 }
 

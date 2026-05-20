@@ -7,44 +7,12 @@ import ChartPanel from './ChartPanel';
 import growthContent from '../../../data/static-pages/growth.json';
 import gradientA from '../../../assets/growth/gradient-a.svg';
 import gradientB from '../../../assets/growth/gradient-b.svg';
-import ctaPhotoMidMarket from '../../../assets/growth/cta-photo.jpg';
-import ctaPhotoAgentic from '../../../assets/growth/cta-photo-agentic.jpg';
 import styles from './GrowthPage.module.css';
 
-/**
- * Per-tab CTA artwork and layout variant. Figma 2316:3209 (164px) vs 2316:3651 (180px).
- * Tabs without an entry render a gradient placeholder.
- */
-const CTA_CONFIG = {
-  'mid-market': { image: ctaPhotoMidMarket, variant: 'default' },
-  agentic: { image: ctaPhotoAgentic, variant: 'tall' },
-};
-
-function CtaCard({ cta, image, variant = 'default' }) {
+function CtaCard({ cta }) {
   if (!cta) return null;
-  const cardClass =
-    variant === 'tall'
-      ? `${styles.ctaCard} ${styles.ctaCardTall}`
-      : styles.ctaCard;
   return (
-    <aside className={cardClass}>
-      <div className={styles.ctaBackdrop} aria-hidden="true">
-        {image ? (
-          <div className={styles.ctaPhotoFrame}>
-            <div className={styles.ctaPhotoInner}>
-              <img
-                className={styles.ctaPhoto}
-                src={image}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-        ) : (
-          <div className={styles.ctaPhotoPlaceholder} />
-        )}
-      </div>
+    <aside className={styles.ctaCard}>
       <div className={styles.ctaBody}>
         <div className={styles.ctaTextGroup}>
           <h4 className={styles.ctaTitle}>{cta.title}</h4>
@@ -205,11 +173,7 @@ export default function GrowthPage() {
                 className={styles.animSlideIn}
                 style={{ '--anim-delay': '200ms' }}
               >
-                <CtaCard
-                  cta={active.cta}
-                  image={CTA_CONFIG[active.id]?.image}
-                  variant={CTA_CONFIG[active.id]?.variant}
-                />
+                <CtaCard cta={active.cta} />
               </div>
             </div>
 
