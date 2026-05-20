@@ -127,6 +127,41 @@ ol {
   }
 }
 
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -12px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeDown {
+  opacity: 0;
+  transform: translate3d(0, -12px, 0);
+}
+
+.fadeDown.isVisible {
+  animation: fade-down 700ms var(--ease-out) forwards;
+  animation-delay: var(--fade-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeDown {
+    opacity: 1;
+    transform: none;
+  }
+
+  .fadeDown.isVisible {
+    animation: none;
+    will-change: auto;
+  }
+}
+
 /* ─── Skip Link ─── */
 .skip-link {
   position: absolute;

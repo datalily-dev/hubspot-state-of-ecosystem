@@ -1,5 +1,6 @@
 import PageShell from '../../common/PageShell/PageShell';
 import VideoHero from '../../common/VideoHero/VideoHero';
+import { useSlideEntrance } from '../../../hooks/useSlideEntrance';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/foreword/gradient-a.svg';
 import gradientB from '../../../assets/foreword/gradient-b.svg';
@@ -9,6 +10,15 @@ import zackKassAvatar from '../../../assets/foreword/zack-kass.webp';
 import styles from './ForewordPage.module.css';
 
 export default function ForewordPage() {
+  const isEntranceReady = useSlideEntrance('foreword');
+  const headlineClass = [
+    styles.headline,
+    'fadeDown',
+    isEntranceReady && 'isVisible',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <PageShell id="foreword" className={styles.page}>
       <div className={styles.gradients} aria-hidden="true">
@@ -28,7 +38,7 @@ export default function ForewordPage() {
         <div className={styles.container}>
           <header className={styles.intro}>
             <p className={styles.eyebrow}>Foreword</p>
-            <h1 className={styles.headline}>
+            <h1 className={headlineClass}>
               Partners will define the agentic era. The AI giants already know it.
             </h1>
           </header>

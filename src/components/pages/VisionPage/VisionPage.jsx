@@ -1,5 +1,6 @@
 import PageShell from '../../common/PageShell/PageShell';
 import VideoHero from '../../common/VideoHero/VideoHero';
+import { useSlideEntrance } from '../../../hooks/useSlideEntrance';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/vision/gradient-a.svg';
 import gradientB from '../../../assets/vision/gradient-b.svg';
@@ -14,6 +15,15 @@ import styles from './VisionPage.module.css';
  * Layout reference: Figma 2193:1823.
  */
 export default function VisionPage() {
+  const isEntranceReady = useSlideEntrance('vision');
+  const headlineClass = [
+    styles.headline,
+    'fadeDown',
+    isEntranceReady && 'isVisible',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <PageShell id="vision" className={styles.page}>
       <div className={styles.gradients} aria-hidden="true">
@@ -33,7 +43,7 @@ export default function VisionPage() {
         <div className={styles.container}>
           <header className={styles.titleBlock}>
             <p className={styles.eyebrow}>Vision</p>
-            <h1 className={styles.headline}>
+            <h1 className={headlineClass}>
               Angie O&rsquo;Dowd on the State of the HubSpot ecosystem
             </h1>
           </header>
