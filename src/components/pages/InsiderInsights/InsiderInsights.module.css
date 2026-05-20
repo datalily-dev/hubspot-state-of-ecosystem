@@ -132,31 +132,6 @@
   margin: 0;
 }
 
-/* ─── Video hero (Figma 2193:2539) ─── */
-.videoWrap {
-  display: flex;
-  justify-content: center;
-}
-
-.video {
-  width: 100%;
-  max-width: calc(var(--insider-w) * 898 / 1440);
-  aspect-ratio: 898 / 503;
-
-  /* Subtle teal/orange tint so the placeholder reads as "video goes here". */
-  background:
-    radial-gradient(
-      circle at 50% 55%,
-      rgba(255, 158, 121, 0.35) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      135deg,
-      var(--color-teal) 0%,
-      var(--color-teal-dark) 100%
-    );
-}
-
 /* ─── Stories list (Figma 2193:2532 "partners") ─── */
 .stories {
   list-style: none;
@@ -418,18 +393,12 @@
 }
 
 /* Mobile (QA) ────────────────────────────────────────────────────────
-   • Video widens to 20px page-edge padding.
    • Headshot moves inline next to the byline (desktop avatar hidden).
    • 32px above and below each dividing line between stories. */
 @media (width <= 640px) {
   .article {
     padding-left: 20px;
     padding-right: 20px;
-  }
-
-  .videoContainer,
-  .videoThumb {
-    max-width: none;
   }
 
   /* Swap which avatar slot is visible. */
@@ -452,7 +421,6 @@
     gap: var(--space-3);
   }
 
-  /* Extra breathing room between the video hero and the first story tag. */
   .outer {
     gap: 40px;
   }

@@ -1,10 +1,8 @@
 import PageShell from '../../common/PageShell/PageShell';
 import AudioPlayer from '../../common/AudioPlayer/AudioPlayer';
-import VideoHero from '../../common/VideoHero/VideoHero';
 import LinkedInIcon from '../../../assets/icon/linked-in.svg?react';
 import gradientA from '../../../assets/vision/gradient-a.svg';
 import gradientB from '../../../assets/vision/gradient-b.svg';
-import insiderVideoSrc from '../../../assets/foreword/HubSpot-Video-Placeholder.mp4';
 import adamBleibtreu from '../../../assets/insider-insights/adam-bleibtreu.webp';
 import camielFreriks from '../../../assets/insider-insights/camiel-freriks.webp';
 import emilyWingrove from '../../../assets/insider-insights/emily-wingrove.webp';
@@ -126,11 +124,10 @@ function StoryRow({ story }) {
  * Page 8 — Insider Insights.
  * Layout reference: Figma 2193:2527.
  *
- * Video hero followed by a vertical list of partner case-study rows.
- * Video thumbnail is a placeholder pending a real asset.
+ * Vertical list of partner case-study rows.
  */
 export default function InsiderInsights() {
-  const { label, heading, video, stories } = insiderContent;
+  const { label, heading, stories } = insiderContent;
 
   return (
     <PageShell id="insider-insights" className={styles.page}>
@@ -153,18 +150,6 @@ export default function InsiderInsights() {
             <p className={styles.eyebrow}>{label}</p>
             <h2 className={styles.heading}>{heading}</h2>
           </header>
-
-          <div className={styles.videoWrap}>
-            <VideoHero
-              className={styles.video}
-              src={insiderVideoSrc}
-              poster={video?.thumbnail}
-              regionLabel="Partner story video"
-              playLabel={video?.title ? `Play video: ${video.title}` : 'Play partner story video'}
-              playButtonSize={100}
-              thumbScaleVar="--insider-w"
-            />
-          </div>
 
           <ul className={styles.stories}>
             {stories.map((story, idx) => (

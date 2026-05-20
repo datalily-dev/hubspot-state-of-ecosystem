@@ -47,6 +47,29 @@
   max-width: calc(var(--content-vw) * 492 / 1440);
 }
 
+/* Right column wraps the video + remaining links in its own list so the
+   ul border-bottoms only apply to actual TOC items. */
+.linkList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Figma 2463:3476 — 488×268 rounded video placeholder pinned to the top
+   of the right column. Scales with the content viewport. */
+.videoWrap {
+  width: 100%;
+  max-width: calc(var(--content-vw) * 488 / 1440);
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 488 / 268;
+  border-radius: 20px;
+}
+
 .colDivider {
   width: 1px;
   height: min(620px, 65vh);
@@ -62,6 +85,10 @@
 
 .item:last-child {
   border-bottom: none;
+}
+
+.item:first-child .link {
+  padding-top: 0;
 }
 
 .link {
@@ -146,5 +173,21 @@
 
   .colDivider {
     display: none;
+  }
+
+  /* Move video below all TOC links and stretch it to full column width. */
+  .linkList {
+    order: -1;
+  }
+
+  .videoWrap {
+    order: 1;
+    max-width: none;
+    width: 100%;
+    margin-top: var(--space-6);
+  }
+
+  .video {
+    border-radius: 12px;
   }
 }
