@@ -87,7 +87,7 @@
   border-bottom: none;
 }
 
-.item:first-child .link {
+.column > .item:first-child .link {
   padding-top: 0;
 }
 
@@ -189,5 +189,11 @@
 
   .video {
     border-radius: 12px;
+  }
+
+  /* Columns stack; restore the divider under the left column's last item
+     so there's a visual separator before the right column's first item. */
+  .column > .item:last-child {
+    border-bottom: 1px solid rgba(4, 39, 41, 0.18);
   }
 }
