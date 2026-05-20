@@ -225,7 +225,7 @@ export default function AudioPlayer({ src, durationSeconds, label, size = 'md' }
         <audio
           ref={audioRef}
           src={src}
-          preload="metadata"
+          preload="none"
           onPlay={handlePlay}
           onPause={handlePause}
           onEnded={handleEnded}
