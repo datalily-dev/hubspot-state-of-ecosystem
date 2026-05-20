@@ -144,7 +144,7 @@ export default function TopNav() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn more
+            Become a Partner
           </a>
         )}
       </div>
