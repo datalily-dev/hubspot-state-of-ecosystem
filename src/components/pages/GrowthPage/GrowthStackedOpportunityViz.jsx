@@ -12,19 +12,23 @@ const TOP_PAD = VALUE_LABEL_H + VALUE_LABEL_GAP;
 const BOTTOM_PAD = YEAR_LABEL_GAP + YEAR_LABEL_H;
 
 /**
- * @param {number} m - value in millions (may be fractional, e.g. 0.3 for $300K)
+ * @param {number} b - value in billions (may be fractional, e.g. 0.25 for $250M)
  */
-export function formatOpportunityValue(m) {
-  if (typeof m !== 'number' || Number.isNaN(m)) return '—';
-  if (Math.abs(m) >= 1) {
-    const rounded = Number.isInteger(m) ? m : Math.round(m * 10) / 10;
-    return `$${rounded}M`;
-  }
-  const k = Math.round(m * 1000);
-  return `$${k.toLocaleString('en-US')}K`;
+export function formatOpportunityValue(b) {
+  if (typeof b !== 'number' || Number.isNaN(b)) return '—';
+  return `$${(Math.round(b * 10) / 10).toFixed(1)}B`;
 }
 
-function columnTotals(years, series) {
+function columnTotals(years, series, explicitTotals) {
+  // If the data provides authoritative totals (from the IDC source), use them
+  // so labels don't drift from summed-rounded-segments.
+  if (Array.isArray(explicitTotals) && explicitTotals.length === years.length) {
+    return explicitTotals.map((t, i) =>
+      typeof t === 'number' && !Number.isNaN(t)
+        ? t
+        : series.reduce((sum, s) => sum + (s.valuesM[i] ?? 0), 0),
+    );
+  }
   return years.map((_, i) =>
     series.reduce((sum, s) => sum + (s.valuesM[i] ?? 0), 0),
   );
@@ -70,9 +74,12 @@ export default function GrowthStackedOpportunityViz({ data, title }) {
   const uid = useId();
   const titleId = `${uid}-svg-title`;
   const descId = `${uid}-svg-desc`;
-  const { years, series } = data;
-  const totals = columnTotals(years, series);
-  const maxTotal = Math.max(...totals, 1);
+  const { years, series, totals: explicitTotals } = data;
+  const labelTotals = columnTotals(years, series, explicitTotals);
+  const segmentSums = years.map((_, i) =>
+    series.reduce((sum, s) => sum + (s.valuesM[i] ?? 0), 0),
+  );
+  const maxTotal = Math.max(...segmentSums, ...labelTotals, 1);
 
   const n = years.length;
   const viewW = n * BAR_W + (n - 1) * BAR_GAP;
@@ -82,8 +89,8 @@ export default function GrowthStackedOpportunityViz({ data, title }) {
 
   const bars = years.map((year, i) => {
     const x = i * (BAR_W + BAR_GAP);
-    const total = totals[i];
-    const barH = (total / maxTotal) * MAX_BAR_H;
+    const total = labelTotals[i];
+    const barH = (segmentSums[i] / maxTotal) * MAX_BAR_H;
     let yCursor = barBottomY;
 
     const segments = series.map((s, si) => {
@@ -159,7 +166,7 @@ export default function GrowthStackedOpportunityViz({ data, title }) {
         aria-labelledby={`${titleId} ${descId}`}
       >
         <title id={titleId}>{title}</title>
-        <desc id={descId}>{buildChartDescription(title, years, series, totals)}</desc>
+        <desc id={descId}>{buildChartDescription(title, years, series, labelTotals)}</desc>
         {bars}
       </svg>
       <div className={styles.legend} aria-hidden="true">

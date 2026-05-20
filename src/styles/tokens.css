@@ -16,11 +16,13 @@
   --color-neutral:     #141414;
   --color-enabled:     #FA9E79;
 
-  /* ─── Data viz extensions (used for chart/table swatches only) ─── */
-  --data-blue:         #4EB3DE;
-  --data-blue-pale:    #D1EFFC;
-  --data-orange-mid:   #FF9000;
-  --data-peach:        #FFD093;
+  /* ─── Data viz palette (Growth stacked charts — Figma May 2026) ─── */
+  --data-cream:        #DCD0B4;
+  --data-sage:         #B4CFBD;
+  --data-peach:        #FFC3AD;
+  --data-orange-mid:   #FF733B;
+  --data-lavender:     #DAC1DC;
+  --data-magenta:      #4D002C;
 
   /* ─── Typography ─── */
   --font-sans:    'HubSpot Text', system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;

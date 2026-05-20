@@ -24,18 +24,18 @@
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],
+          "totals": [19.1, 25.1, 31.9, 36.7, 42.0],
           "rowHeaderLabel": "Company size",
           "series": [
             {
               "label": "> 200 employees",
-              "valuesM": [5, 7, 8, 10, 11],
-              "fill": "var(--color-orange)"
+              "valuesM": [5.0, 6.6, 8.3, 9.6, 10.9],
+              "fill": "var(--color-sage)"
             },
             {
               "label": "< 200 employees",
-              "valuesM": [14, 18, 24, 27, 31],
-              "fill": "var(--color-lavender-dark)",
-              "tableSwatch": "var(--color-pink)"
+              "valuesM": [14.0, 18.5, 23.6, 27.2, 31.1],
+              "fill": "var(--color-orange)"
             }
           ]
         }
@@ -66,17 +66,18 @@
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],
+          "totals": [19.1, 25.1, 31.9, 36.7, 42.0],
           "rowHeaderLabel": "Focus",
           "series": [
             {
               "label": "AI First",
-              "valuesM": [7, 9, 12, 15, 18],
-              "fill": "var(--color-orange)"
+              "valuesM": [6.7, 9.4, 12.4, 15.1, 18.1],
+              "fill": "var(--color-sage)"
             },
             {
               "label": "AI Enhanced",
-              "valuesM": [12, 16, 20, 22, 24],
-              "fill": "var(--color-lavender-dark)"
+              "valuesM": [12.4, 15.7, 19.5, 21.6, 23.9],
+              "fill": "var(--color-orange)"
             }
           ]
         }
@@ -105,31 +106,32 @@
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],
+          "totals": [19.1, 25.1, 31.9, 36.7, 42.0],
           "rowHeaderLabel": "Hub",
           "series": [
             {
               "label": "Commerce",
-              "valuesM": [0.25, 0.5, 0.75, 1, 1.25],
-              "fill": "var(--color-pink)"
+              "valuesM": [0.3, 0.6, 0.8, 1.0, 1.3],
+              "fill": "var(--data-cream)"
             },
             {
               "label": "Marketing",
-              "valuesM": [10.5, 13.75, 17.25, 19.5, 22],
-              "fill": "var(--color-lavender-dark)"
+              "valuesM": [10.7, 13.8, 17.2, 19.5, 22.0],
+              "fill": "var(--data-sage)"
             },
             {
               "label": "Data/Operations",
-              "valuesM": [1.25, 1.75, 2.5, 3.25, 3.5],
+              "valuesM": [1.2, 1.7, 2.4, 2.9, 3.6],
               "fill": "var(--data-peach)"
             },
             {
               "label": "Sales",
-              "valuesM": [5.5, 7.25, 9.25, 10.75, 12.25],
+              "valuesM": [5.5, 7.3, 9.3, 10.6, 12.1],
               "fill": "var(--data-orange-mid)"
             },
             {
               "label": "Customer Success",
-              "valuesM": [1.5, 1.75, 2.25, 2.5, 3],
+              "valuesM": [1.3, 1.7, 2.3, 2.6, 3.0],
               "fill": "var(--color-orange)"
             }
           ]
@@ -164,46 +166,47 @@
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",
         "data": {
           "years": [2026, 2027, 2028, 2029, 2030],
+          "totals": [19.1, 25.1, 31.9, 36.7, 42.0],
           "rowHeaderLabel": "Region",
           "series": [
             {
               "label": "ANZ",
-              "valuesM": [1, 1, 1, 3, 2],
-              "fill": "var(--data-blue)"
+              "valuesM": [0.8, 1.1, 1.4, 1.6, 1.8],
+              "fill": "var(--color-cream)"
             },
             {
               "label": "India",
-              "valuesM": [1, 1, 2, 2, 3],
-              "fill": "var(--data-blue-pale)"
+              "valuesM": [0.2, 0.2, 0.3, 0.4, 0.4],
+              "fill": "var(--data-magenta)"
             },
             {
               "label": "Rest of APeJC",
-              "valuesM": [1, 2, 2, 2, 2],
-              "fill": "var(--color-sage)"
+              "valuesM": [0.5, 0.6, 0.8, 0.9, 1.0],
+              "fill": "var(--data-lavender)"
             },
             {
               "label": "Canada",
-              "valuesM": [1, 1, 2, 2, 2],
-              "fill": "var(--color-pink)"
+              "valuesM": [0.6, 0.8, 1.1, 1.2, 1.4],
+              "fill": "var(--data-cream)"
             },
             {
               "label": "Europe",
-              "valuesM": [4, 5, 6, 7, 8],
-              "fill": "var(--color-lavender-dark)"
+              "valuesM": [6.1, 8.0, 10.2, 11.8, 13.4],
+              "fill": "var(--data-sage)"
             },
             {
               "label": "Japan",
-              "valuesM": [1, 1, 2, 2, 3],
+              "valuesM": [0.4, 0.5, 0.6, 0.7, 0.8],
               "fill": "var(--data-peach)"
             },
             {
               "label": "LATAM",
-              "valuesM": [3, 3, 4, 4, 5],
+              "valuesM": [0.7, 0.9, 1.2, 1.4, 1.6],
               "fill": "var(--data-orange-mid)"
             },
             {
               "label": "USA",
-              "valuesM": [8, 11, 13, 15, 17],
+              "valuesM": [9.8, 12.8, 16.3, 18.8, 21.5],
               "fill": "var(--color-orange)"
             }
           ]
