@@ -1,4 +1,14 @@
 {
+  "ui": {
+    "title": "Customize your experience",
+    "closeAriaLabel": "Close customize panel",
+    "closeLabel": "Close",
+    "partnerTypeRowLabel": "Partner Type",
+    "customerFocusRowLabel": "Customer focus",
+    "regionRowLabel": "Region",
+    "selectedSuffix": " selected",
+    "applyLabel": "Apply"
+  },
   "partnerTypes": [
     { "id": "technology", "label": "Technology Partner" },
     { "id": "solutions",  "label": "Solutions Partner"  }

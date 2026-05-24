@@ -185,6 +185,16 @@
   font-weight: 500;
 }
 
+.takeawayLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.takeawayLink:hover {
+  color: var(--color-orange);
+}
+
 /* ─── Author byline (Figma 2193:1840) ─── */
 .byline {
   display: flex;

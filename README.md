@@ -97,6 +97,8 @@ src/
 
 ## Content Editing Guide
 
+**Start here:** [`src/data/README.md`](src/data/README.md) — maps every slide to its data file(s).
+
 ### Updating Dynamic Page Content (Pages 4 & 5)
 
 Dynamic content lives in `src/data/dynamic-pages/` and is resolved through
@@ -114,20 +116,17 @@ Global (unfiltered) page content lives in `src/data/static-pages/`:
 
 | File | Edits |
 |------|-------|
+| `cover.json`           | Cover title, intro, stats, customize CTA |
 | `navigationToc.js`     | Table-of-contents entries on the Navigation page |
+| `foreword.json`        | Foreword letter, byline, video labels |
+| `vision.json`          | Vision letter, takeaways, byline, video labels |
 | `growth.json`          | All four Growth tabs (eyebrow, body, bullets, chart, CTA) |
-| `insider-insights.json`| Section heading, video, and the array of partner stories |
+| `insider-insights.json`| Section heading and partner stories |
+| `partner-carousel.json`| Partner names on the By the Numbers carousel |
+| `filters.json` (`ui`)  | Filter modal title, row labels, Apply/Close |
 
 See [`src/data/static-pages/README.md`](src/data/static-pages/README.md)
-for the per-file schema and instructions on adding/editing entries.
-
-Cover / Foreword / Vision body copy is currently kept in JSX — it ships
-into HubSpot CMS downstream where it becomes editable. To edit before
-hand-off, change the copy directly in:
-
-- `src/components/pages/CoverPage/CoverPage.jsx`
-- `src/components/pages/ForewordPage/ForewordPage.jsx`
-- `src/components/pages/VisionPage/VisionPage.jsx`
+for per-file schemas and HubSpot handoff notes in [`src/data/README.md`](src/data/README.md).
 
 ### Changing Colors or Typography
 

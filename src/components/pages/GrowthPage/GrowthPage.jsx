@@ -25,7 +25,7 @@ function CtaCard({ cta }) {
             rel="noopener noreferrer"
             className={styles.ctaButton}
           >
-            {cta.linkText || 'Learn more'}
+            {cta.linkText}
           </a>
         )}
       </div>

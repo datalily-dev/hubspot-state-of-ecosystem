@@ -290,6 +290,17 @@
   max-width: 21.875rem; /* 350px */
 }
 
+.statLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.statLink:hover {
+  opacity: 0.85;
+}
+
 @media (width <= 900px) {
   .body {
     grid-template-columns: 1fr;

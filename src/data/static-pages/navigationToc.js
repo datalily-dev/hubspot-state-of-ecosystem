@@ -3,14 +3,14 @@ export const NAVIGATION_TOC = [
   {
     label: 'Foreword',
     href: '#foreword',
-    title: 'A letter from Zack Kass, OpenAI',
-    description: 'Global AI Advisory and former head of\nGTM at Open AI',
+    title: 'A letter from Zack Kass, Global AI Advisor',
+    description: 'On how partners can deliver AI that benefits people—and businesses—from all walks of life.',
   },
   {
     label: 'By the Numbers',
     href: '#by-the-numbers',
-    title: 'HubSpot’s ecosystem at a glance',
-    description: 'Get glimpse at partner growth',
+    title: 'HubSpot’s Ecosystem at a Glance',
+    description: 'Get glimpse at partner momentum in every segment and region.',
   },
   {
     label: 'Short Takes',
@@ -34,6 +34,6 @@ export const NAVIGATION_TOC = [
     label: 'Impact',
     href: '#insider-insights',
     title: 'Customer value, delivered',
-    description: 'Browse impressive partner-driven outcomes',
+    description: 'Browse top partner-driven outcomes',
   },
 ];

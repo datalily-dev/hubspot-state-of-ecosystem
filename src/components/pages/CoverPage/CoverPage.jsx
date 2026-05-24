@@ -2,32 +2,12 @@ import { useCallback, useState } from 'react';
 import FilterIcon from '../../../assets/icon/filter.svg?react';
 import gradientA from '../../../assets/cover/gradient-a.svg';
 import gradientB from '../../../assets/cover/gradient-b.svg';
+import coverContent from '../../../data/static-pages/cover.json';
 import PageShell from '../../common/PageShell/PageShell';
 import FilterModal from '../../filters/FilterModal/FilterModal';
 import { useFilters } from '../../../context/FilterContext';
 import { useEntranceAnimation } from '../../../hooks/useEntranceAnimation';
 import styles from './CoverPage.module.css';
-
-const STATS = [
-  {
-    prefix: '$',
-    prefixKind: 'symbol',
-    number: '42',
-    suffix: 'B',
-    label: "HubSpot's partner opportunity by 2030",
-  },
-  {
-    number: '28.4',
-    suffix: '%',
-    label: "CAGR of AI-first revenue for HubSpot's partners",
-  },
-  {
-    prefix: 'Top',
-    prefixKind: 'word',
-    number: '10',
-    label: 'HubSpot is a top global 10 ecosystem, according to Partnership Leaders',
-  },
-];
 
 /** Page 1 — Cover (STATIC) */
 export default function CoverPage() {
@@ -61,18 +41,18 @@ export default function CoverPage() {
             className={fadeClass(styles.reportLabel)}
             style={{ '--fade-delay': '100ms' }}
           >
-            2026 HubSpot Partner Report
+            {coverContent.reportLabel}
           </p>
 
           <h1
             className={fadeClass(styles.headline)}
             style={{ '--fade-delay': '250ms' }}
           >
-            The State of Ecosystems
+            {coverContent.headline}
           </h1>
 
           <p className={fadeClass(styles.intro)} style={{ '--fade-delay': '450ms' }}>
-            HubSpot&rsquo;s market potential is growing. Partners who move early will own it.
+            {coverContent.intro}
           </p>
 
           <div
@@ -89,7 +69,7 @@ export default function CoverPage() {
               <span className={styles.customizeIconWrap} aria-hidden="true">
                 <FilterIcon className={styles.customizeIcon} focusable="false" />
               </span>
-              Customize your experience
+              {coverContent.customizeCta}
             </button>
 
             <p
@@ -108,7 +88,7 @@ export default function CoverPage() {
         </div>
 
         <div className={styles.right}>
-          {STATS.map((stat, i) => (
+          {coverContent.stats.map((stat, i) => (
             <div
               key={stat.label}
               className={fadeClass(styles.statBlock)}
@@ -130,7 +110,21 @@ export default function CoverPage() {
                 {stat.suffix && <span className={styles.statSuffix}>{stat.suffix}</span>}
               </div>
 
-              <p className={styles.statLabel}>{stat.label}</p>
+              <p className={styles.statLabel}>
+                {stat.label}
+                {stat.linkText && (
+                  <>
+                    <a
+                      href={stat.linkHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.statLink}
+                    >
+                      {stat.linkText}
+                    </a>
+                  </>
+                )}
+              </p>
             </div>
           ))}
         </div>

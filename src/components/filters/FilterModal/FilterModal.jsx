@@ -123,6 +123,8 @@ export default function FilterModal({ isOpen, onClose }) {
     (a, b) => REGION_ORDER.indexOf(a.id) - REGION_ORDER.indexOf(b.id),
   );
 
+  const { ui } = filtersData;
+
   if (typeof document === 'undefined') return null;
 
   return createPortal(
@@ -143,22 +145,22 @@ export default function FilterModal({ isOpen, onClose }) {
           type="button"
           className={styles.closeBtn}
           onClick={handleClose}
-          aria-label="Close customize panel"
+          aria-label={ui.closeAriaLabel}
         >
           <XMarkIcon className={styles.closeIcon} aria-hidden="true" focusable="false" />
-          <span className={styles.closeLabel}>Close</span>
+          <span className={styles.closeLabel}>{ui.closeLabel}</span>
         </button>
 
         <div className={styles.body}>
           <h2 id="filter-modal-title" className={styles.title}>
-            Customize your experience
+            {ui.title}
           </h2>
 
           <div className={styles.sections}>
             <div className={styles.divider} aria-hidden="true" />
 
             <div className={styles.row}>
-              <span className={styles.rowLabel}>Partner Type</span>
+              <span className={styles.rowLabel}>{ui.partnerTypeRowLabel}</span>
               <div className={styles.options}>
                 {filtersData.partnerTypes.map((type) => (
                   <FilterChip
@@ -176,7 +178,7 @@ export default function FilterModal({ isOpen, onClose }) {
                 <div className={styles.divider} aria-hidden="true" />
 
                 <div className={styles.row}>
-                  <span className={styles.rowLabel}>Customer focus</span>
+                  <span className={styles.rowLabel}>{ui.customerFocusRowLabel}</span>
                   <div className={styles.options}>
                     {filtersData.segments.map((seg) => (
                       <FilterChip
@@ -192,7 +194,7 @@ export default function FilterModal({ isOpen, onClose }) {
                 <div className={styles.divider} aria-hidden="true" />
 
                 <div className={styles.row}>
-                  <span className={styles.rowLabel}>Region</span>
+                  <span className={styles.rowLabel}>{ui.regionRowLabel}</span>
                   <div className={styles.options}>
                     {regions.map((region) => (
                       <FilterChip
@@ -212,10 +214,10 @@ export default function FilterModal({ isOpen, onClose }) {
             <div className={styles.footer}>
               <span className={styles.counter} aria-live="polite">
                 <span className={styles.counterValue}>{selectedCount}</span>
-                <span className={styles.counterLabel}> selected</span>
+                <span className={styles.counterLabel}>{ui.selectedSuffix}</span>
               </span>
               <button type="button" className={styles.applyBtn} onClick={handleApply}>
-                Apply
+                {ui.applyLabel}
               </button>
             </div>
           </div>

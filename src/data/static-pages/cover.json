@@ -1,0 +1,32 @@
+{
+  "reportLabel": "2026 HubSpot Partner Report",
+  "headline": "The State of Ecosystems",
+  "intro": "HubSpot's market potential is growing. Partners who move early will own it.",
+  "customizeCta": "Customize your experience",
+  "stats": [
+    {
+      "prefix": "$",
+      "prefixKind": "symbol",
+      "number": "42",
+      "suffix": "B",
+      "label": "HubSpot's partner opportunity by 2030, ",
+      "linkText": "according to IDC",
+      "linkHref": "https://offers.hubspot.com/hubspot-ecosystem-idc"
+    },
+    {
+      "number": "28.4",
+      "suffix": "%",
+      "label": "CAGR of AI-first revenue for HubSpot's partners, ",
+      "linkText": "according to IDC",
+      "linkHref": "https://offers.hubspot.com/hubspot-ecosystem-idc"
+    },
+    {
+      "prefix": "Top",
+      "prefixKind": "word",
+      "number": "10",
+      "label": "ecosystem in the world, according to ",
+      "linkText": "Partnership Leaders",
+      "linkHref": "https://lp.partnershipleaders.com/executive-summary-ecosystem-compass-2026"
+    }
+  ]
+}

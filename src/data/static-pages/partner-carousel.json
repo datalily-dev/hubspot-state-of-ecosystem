@@ -1,0 +1,13 @@
+{
+  "slides": [
+    { "id": "aircall", "name": "Aircall" },
+    { "id": "apitude", "name": "Aptitude 8" },
+    { "id": "smartbug", "name": "SmartBug Media" },
+    { "id": "siloy", "name": "Siloy" },
+    { "id": "hububble", "name": "HuBubble" },
+    { "id": "zoom", "name": "Zoom" },
+    { "id": "guepard", "name": "Guepard" },
+    { "id": "engaging", "name": "Engaging" },
+    { "id": "grows", "name": "Grows" }
+  ]
+}

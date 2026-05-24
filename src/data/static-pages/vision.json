@@ -1,0 +1,42 @@
+{
+  "eyebrow": "Vision",
+  "headline": "Angie O'Dowd on the State of the HubSpot ecosystem",
+  "video": {
+    "regionLabel": "Vision video",
+    "playLabel": "Play vision video from Angie O'Dowd"
+  },
+  "body": [
+    "Everything in this report—and Zack's foreword—call out what we've always known to be true:",
+    "When partners thrive, customers win.",
+    "That's what this report is all about: Connecting our partners—current and future—with the information you need to build with us and define your growth strategy with HubSpot and deliver value with our agentic customer platform.",
+    "The next section speaks to the revenue opportunity ahead, but these are the takeaways that characterize the State of HubSpot's ecosystem:"
+  ],
+  "takeaways": [
+    {
+      "title": "Industry-leading and growing at an impressive clip:",
+      "body": "Partnership Leaders named HubSpot a Top 10 ecosystem in the world, with an IDC-defined $42B in partner opportunity by 2030 at 21.8% CAGR."
+    },
+    {
+      "title": "Driving upmarket and aligned in GTM and product:",
+      "body": "We saw +41% growth in $10k+ deals in 2025 along with ~16+ apps used by upmarket customers—and we're accelerating in the AWS marketplace."
+    },
+    {
+      "title": "Guided by ",
+      "linkText": "three principles",
+      "linkHref": "https://www.hubspot.com/company-news/our-vision-for-building-an-open-ecosystem-for-the-agent-era",
+      "titleSuffix": ":",
+      "body": "Customer value above all; Open by design; and trusted by default. These are deliberate choices about the kind of platform we want to be—and how we build with you."
+    }
+  ],
+  "bodyAfterTakeaways": [
+    "HubSpot redefined marketing with inbound. We led the front-office shift for GTM teams. And today, our agentic customer platform is driving the GTM transformation.",
+    "Our partners have led customers through every shift. This moment is ours to win—together."
+  ],
+  "author": {
+    "name": "Angie O'Dowd",
+    "role": "Global VP, Platform & Partner Ecosystem, HubSpot",
+    "linkedIn": "https://www.linkedin.com/in/angiemarie/",
+    "linkedInAriaLabel": "Angie O'Dowd on LinkedIn",
+    "avatarAlt": "Angie O'Dowd"
+  }
+}
