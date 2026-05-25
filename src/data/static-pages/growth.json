@@ -6,15 +6,14 @@
       "id": "mid-market",
       "tabLabel": "Mid-Market Momentum",
       "eyebrow": "Mid-Market Momentum",
-      "heading": "HubSpot is seeing mid-market momentum",
+      "heading": "HubSpot has mid-market momentum",
       "body": [
-        "The highest-margin work is in mid-market accounts (200–2,000 employees). IDC projects the mid-market opportunity alone will exceed $11B by 2030, and the momentum is already visible. With complex setups, they need partners to help them scale:",
+        "DC projects the mid-market opportunity alone will exceed $11B by 2030, and the momentum is already visible. With complex setups, customers need partners to help them scale:",
         "HubSpot is also now available on AWS Marketplace, where customers can procure select products via private offers and apply eligible AWS committed cloud spend, removing a procurement barrier that has historically slowed enterprise deals. For services partners, that means faster buying cycles on larger accounts. For ISVs, it signals the kind of enterprise distribution infrastructure that makes building for HubSpot's mid-market customer base a serious product strategy."
       ],
       "bullets": [
         "$10K+ deals grew 41% year-over-year in Q4 2025",
-        "500+ seat HubSpot customers grew 5x in 2025 alone",
-        "Mid-market buyers spend up to $500K annually on implementation and services",
+        "Market customers spend up to $500K annually on services",
         "Mid-market accounts use an average of 16+ applications"
       ],
       "chart": {
@@ -55,7 +54,7 @@
       "heading": "AI-first engagements are the fastest-growing slice of the partner TAM",
       "body": [
         "AI-first engagements, where deploying, productizing, or operationalizing AI is the primary deliverable, will grow from $6.7B in 2026 to $18.1B by 2030 — a 28.4% annual growth rate that outpaces the overall TAM.",
-        "79% of elite partners are already building AI-first solutions, and 92% are consulting on AI implementations. The opportunity now is to move from advising to building. HubSpot's expanding MCP support, increasingly sophisticated APIs, and growing surface area for agentic development mean partners — whether delivering services or shipping software — have the platform infrastructure to embed AI directly into customer workflows, build proprietary agent frameworks, and package reusable IP that compounds in value over time.",
+        "In fact, 92% of partners are already consulting on AI implementations. HubSpot's expanding MCP support, increasingly sophisticated APIs, and growing surface area for agentic development mean partners — whether delivering services or shipping software — have the platform infrastructure to embed AI directly into customer workflows, build proprietary agent frameworks, and package reusable IP that compounds in value over time.",
         "The partners who act now will establish the technical depth and customer relationships that are hardest to replicate."
       ],
       "bullets": [],
@@ -91,16 +90,16 @@
     },
     {
       "id": "marketing",
-      "tabLabel": "Marketing, Transformed",
-      "eyebrow": "Marketing, Transformed",
+      "tabLabel": "Marketing, reimagined",
+      "eyebrow": "Marketing, reimagined",
       "heading": "Marketing is the single largest opportunity in the ecosystem",
       "body": [
         "Marketing partnerships represent $9.95B in 2026, growing to $20.1B by 2030. With the launch of Loop Marketing and HubSpot AEO, the nature of partner engagements is shifting from one-time implementations to ongoing outcome optimization. Partners who design, deploy, and optimize agentic demand engines across the full Loop will own the most durable revenue relationships in the ecosystem.",
-        "The Spring 2026 Essential Apps for Marketers collection — including Reddit for Business, TikTok for Business, Canva, and Vidyard — signals where that demand is already concentrating. Partners who know these tools win the implementations that follow. For ISVs, every essential app is also a signal: this is where customers are already spending, and where purpose-built integrations find their fastest distribution."
+        "The Spring 2026 Essential Apps for Marketers collection — including Reddit for Business, TikTok for Business, Canva, and Vidyard — signals where that demand is already concentrating. For ISVs, every essential app is also a signal: this is where customers are already spending, and where purpose-built integrations find their fastest distribution."
       ],
       "bullets": [],
       "chart": {
-        "title": "HubSpot Ecosystem Opportunity by Hub",
+        "title": "HubSpot's Ecosystem Opportunity by GTM Function",
         "source": "Source: IDC White Paper, sponsored by HubSpot, The $42B Agentic Shift: AI-Driven Growth Opportunities for HubSpot Partners, US54368326, May 2026",
         "sourceLinkText": "Source: IDC White Paper, sponsored by HubSpot",
         "sourceHref": "https://offers.hubspot.com/hubspot-ecosystem-idc",

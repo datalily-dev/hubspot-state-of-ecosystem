@@ -79,7 +79,7 @@ export default function VisionPage() {
                       rel="noopener noreferrer"
                       className={styles.takeawayLink}
                     >
-                      {item.linkText}
+                      <strong>{item.linkText}</strong>
                     </a>
                   ) : null}
                   {item.titleSuffix ? <strong>{item.titleSuffix}</strong> : null}{' '}

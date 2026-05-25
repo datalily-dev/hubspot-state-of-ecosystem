@@ -26,7 +26,7 @@
     "stat-42b": {
       "icon": "target",
       "value": "$42B",
-      "description": "at a 21.8% CAGR is the total partner opportunity by 2030",
+      "description": "at 21.8% CAGR in partner opportunity by 2030",
       "linkText": "according to IDC",
       "linkHref": "https://offers.hubspot.com/hubspot-ecosystem-idc"
     },
@@ -38,21 +38,21 @@
     },
     "stat-300k": {
       "icon": "sparkle",
-      "value": "300K",
+      "value": "299K",
       "description": "customers using HubSpot's Agentic Customer Platform"
     },
     "stat-63": {
       "value": "63%",
-      "description": "New Pro+ customers on multiple Hubs"
+      "description": "new Pro+ customers on multiple Hubs"
     },
     "stat-3m": {
       "icon": "arrow",
       "value": "3M",
-      "description": "App installs across all customers"
+      "description": "app installs across all customers"
     },
     "stat-16": {
       "value": "16+",
-      "description": "Average apps used by upmarket customers"
+      "description": "average apps used by upmarket customers"
     },
     "stat-image": {
       "value": "Hear from partners",
@@ -80,18 +80,18 @@
     },
     "stat-7k-partners": {
       "value": "7K",
-      "description": "Solutions partners globally"
+      "description": "Solutions Partners globally"
     },
     "stat-10k-500k-spend": {
       "icon": "arrow",
       "value": "$10K–$500K",
       "valueLines": ["$10K–", "$500K"],
-      "description": "is the annual client implementation and services spend range as reported by partners"
+      "description": "annual client services spend range as reported by partners"
     },
     "stat-1-12-months": {
       "value": "1–12 months",
       "valueLines": ["1–12 ", "months"],
-      "description": "Project lengths vary, with strong client retention and ongoing retainers as reported by partners"
+      "description": "project lengths, with strong client retention and retainers as reported by partners"
     },
 
     "stat-309b-smb": {
@@ -137,7 +137,7 @@
     "stat-41-deals": {
       "icon": "arrow",
       "value": "+41%",
-      "description": "Growth in $10K+ deals in Q4 '25 YoY"
+      "description": "growth in $10K+ deals in Q4 '25 YoY"
     },
     "stat-5x-seats": {
       "value": "5x",
@@ -151,28 +151,28 @@
     "stat-196b-nam": {
       "icon": "target",
       "value": "$19.6B",
-      "description": "Total Partner opportunity in NAM by 2030",
+      "description": "total partner opportunity in NAM by 2030",
       "linkText": "according to IDC",
       "linkHref": "https://offers.hubspot.com/hubspot-ecosystem-idc"
     },
     "stat-122b-emea": {
       "icon": "target",
       "value": "$12.2B",
-      "description": "Total partner opportunity in EMEA by 2030",
+      "description": "total partner opportunity in EMEA by 2030",
       "linkText": "according to IDC",
       "linkHref": "https://offers.hubspot.com/hubspot-ecosystem-idc"
     },
     "stat-71b-japac": {
       "icon": "target",
       "value": "$7.1B",
-      "description": "Total partner opportunity in JAPAC by 2030",
+      "description": "total partner opportunity in JAPAC by 2030",
       "linkText": "according to IDC",
       "linkHref": "https://offers.hubspot.com/hubspot-ecosystem-idc"
     },
     "stat-35b-latam": {
       "icon": "target",
       "value": "$3.5B",
-      "description": "Total Partner opportunity in LATAM by 2030",
+      "description": "total partner opportunity in LATAM by 2030",
       "linkText": "according to IDC",
       "linkHref": "https://offers.hubspot.com/hubspot-ecosystem-idc"
     },

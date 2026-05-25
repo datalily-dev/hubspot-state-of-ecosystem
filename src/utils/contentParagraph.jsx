@@ -19,6 +19,8 @@ export function ContentParagraph({ paragraph, as: Tag = 'p', className }) {
             >
               {seg.text}
             </a>
+          ) : seg.italic ? (
+            <em key={i}>{seg.text}</em>
           ) : (
             <span key={i}>{seg.text}</span>
           ),
