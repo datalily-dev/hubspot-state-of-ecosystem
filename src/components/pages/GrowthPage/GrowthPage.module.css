@@ -241,7 +241,8 @@
   align-items: center;
   width: 100%;
   max-width: calc(var(--gw) * 436 / 1440);
-  padding: calc(var(--gw) * 16 / 1440) calc(var(--gw) * 24 / 1440);
+  padding: calc(var(--gw) * 20 / 1440) calc(var(--gw) * 24 / 1440)
+    calc(var(--gw) * 24 / 1440);
   color: var(--color-teal-dark);
   background: var(--color-cream);
   border-radius: 10px;
@@ -256,14 +257,14 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gw) * 9 / 1440);
+  gap: 12px;
   align-items: center;
 }
 
 .ctaTextGroup {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gw) * 6 / 1440);
+  gap: 6px;
   width: 100%;
   align-items: center;
 }
@@ -504,7 +505,7 @@
 
   .ctaCard {
     max-width: none;
-    padding: var(--space-4) var(--space-5);
+    padding: 20px var(--space-5) 24px;
   }
 }
 

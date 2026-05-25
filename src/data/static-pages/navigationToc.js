@@ -33,7 +33,7 @@ export const NAVIGATION_TOC = [
   {
     label: 'Impact',
     href: '#insider-insights',
-    title: 'Customer value, delivered',
+    title: 'Customer value, delivered.',
     description: 'Browse top partner-driven outcomes',
   },
 ];
