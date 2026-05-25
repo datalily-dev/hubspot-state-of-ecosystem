@@ -3,13 +3,13 @@
   "heading": "Perspectives from current partners",
 
   "byFilterId": {
-    "global":                   ["camiel-freriks-strategic", "brendan-ittelson", "michelle-okeeffe-roadmap", "stuart-toledo-community", "patrick-ganzmann-scalable", "scott-harrison", "adam-bleibtreu-innovate", "scott-chancellor"],
+    "global":                   ["camiel-freriks-strategic", "brendan-ittelson", "michelle-okeeffe-roadmap", "stuart-toledo-community", "scott-harrison", "adam-bleibtreu-innovate", "scott-chancellor"],
     "technology":               ["brendan-ittelson", "scott-chancellor", "scott-harrison"],
-    "solutions":                ["camiel-freriks-strategic", "michelle-okeeffe-roadmap", "stuart-toledo-community", "patrick-ganzmann-scalable", "adam-bleibtreu-innovate"],
+    "solutions":                ["camiel-freriks-strategic", "michelle-okeeffe-roadmap", "stuart-toledo-community", "adam-bleibtreu-innovate"],
     "solutions-smb":            ["justine-gaignard-overwhelm", "ross-breckenridge-transformed", "hsiang-lee-changed-everything", "jorge-garagarza-aligned", "michelle-miller-trust"],
     "solutions-upmarket":       ["camiel-freriks-strategic", "brendan-ittelson", "michelle-okeeffe-roadmap", "stuart-toledo-community", "patrick-ganzmann-scalable"],
     "solutions-nam":            ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm", "michelle-miller-trust"],
-    "solutions-emea":           ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-emea":           ["camiel-freriks-strategic", "patrick-ganzmann-scalable", "ross-breckenridge-transformed", "daryl-michel-influence"],
     "solutions-japac":          ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
     "solutions-latam":          ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
     "solutions-smb-nam":        ["adam-bleibtreu-innovate", "justine-gaignard-overwhelm", "michelle-miller-trust"],
@@ -17,7 +17,7 @@
     "solutions-smb-japac":      ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
     "solutions-smb-latam":      ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
     "solutions-upmarket-nam":   ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm"],
-    "solutions-upmarket-emea":  ["camiel-freriks-strategic", "ross-breckenridge-transformed", "daryl-michel-influence"],
+    "solutions-upmarket-emea":  ["camiel-freriks-strategic", "patrick-ganzmann-scalable", "ross-breckenridge-transformed", "daryl-michel-influence"],
     "solutions-upmarket-japac": ["michelle-okeeffe-roadmap"],
     "solutions-upmarket-latam": ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"]
   },
@@ -61,7 +61,7 @@
         "role": "VP Strategic Alliances, Siloy",
         "linkedIn": "https://www.linkedin.com/in/camielfreriks/"
       },
-      "audio": { "durationSeconds": 40 }
+      "audio": { "durationSeconds": 70 }
     },
     "michelle-okeeffe-roadmap": {
       "title": "Clear, transparent, and communicative about the product roadmap",
@@ -90,7 +90,7 @@
         "name": "Patrick Ganzmann",
         "role": "Managing Director, Valantic"
       },
-      "audio": { "durationSeconds": 42 }
+      "audio": { "durationSeconds": 92 }
     },
     "adam-bleibtreu-innovate": {
       "title": "Pushing us to innovate, think bigger, and deliver across the front office",

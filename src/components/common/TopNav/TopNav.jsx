@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import BarsIcon from '../../../assets/icon/bars.svg?react';
+import XMarkIcon from '../../../assets/icon/x-mark.svg?react';
 import HubSpotLogo from '../../../assets/logo.svg?react';
 import { useFilters } from '../../../context/FilterContext';
 import { useSlideDeck } from '../../../context/SlideDeckContext';
@@ -11,16 +12,15 @@ import styles from './TopNav.module.css';
 const SCROLL_REVEAL_PX = 4;
 
 // Per-slide overrides. Only deviations from the default config need an entry.
-// Defaults: showMenu, showLearnMore, showClearFilter, and showFilterIndicator are true.
+// Defaults: showMenu, showLearnMore, and showFilterIndicator are true.
 const PER_SLIDE_CONFIG = {
   cover: { showFilterIndicator: false },
-  navigation: { showMenu: false, showClearFilter: true },
+  navigation: { showMenu: false },
 };
 
 const DEFAULT_CONFIG = {
   showMenu: true,
   showLearnMore: true,
-  showClearFilter: false,
   showFilterIndicator: true,
 };
 
@@ -38,9 +38,21 @@ const DEFAULT_CONFIG = {
  * doesn't start under this bar; that reserved space scrolls with the page as
  * the user scrolls within a long slide.
  */
+// Maps the active partner-type filter to the matching hubspot.com landing
+// page. Solutions and Technology each have a dedicated funnel; anything else
+// (no filter, or future partner types) falls back to the umbrella page.
+const PARTNER_LINKS = {
+  technology: 'https://www.hubspot.com/partners/technology',
+  solutions: 'https://www.hubspot.com/partners/solutions',
+};
+const DEFAULT_PARTNER_LINK = 'https://www.hubspot.com/partners';
+
 export default function TopNav() {
-  const { filterSummary, hasActiveFilters, resetFilters } = useFilters();
+  const { confirmedFilters, filterSummary, hasActiveFilters, resetFilters } = useFilters();
   const { activeAnchor, slideTheme } = useSlideDeck();
+
+  const learnMoreHref =
+    PARTNER_LINKS[confirmedFilters.partnerType] ?? DEFAULT_PARTNER_LINK;
 
   // Tracks whether the active slide's scroll container has moved past the top.
   // While at the top the nav is fully transparent so the hero composition reads
@@ -112,17 +124,20 @@ export default function TopNav() {
       <div className={styles.actions}>
         {hasActiveFilters && config.showFilterIndicator && (
           <div className={styles.filterIndicator}>
-            {config.showClearFilter && (
-              <button
-                type="button"
-                className={styles.clearFilter}
-                onClick={resetFilters}
-              >
-                Clear filter
-              </button>
-            )}
             <span className={styles.filterDot} aria-hidden="true" />
             <span className={styles.filterLabel}>{filterSummary}</span>
+            <button
+              type="button"
+              className={styles.clearFilter}
+              onClick={resetFilters}
+              aria-label="Clear filter"
+            >
+              <XMarkIcon
+                className={styles.clearFilterIcon}
+                aria-hidden="true"
+                focusable="false"
+              />
+            </button>
           </div>
         )}
 
@@ -139,7 +154,7 @@ export default function TopNav() {
 
         {config.showLearnMore && (
           <a
-            href="https://www.hubspot.com/partners"
+            href={learnMoreHref}
             className={styles.learnMoreBtn}
             target="_blank"
             rel="noopener noreferrer"

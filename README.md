@@ -126,7 +126,7 @@ Global (unfiltered) page content lives in `src/data/static-pages/`:
 | `filters.json` (`ui`)  | Filter modal title, row labels, Apply/Close |
 
 See [`src/data/static-pages/README.md`](src/data/static-pages/README.md)
-for per-file schemas and HubSpot handoff notes in [`src/data/README.md`](src/data/README.md).
+for per-file schemas.
 
 ### Changing Colors or Typography
 

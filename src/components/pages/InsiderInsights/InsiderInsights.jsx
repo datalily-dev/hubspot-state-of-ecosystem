@@ -9,6 +9,7 @@ import emilyWingrove from '../../../assets/insider-insights/emily-wingrove.webp'
 import joseBetancur from '../../../assets/insider-insights/jose-betancur.webp';
 import michelleOKeeffe from '../../../assets/insider-insights/michelle-okeeffe.webp';
 import stuartToledo from '../../../assets/insider-insights/stuart-toledo.webp';
+import siloyAudio from '../../../assets/audio/Siloy - Global View - Partner Program.m4a';
 import aptitude8Audio from '../../../assets/audio/Aptitude 8 - Solutions Partner - Impact.m4a';
 import engagingAudio from '../../../assets/audio/Engaging.io - JAPAC Partner of the Year - Impact.m4a';
 import growsAudio from '../../../assets/audio/GROWS - LATAM - Impact.m4a';
@@ -32,6 +33,7 @@ const AVATARS = {
  * audio pill (AudioPlayer falls back gracefully when `src` is missing).
  */
 const AUDIO = {
+  'siloy-twelve': siloyAudio,
   'aptitude8-b2c': aptitude8Audio,
   'engaging-castle': engagingAudio,
   'grows-colectivo': growsAudio,

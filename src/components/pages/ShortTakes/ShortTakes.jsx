@@ -19,6 +19,7 @@ import joseBetancur from '../../../assets/short-takes/jose-betancur.webp';
 import justineGaignardParent from '../../../assets/short-takes/justine-gaignard-parent.webp';
 import michelleMiller from '../../../assets/short-takes/michelle-miller.webp';
 import michelleOKeeffe from '../../../assets/short-takes/michelle-okeeffe.webp';
+import patrickGanzmann from '../../../assets/short-takes/patrick-ganzmann.webp';
 import rossBreckenridge from '../../../assets/short-takes/ross-breckenridge.webp';
 import sandhyaHegde from '../../../assets/short-takes/sandhya-hegde.webp';
 import scottChancellor from '../../../assets/short-takes/scott-chancellor.webp';
@@ -41,6 +42,8 @@ import darylMichelAudio from '../../../assets/audio/Cogent Connective - EMEA - U
 import hsiangLeeAudio from '../../../assets/audio/Hubbubble - Solutions Partner - JAPAC - SmB - Partner Program.m4a';
 import joseBetancurAudio from '../../../assets/audio/Triario - Solutions Partner - LATAM - Upmarket - Partner Program.m4a';
 import jorgeGaragarzaAudio from '../../../assets/audio/Zubia - Solutions Partner - LATAM - SmB - Partner Program.m4a';
+import camielFreriksAudio from '../../../assets/audio/Siloy - Global View - Partner Program.m4a';
+import patrickGanzmannAudio from '../../../assets/audio/Valantic - Solutions Partner - EMEA - Upmarket - Partner Program.m4a';
 import styles from './ShortTakes.module.css';
 
 /** Headshots keyed by quote id (field + partners). */
@@ -54,6 +57,7 @@ const AVATARS = {
   'camiel-freriks-strategic': camielFreriks,
   'michelle-okeeffe-roadmap': michelleOKeeffe,
   'stuart-toledo-community': stuartToledo,
+  'patrick-ganzmann-scalable': patrickGanzmann,
   'adam-bleibtreu-innovate': adamBleibtreu,
   'emily-wingrove-central': emilyWingrove,
   'justine-gaignard-overwhelm': justineGaignardParent,
@@ -86,6 +90,8 @@ const AUDIO = {
   'hsiang-lee-changed-everything': hsiangLeeAudio,
   'jose-betancur-best-option': joseBetancurAudio,
   'jorge-garagarza-aligned': jorgeGaragarzaAudio,
+  'camiel-freriks-strategic': camielFreriksAudio,
+  'patrick-ganzmann-scalable': patrickGanzmannAudio,
 };
 
 function QuoteCard({ quote }) {

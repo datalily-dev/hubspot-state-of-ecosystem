@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react';
 import { SlideDeckProvider } from '../../../context/SlideDeckContext';
+import { splitHash } from '../../../utils/url';
 import PageNav from '../PageNav/PageNav';
 import TopNav from '../TopNav/TopNav';
 import styles from './SlideDeck.module.css';
@@ -82,8 +83,8 @@ function clampIndex(index, total) {
 }
 
 function indexFromHash(hash, anchors) {
-  const slug = (hash || '').replace(/^#/, '');
-  const found = anchors.indexOf(slug);
+  const { anchor } = splitHash(hash);
+  const found = anchors.indexOf(anchor);
   return found === -1 ? 0 : found;
 }
 
@@ -217,7 +218,12 @@ export default function SlideDeck({
 
       if (updateHash && anchors[target]) {
         // Replace, not push — avoids cluttering history with every wheel tick.
-        const url = `${window.location.pathname}${window.location.search}#${anchors[target]}`;
+        // Preserve any filter query that lives after the anchor in the hash
+        // (format: `#<anchor>?<filterParams>`) so navigating between slides
+        // never wipes the user's filter selection.
+        const { query } = splitHash(window.location.hash);
+        const newHash = query ? `#${anchors[target]}?${query}` : `#${anchors[target]}`;
+        const url = `${window.location.pathname}${window.location.search}${newHash}`;
         window.history.replaceState(null, '', url);
       }
 

@@ -12,7 +12,7 @@ const FilterContext = createContext(null);
  * Consumers: use the `useFilters` hook.
  */
 export function FilterProvider({ children }) {
-  const [, setUrlFilters] = useUrlState();
+  const [urlFilters, setUrlFilters] = useUrlState();
 
   const {
     pendingFilters,
@@ -23,7 +23,7 @@ export function FilterProvider({ children }) {
     confirmFilters: confirmPending,
     openModal,
     resetFilters,
-  } = useFilterState();
+  } = useFilterState(urlFilters);
 
   const confirmFilters = useCallback(() => {
     confirmPending();

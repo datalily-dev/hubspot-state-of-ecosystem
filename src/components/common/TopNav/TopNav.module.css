@@ -84,32 +84,29 @@
 
 /* ─── Filter indicator pill ─── */
 
-/* Color inherits from the page so the label stays legible on both
-   light (teal-dark text) and dark (cream text) page backgrounds. */
+/* Styled independently from the "Become a Partner" CTA: white surface with
+   a subtle grey border so the pill reads as a status chip, not a primary
+   action. Always rendered with its own background so it stays legible on
+   both light and dark page palettes. */
 .filterIndicator {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: var(--text-sm);
-  color: inherit;
-}
-
-.clearFilter {
-  color: var(--color-orange);
-  font-size: var(--text-sm);
-  padding: 0;
-  margin-right: var(--space-1);
-  transition: opacity var(--duration-fast) var(--ease-out);
-}
-
-.clearFilter:hover {
-  opacity: 0.75;
+  height: 2.25em;
+  padding: 0 var(--space-3) 0 var(--space-4);
+  background: #ffffff;
+  color: var(--color-teal-dark);
+  font-size: var(--text-sm);   /* 14px */
+  font-weight: 300;
+  line-height: 1;
+  border: 1px solid #e3e3e3;
+  border-radius: 6px;
 }
 
 .filterDot {
   display: inline-block;
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: var(--radius-full);
   background: var(--color-orange);
   flex-shrink: 0;
@@ -117,6 +114,32 @@
 
 .filterLabel {
   white-space: nowrap;
+}
+
+.clearFilter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;   /* 20px tap target inside the pill */
+  height: 1.25rem;
+  padding: 0;
+  margin-left: var(--space-1);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.clearFilterIcon {
+  display: block;
+  width: 1rem;     /* 16px */
+  height: 1rem;
+  color: var(--color-orange-dark);
+}
+
+.clearFilter:hover {
+  opacity: 0.7;
 }
 
 /* ─── Menu button (Figma menu 2192:5026 — icon/bars + label) ─── */

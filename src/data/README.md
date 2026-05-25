@@ -34,18 +34,3 @@ npm run dev
 ```
 
 Then open the site and navigate to the slide you changed.
-
-## HubSpot CMS handoff (documentation)
-
-This app is built as a React bundle, not native HubSpot modules. For CMS
-editing after handoff:
-
-1. HubSpot team creates a **custom template/module** and loads the built assets.
-2. Map each JSON field to a HubSpot field (text, rich text, or repeater for
-   arrays like `body[]`, `quotes[]`, `stats[]`).
-3. At page render, HubL injects field values into a global object, e.g.
-   `window.__ECOSYSTEMS_CONTENT__`, using the **same JSON shapes** as in this repo.
-4. React reads those values instead of (or merged with) bundled JSON imports.
-
-No duplicate copy should remain in JSX at handoff — everything editable should
-trace back to a field in `src/data` (or the CMS mirror of it).

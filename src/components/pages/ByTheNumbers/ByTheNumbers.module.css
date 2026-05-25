@@ -539,8 +539,9 @@
 
   .size_md .cardValue {
     width: auto;
-    padding: 0 0 var(--space-4);
-    margin-bottom: var(--space-5);
+    padding: 0;
+    margin-bottom: 0;
+    border-bottom: none;
   }
 
   .value_compact.size_sm,

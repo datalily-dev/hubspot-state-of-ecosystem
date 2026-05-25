@@ -16,7 +16,7 @@ export const NAVIGATION_TOC = [
     label: 'Short Takes',
     href: '#short-takes',
     title: 'Global Perspectives from the Ecosystem',
-    description: 'Go deeper on why HubSpot, why now',
+    description: 'Go deeper on why HubSpot, why now.',
   },
   {
     label: 'Vision',
@@ -34,6 +34,6 @@ export const NAVIGATION_TOC = [
     label: 'Impact',
     href: '#insider-insights',
     title: 'Customer value, delivered.',
-    description: 'Browse top partner-driven outcomes',
+    description: 'Browse top partner-driven outcomes.',
   },
 ];
