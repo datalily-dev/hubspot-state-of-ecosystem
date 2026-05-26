@@ -25,15 +25,11 @@ const PAGE_ANCHORS = [
   'insider-insights',
 ];
 
-// Per-slide variant for the persistent PageNav, matching each page's
-// background palette so the dot pill stays legible. Order must mirror
-// DEFAULT_PAGE_BG_COLORS below — 'dark' on teal-dark slides, 'light' on
-// cream slides — so the sticky nav's background blends into the page.
+// PageNav variant + bg color per slide. Order must match PAGE_ANCHORS above:
+// 'dark' on teal-dark slides, 'light' on cream slides — so the sticky nav
+// blends into its page and scrolling content disappears cleanly under it.
 const DEFAULT_PAGE_VARIANTS = ['dark', 'light', 'light', 'light', 'dark', 'light', 'dark', 'light'];
 
-// Per-slide background color for the sticky PageNav footer. Matches the
-// owning page's background so content scrolling underneath the nav vanishes
-// cleanly instead of bleeding through behind the dot pill / arrows.
 const DEFAULT_PAGE_BG_COLORS = [
   'var(--color-teal-dark)',
   'var(--color-cream)',
@@ -45,17 +41,10 @@ const DEFAULT_PAGE_BG_COLORS = [
   'var(--color-cream)',
 ];
 
-// Adjacent (delta = 1) hops run a "push" transition: the track translates
-// 100vw to the next slide while the outgoing slide fades to opacity 0 and
-// the incoming slide fades to opacity 1 in the same time window. The
-// simultaneous opacity envelope softens the color boundary at the slide
-// edge so the eye never sees a hard vertical color seam crossing the
-// viewport — directional motion is preserved, the seam is dissolved.
+// Push transition for adjacent hops (delta = 1). See the SlideDeck JSDoc
+// below for the rationale on the parallel translate + opacity envelope.
 const SLIDE_MS = 500;
-// Non-adjacent (delta > 1) hops run a pure crossfade instead — translating
-// the track across multiple slide-widths at high speed would feel like a
-// disorienting flicker through every intermediate page. Half-cycle: full
-// fade-out + fade-in takes 2x this value.
+// Crossfade half-cycle for non-adjacent hops (delta > 1). Full out+in = 2×.
 const FADE_HALF_MS = 220;
 const EDGE_TOLERANCE = 2;
 const WHEEL_THRESHOLD = 8;
@@ -120,15 +109,9 @@ export default function SlideDeck({
     clampIndex(indexFromHash(window.location.hash, anchors), total),
   );
   const activeIndexRef = useRef(activeIndex);
-  // Active transition style for the track:
-  //   null     — steady state (no transition running)
-  //   'slide'  — push transition for adjacent hops (transform + per-slide
-  //              opacity animate simultaneously)
-  //   'fade'   — crossfade for non-adjacent hops (track-level opacity
-  //              animates while transform snaps mid-fade)
+  // null | 'slide' | 'fade' — selects the CSS transition via [data-mode].
   const [transitionMode, setTransitionMode] = useState(null);
-  // null | 'out' | 'in' — only relevant while transitionMode === 'fade'.
-  // Drives the two-phase crossfade: fade-out → swap index → fade-in.
+  // null | 'out' | 'in' — drives the two-phase crossfade when mode='fade'.
   const [fadePhase, setFadePhase] = useState(null);
   const fadeTimers = useRef([]);
 
@@ -263,13 +246,7 @@ export default function SlideDeck({
 
       const distance = Math.abs(target - previousIndex);
 
-      // Adjacent hop — push transition. setActiveIndex flips data-active on
-      // both slides; CSS transitions the track transform from -prev*100vw
-      // to -target*100vw while old slide opacity goes 1→0 and new slide
-      // opacity goes 0→1, all in the same SLIDE_MS window. The parallel
-      // opacity envelope softens the color seam at the slide boundary so
-      // the eye never perceives a hard vertical color edge crossing the
-      // viewport.
+      // Adjacent hop — push transition (see component JSDoc).
       if (distance === 1) {
         setTransitionMode('slide');
         setFadePhase(null);
@@ -288,12 +265,7 @@ export default function SlideDeck({
         return;
       }
 
-      // Non-adjacent hop — crossfade. Translating the track across multiple
-      // slide-widths at high speed would flicker through every intermediate
-      // page, so instead we fade the track out, snap the transform to the
-      // target index while invisible, then fade back in. Per-slide opacity
-      // transitions are disabled by .track[data-mode="fade"] so they don't
-      // interfere with the track-level opacity envelope.
+      // Non-adjacent hop — crossfade (see component JSDoc).
       setTransitionMode('fade');
       setFadePhase('out');
 
@@ -487,11 +459,8 @@ export default function SlideDeck({
     [activeIndex, goTo, total],
   );
 
-  // Transition timing is owned by SlideDeck.module.css and selected via
-  // [data-mode]. We pass the durations through as custom properties so the
-  // CSS rules stay declarative and the JS only decides "which mode are we
-  // in right now". Reduced-motion users get data-mode=null + a 'none'
-  // transition shorthand so changes apply instantly.
+  // Durations are passed to CSS as custom properties so timing stays in
+  // the stylesheet and JS only picks the mode via [data-mode].
   const trackStyle = {
     transform: `translate3d(-${activeIndex * 100}vw, 0, 0)`,
     opacity: fadePhase === 'out' ? 0 : 1,
@@ -510,12 +479,8 @@ export default function SlideDeck({
       activeAnchor={anchors[activeIndex] || anchors[0]}
       slideTheme={slideTheme}
     >
-      {/* Single, persistent top navigation floating above every slide. Lives
-          outside the transformed track so it stays anchored to the viewport
-          and never mounts/unmounts during transitions. */}
+      {/* Persistent across slide transitions — sits outside the transformed track. */}
       <TopNav />
-      {/* The deck wraps interactive page content and intercepts wheel/touch/key
-          gestures to advance slides while remaining a landmark region. */}
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={deckRef}
@@ -547,12 +512,8 @@ export default function SlideDeck({
               inert={i !== activeIndex}
             >
               {cloneElement(child)}
-              {/* Per-slide PageNav anchored to the very bottom of the page
-                content (in normal flow — NOT sticky). On short pages it
-                sits at the viewport bottom because PageShell's min-height
-                is sized to leave room for it. On tall, scrollable pages
-                the user scrolls through the content first and the bar
-                appears at the end of the scroll, matching the design. */}
+              {/* Floats at the bottom of each slide's scroll container — see
+                  .pageNavFooter in SlideDeck.module.css for positioning. */}
               <div className={styles.pageNavFooter}>
                 <PageNav
                   activeIndex={i}

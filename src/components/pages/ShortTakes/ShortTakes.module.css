@@ -8,8 +8,7 @@
   overflow-x: clip;
 }
 
-/* ─── Decorative background gradients (Figma 2193:1610, 2193:1611) ───
-   Sage-tinted blobs at 5% opacity. */
+/* Decorative blobs (Figma 2193:1610, 2193:1611) — sage-tinted, 5% opacity. */
 .gradients {
   position: absolute;
   left: 0;
@@ -29,9 +28,8 @@
   justify-content: center;
 }
 
-/* B — rotated bbox 1824.158×1926.469 @ (-911, -991.16).
-   Full-bleed slide background: position from the viewport edge, not the
-   centered content column (no --st-offset-x). */
+/* B — Figma rotated bbox 1824.158×1926.469 @ (-911, -991).
+   Positioned from the viewport edge (full-bleed), not the content column. */
 .gradientBWrap {
   left: calc(var(--st-w) * -911 / 1440);
   top: calc(var(--st-w) * -991.16 / 1440);
@@ -51,7 +49,7 @@
   max-width: none;
 }
 
-/* A — rotated bbox 1921.421×1811.049 @ (calc(41.67% + 87px), 168) */
+/* A — Figma rotated bbox 1921.421×1811.049 @ (left=687, top=168). */
 .gradientAWrap {
   left: calc(var(--st-w) * 687 / 1440);
   top: calc(var(--st-w) * 168 / 1440);
@@ -149,9 +147,8 @@
   
 }
 
-/* ─── Quote list (Figma 2193:1614 — 1080px column, quotes inset 184px) ───
-   The text frame is 1080px @ x=180; each quote is 712px @ x=184 inside that
-   frame (364px from the artboard edge). Dividers span the full 1080px width. */
+/* Quote list (Figma 2193:1614) — 1080px text frame, 712px quotes inset
+   inside it, dividers span the full 1080px. */
 .quotes {
   display: flex;
   flex-direction: column;
@@ -162,9 +159,8 @@
   width: 100%;
   max-width: calc(var(--st-w) * 1080 / 1440);
 
-  /* Shared container so every .quoteFooter flips to its stacked layout at
-     the same width — keeps the audio pills aligned across all quotes
-     instead of each one wrapping individually based on byline length. */
+  /* Shared container query so every .quoteFooter stacks at the same width,
+     keeping audio pills aligned regardless of individual byline length. */
   container-type: inline-size;
   container-name: short-takes-quotes;
 }
@@ -224,9 +220,8 @@
   gap: var(--space-4);
 }
 
-/* Stack the audio pill below the byline in lockstep across every quote.
-   Threshold picked so the longest byline (e.g. "Vice President, ISV
-   Partnerships, DocuSign") still fits inline above it. */
+/* Stack audio below byline once the longest byline (e.g. "Vice President,
+   ISV Partnerships, DocuSign") no longer fits inline. */
 @container short-takes-quotes (max-width: 640px) {
   .quoteFooter {
     flex-direction: column;
@@ -315,10 +310,9 @@
   background: rgba(248, 245, 238, 0.18);
 }
 
-/* Tablet — pull body padding back to the page gutter (drop the Figma
-   180px global margin), let container/quotes/heading stretch full-width,
-   and tighten the header→tabs→quote rhythm. Mirrors GrowthPage's tablet
-   block as the other dynamic filter page. */
+/* Tablet — drop the Figma 180px global margin, stretch the content
+   columns full-width, tighten the header→tabs→quote rhythm. Mirrors
+   GrowthPage as the other dynamic filter page. */
 @media (width <= 900px) {
   .body {
     padding-left: var(--page-gutter);

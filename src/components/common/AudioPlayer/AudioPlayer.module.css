@@ -3,8 +3,7 @@
   position: relative;
 }
 
-/* The outer pill is now a `role="group"` div containing the main
-   play/pause button plus the skip-back / skip-forward buttons. */
+/* Outer pill — `role="group"` wrapping play/pause + skip controls. */
 .player {
   display: inline-flex;
   align-items: center;
@@ -25,15 +24,13 @@
   opacity: 0.85;
 }
 
-/* Darken only while the button is actively being pressed — avoids the pill
-   appearing "stuck" in a dark state after a click while the mouse sits
-   over the button. */
+/* Darken only on :active — avoids a "stuck dark" state when the cursor
+   lingers over the pill after a click. */
 .player:not(.disabled):active {
   background: var(--color-orange-dark);
 }
 
-/* Main play/pause button — fills most of the pill so the click target
-   stays as large as the original single-button pill. */
+/* Main play/pause — fills most of the pill so the click target stays large. */
 .mainBtn {
   display: inline-flex;
   align-items: center;
@@ -78,8 +75,7 @@
   flex-shrink: 0;
 }
 
-/* Force the inline SVG (which authoring app exported with hard-coded fill)
-   to render in the cream pill colour. */
+/* Override the SVG's hard-coded fill so it matches the cream pill colour. */
 .wavesIdle path {
   fill: var(--color-cream);
 }
@@ -97,10 +93,8 @@
   flex-shrink: 0;
 }
 
-/* ─── Skip back / skip forward 5s controls ───
-   Positioned absolutely to the right of the pill so the pill (and play
-   button) keep their idle position when audio starts — the controls extend
-   rightward beyond the pill without re-flowing surrounding layout. */
+/* Skip ±5s controls — absolutely positioned right of the pill so the
+   pill stays in its idle position when audio starts (no layout reflow). */
 .skipGroup {
   position: absolute;
   left: 100%;
@@ -138,11 +132,9 @@
     color var(--duration-fast) var(--ease-out);
 }
 
-/* Brief flash applied via JS for ~220ms after a click. We deliberately do
-   NOT use :hover/:focus/:active styles here — on desktop the cursor sits
-   on top of the button after a click, which would leave it "stuck" lit;
-   on touch :hover lingers until the next tap. The JS-driven class
-   guarantees the lit state always self-clears. */
+/* JS-driven press flash (~220ms). Not :hover/:focus/:active because the
+   cursor parks on the button after click and `:hover` lingers on touch —
+   both leave the button visually "stuck" lit. */
 .skipBtn.skipBtnPressed {
   background: var(--color-cream);
   color: var(--color-orange);
@@ -153,9 +145,7 @@
   outline-offset: 2px;
 }
 
-/* Compact variant — used on Insider Insights story rows. Same anatomy, just
-   smaller padding, smaller bubble, and a tighter min-width to fit alongside
-   the story copy. */
+/* Compact variant — used on Insider Insights story rows. */
 .playerSm {
   padding: 3px;
   height: 36px;

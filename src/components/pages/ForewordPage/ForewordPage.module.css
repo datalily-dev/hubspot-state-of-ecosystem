@@ -29,7 +29,7 @@
   justify-content: center;
 }
 
-/* Top-left blob — rotated bounding box 1526.13×1385.94 @ (-770, -731) */
+/* B — Figma rotated bbox 1526.13×1385.94 @ (-770, -731). */
 .gradientBWrap {
   left: calc(var(--foreword-offset-x) + var(--foreword-w) * -770 / 1440);
   top: calc(var(--foreword-w) * -731 / 1440);
@@ -49,7 +49,7 @@
   max-width: none;
 }
 
-/* Lower-right blob — rotated bounding box 1846.88×1784.91 @ (409.7, 1271) */
+/* A — Figma rotated bbox 1846.88×1784.91 @ (409.7, 1271). */
 .gradientAWrap {
   left: calc(var(--foreword-offset-x) + var(--foreword-w) * 409.7 / 1440);
   top: calc(var(--foreword-w) * 1271 / 1440);
@@ -218,16 +218,14 @@
 }
 
 @media (width <= 900px) {
-  /* Upper-left blob: top as % of page height keeps it proportional
-     regardless of how tall the mobile content grows. */
+  /* Anchor blobs to % of page height so they stay proportional as the
+     mobile content height grows (text reflows to ~2× desktop). */
   .gradientBWrap {
     left: calc(var(--foreword-offset-x) + var(--foreword-w) * -0.45);
     top: -25%;
     width: 115%;
   }
 
-  /* Lower-right blob: 60% of page height keeps it in the lower third
-     on any content-driven page height (mobile text reflows to ~2× desktop height). */
   .gradientAWrap {
     left: calc(var(--foreword-offset-x) + var(--foreword-w) * 0.05);
     top: 60%;

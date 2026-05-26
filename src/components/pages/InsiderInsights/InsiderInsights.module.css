@@ -9,9 +9,7 @@
   overflow-x: clip;
 }
 
-/* ─── Decorative background gradients (Figma 2193:2528, 2193:2529) ───
-   Two soft orange blob shapes at 5% opacity. B sits in the upper-left
-   (rotated -116°), A in the lower-right (y-flipped, rotated -43.69°). */
+/* Decorative blobs (Figma 2193:2528, 2193:2529). B: upper-left. A: lower-right. */
 .gradients {
   position: absolute;
   left: 0;
@@ -31,9 +29,7 @@
   justify-content: center;
 }
 
-/* B — upper-left blob (Figma 2193:2529).
-   Rotated bbox 1870.587×1918.331 @ left=-664, top=-816.9
-   Inner gradient image is 1468.62×1364.925; transform rotate(-116°). */
+/* B — Figma rotated bbox 1870.587×1918.331 @ (-664, -817), rotate(-116°). */
 .gradientBWrap {
   left: calc(var(--insider-offset-x) + var(--insider-w) * -664 / 1440);
   top: calc(var(--insider-w) * -816.9 / 1440);
@@ -53,10 +49,7 @@
   max-width: none;
 }
 
-/* A — lower-right blob (Figma 2193:2528).
-   Rotated bbox 2139.596×2134.724 @ left=calc(41.67%+38.28px), top=661
-   41.67% of 1440 = 600.05, +38.28 = 638.33
-   Inner gradient image is 1586.949×1436.241; transform scaleY(-1) rotate(-43.69°). */
+/* A — Figma rotated bbox 2139.596×2134.724 @ (638.33, 661), scaleY(-1) rotate(-43.69°). */
 .gradientAWrap {
   left: calc(var(--insider-offset-x) + var(--insider-w) * 638.33 / 1440);
   top: calc(var(--insider-w) * 661 / 1440);
@@ -171,9 +164,7 @@
   display: block;
 }
 
-/* Two avatar slots (desktop left, mobile inline with byline). Default
-   visibility is set here and flipped inside the mobile media query so the
-   correct copy shows up at each breakpoint without duplicating layout. */
+/* Two avatar slots — visibility flips at the mobile breakpoint below. */
 .avatarDesktop {
   display: block;
 }
@@ -336,8 +327,7 @@
 
 /* ─── Responsive ─── */
 @media (width <= 900px) {
-  /* Reflow gradients off content-driven mobile height instead of the
-     1440-frame absolute coordinates. */
+  /* Reflow gradients against the tall mobile body, not the 1440 artboard. */
   .gradientBWrap {
     left: calc(var(--insider-offset-x) + var(--insider-w) * -0.5);
     top: -8%;

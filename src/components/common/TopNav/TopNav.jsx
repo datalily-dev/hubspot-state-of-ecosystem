@@ -24,29 +24,22 @@ const DEFAULT_CONFIG = {
   showFilterIndicator: true,
 };
 
-/**
- * Single, always-on top navigation bar floating above the slide deck.
- *
- * Rendered once at the deck level (NOT per page), so transitions don't mount /
- * unmount the bar — eliminating the colored seam previously visible during
- * horizontal slide animations. Background is fully transparent; only the brand
- * marks (orange logo + buttons) sit above the slides. Text color is driven
- * by the active slide's variant via `slideTheme`, so the filter pill label
- * stays legible on both light and dark page palettes.
- *
- * Each PageShell reserves `--top-nav-height` of top padding so page content
- * doesn't start under this bar; that reserved space scrolls with the page as
- * the user scrolls within a long slide.
- */
-// Maps the active partner-type filter to the matching hubspot.com landing
-// page. Solutions and Technology each have a dedicated funnel; anything else
-// (no filter, or future partner types) falls back to the umbrella page.
+// "Become a Partner" CTA target per active partner-type filter. Falls back to
+// the umbrella page when no filter is set (or for any future partner type).
 const PARTNER_LINKS = {
   technology: 'https://www.hubspot.com/partners/technology',
   solutions: 'https://www.hubspot.com/partners/solutions',
 };
 const DEFAULT_PARTNER_LINK = 'https://www.hubspot.com/partners';
 
+/**
+ * Persistent top nav rendered once at the deck level (not per page), so
+ * slide transitions never mount/unmount it. Background is transparent; text
+ * color comes from the active slide's variant via `slideTheme`.
+ *
+ * PageShell reserves `--top-nav-height` of top padding so content never
+ * starts behind the bar.
+ */
 export default function TopNav() {
   const { confirmedFilters, filterSummary, hasActiveFilters, resetFilters } = useFilters();
   const { activeAnchor, slideTheme } = useSlideDeck();
@@ -54,22 +47,15 @@ export default function TopNav() {
   const learnMoreHref =
     PARTNER_LINKS[confirmedFilters.partnerType] ?? DEFAULT_PARTNER_LINK;
 
-  // Tracks whether the active slide's scroll container has moved past the top.
-  // While at the top the nav is fully transparent so the hero composition reads
-  // cleanly; once the user scrolls, a slide-bg-colored layer fades in behind
-  // the nav so the menu/CTA text never overlays page content.
+  // Drives the bg-color fade-in once the active slide scrolls past the top
+  // (keeps the hero clean, then keeps nav text legible over page content).
   const [scrolled, setScrolled] = useState(false);
 
-  // Attach the scroll listener directly to the active slide's scroll
-  // container. Each slide is its own scroller (see SlideDeck.module.css), and
-  // on iOS Safari scroll events from internal scrollers don't reliably reach
-  // a capture-phase listener on `window` — leaving the nav transparent over
-  // content. Direct attachment fires consistently across browsers.
-  // On slide change we also re-evaluate from the new slide's actual scrollTop
-  // because reverse-direction navigation (wheel up at top edge, ArrowUp,
-  // leftward swipe) seats the destination slide at its BOTTOM via
-  // SlideDeck's `landAt: 'bottom'`, so assuming scrollTop = 0 would leave
-  // the nav transparent over content.
+  // Listen on the active slide's scroller directly — each slide is its own
+  // scroll container, and iOS Safari doesn't reliably bubble those scroll
+  // events to `window`. Re-evaluating on slide change is required because
+  // reverse-direction navigation seats the new slide at its bottom (see
+  // SlideDeck `landAt: 'bottom'`), not at scrollTop 0.
   useEffect(() => {
     const section = document.getElementById(activeAnchor);
     const scroller = section?.parentElement ?? null;
@@ -79,15 +65,12 @@ export default function TopNav() {
       setScrolled(scroller.scrollTop > SCROLL_REVEAL_PX);
     };
 
-    // Initial read after the slide-change `seatScroll` has run. rAF defers
-    // until after the layout pass so we read the seated value, not the
-    // pre-seat one.
+    // rAF defers until after SlideDeck's `seatScroll` has run.
     const rafId = window.requestAnimationFrame(evaluate);
 
     scroller.addEventListener('scroll', evaluate, { passive: true });
-    // Also re-evaluate on resize/orientation change — the scroll position
-    // can shift relative to the viewport and the user may end up at a new
-    // edge state without firing a scroll event.
+    // Resize can shift scroll position relative to the viewport without
+    // emitting a scroll event (e.g. mobile URL bar collapse).
     window.addEventListener('resize', evaluate, { passive: true });
 
     return () => {

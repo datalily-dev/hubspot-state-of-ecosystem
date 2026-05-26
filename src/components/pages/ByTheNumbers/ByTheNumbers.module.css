@@ -9,9 +9,7 @@
   overflow-x: clip;
 }
 
-/* ─── Decorative background gradients (Figma 2194:2342, 2194:2343) ───
-   Two soft orange blob shapes. A: upper-right, rotated and y-flipped.
-   B: lower-left, rotated 160°. */
+/* Decorative blobs (Figma 2194:2342, 2194:2343). A: upper-right. B: lower-left. */
 .gradients {
   position: absolute;
   left: 0;
@@ -31,12 +29,9 @@
   justify-content: center;
 }
 
-/* A — rotated bbox 1824.158×1926.469 @ (calc(33.33% + 59px), -991.16).
-   Figma's exact spec uses left=539 in a 1440 frame. We shift ~70px
-   leftward (left=470) so the visible curve clears "a glance" instead
-   of interrupting it — our HubSpot Sans fallback renders the heading
-   slightly wider than the Figma reference, pushing "glance" into the
-   absolute Figma position of the gradient's curve. */
+/* A — Figma rotated bbox 1824.158×1926.469 @ (left=539, top=-991).
+   We shift ~70px left (470) so our slightly-wider fallback heading clears
+   the gradient curve — keeps "a glance" from colliding with the blob. */
 .gradientAWrap {
   left: calc(var(--btn-offset-x) + var(--btn-w) * 470 / 1440);
   top: calc(var(--btn-w) * -991 / 1440);
@@ -56,7 +51,7 @@
   max-width: none;
 }
 
-/* B — rotated bbox 1849.872×1781.919 @ (-1040, 29) */
+/* B — Figma rotated bbox 1849.872×1781.919 @ (-1040, 29). */
 .gradientBWrap {
   left: calc(var(--btn-offset-x) + var(--btn-w) * -1040 / 1440);
   top: calc(var(--btn-w) * 29 / 1440);
@@ -383,10 +378,8 @@
   margin: 0;
 }
 
-/* ─── Partner carousel slides ───
-   All slides stack at inset:0. Active sits at 0; outgoing sits at -100%;
-   the rest park offscreen at 100% with no transition so they don't streak
-   across the card when the index advances. */
+/* All slides stack at inset:0. Active=0, outgoing=-100%, rest park at
+   100% with no transition so they don't streak across when the index advances. */
 .slide {
   transform: translate3d(100%, 0, 0);
   transition: none;
@@ -419,9 +412,8 @@
 
 /* ─── Responsive — collapse to 2 cols, then 1 col on small screens ─── */
 @media (width <= 900px) {
-  /* Dissolve the two row grids into one continuous 2-col flow so cards
-     pair up naturally instead of leaving a gap when a row has an odd
-     number of items (e.g. the 3-card top row at tablet width). */
+  /* Flatten the two row grids into one 2-col flow so odd-count rows
+     (the 3-card top row) don't leave a gap. */
   .rowTop,
   .rowBottom {
     display: contents;

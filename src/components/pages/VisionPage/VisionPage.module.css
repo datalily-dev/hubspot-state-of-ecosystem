@@ -9,9 +9,7 @@
   overflow-x: clip;
 }
 
-/* ─── Decorative background gradients (Figma 2193:1824, 2193:1825) ───
-   Two soft orange blob shapes at 5% opacity. B sits in the upper-left
-   (rotated and y-flipped), A in the lower-right (rotated -160°). */
+/* Decorative blobs (Figma 2193:1824, 2193:1825). B: upper-left. A: lower-right. */
 .gradients {
   position: absolute;
   left: 0;
@@ -31,9 +29,7 @@
   justify-content: center;
 }
 
-/* B — upper-left blob.
-   Figma: rotated bbox 1921.421×1811.049 @ left=-763, top=168
-   Inner gradient image is 1610.819×1457.845; transform scaleY(-1) rotate(-165.68°). */
+/* B — Figma rotated bbox 1921.421×1811.049 @ (-763, 168), scaleY(-1) rotate(-165.68°). */
 .gradientBWrap {
   left: calc(var(--vision-offset-x) + var(--vision-w) * -763 / 1440);
   top: calc(var(--vision-w) * 168 / 1440);
@@ -53,10 +49,7 @@
   max-width: none;
 }
 
-/* A — lower-right blob.
-   Figma: rotated bbox 1846.883×1784.908 @ left=calc(33.33%+69.7px), top=1307.01
-   33.33% of 1440 = 480, +69.7 = 549.7
-   Inner gradient image is 1468.62×1364.925; transform rotate(-160°). */
+/* A — Figma rotated bbox 1846.883×1784.908 @ (549.7, 1307), rotate(-160°). */
 .gradientAWrap {
   left: calc(var(--vision-offset-x) + var(--vision-w) * 549.7 / 1440);
   top: calc(var(--vision-w) * 1307.01 / 1440);
@@ -264,8 +257,7 @@
 
 /* ─── Responsive ─── */
 @media (width <= 900px) {
-  /* Reflow gradients to lean on the tall mobile body height instead of
-     1440-frame absolute coordinates. */
+  /* Reflow gradients against the tall mobile body, not the 1440 artboard. */
   .gradientBWrap {
     left: calc(var(--vision-offset-x) + var(--vision-w) * -0.5);
     top: 5%;

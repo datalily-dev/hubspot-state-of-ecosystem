@@ -4,9 +4,8 @@ import SlideDeck from './components/common/SlideDeck/SlideDeck';
 import CoverPage from './components/pages/CoverPage/CoverPage';
 import styles from './App.module.css';
 
-// Below-the-fold pages are code-split so they don't block initial paint or
-// inflate the main JS chunk. Each gets its own Suspense boundary so chunks
-// can resolve independently (one slow page won't gate the others).
+// Code-split below-the-fold pages; one Suspense boundary per page so a slow
+// chunk doesn't gate the others.
 const NavigationPage = lazy(() => import('./components/pages/NavigationPage/NavigationPage'));
 const ForewordPage = lazy(() => import('./components/pages/ForewordPage/ForewordPage'));
 const ByTheNumbers = lazy(() => import('./components/pages/ByTheNumbers/ByTheNumbers'));

@@ -1,9 +1,5 @@
-/* ─── Themed Dropdown (combobox + listbox) ───────────────────────────────
-   Replaces the native <select> so the picker matches the page theme on
-   mobile (iOS Safari otherwise renders its own picker UI). The `bar`
-   variant mirrors the dark teal "bar" tab style used on Growth/Short Takes
-   so the dropdown reads as a continuation of the tab control collapsed
-   into a single row. */
+/* Themed combobox/listbox — see Dropdown.jsx JSDoc. The `bar` variant
+   mirrors the dark-teal "bar" tab style on Growth/Short Takes. */
 
 .root {
   position: relative;
@@ -135,10 +131,8 @@
   color: currentColor;
 }
 
-/* ─── Flush variant ──────────────────────────────────────────────────
-   Edge-to-edge band: square corners and only the top hairline border
-   remains on both the trigger and the open list panel. Used by Growth's
-   mobile dropdown which extends to the viewport edges. */
+/* Flush variant — edge-to-edge band with square corners. Used by Growth's
+   mobile dropdown that extends to the viewport edges. */
 .flush .trigger {
   border: none;
   border-radius: 0;

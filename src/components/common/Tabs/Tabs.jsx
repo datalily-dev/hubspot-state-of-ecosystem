@@ -2,16 +2,8 @@ import { useId } from 'react';
 import styles from './Tabs.module.css';
 
 /**
- * Reusable pill-style tab control.
- *
- * Renders a horizontal list of tab buttons. The selected tab is highlighted
- * with the brand orange fill; inactive tabs use a translucent surface that
- * picks up the page background. Designed to be reused on Short Takes (page 5)
- * and any future page that needs the same control.
- *
- * Implements the WAI-ARIA tab pattern (tablist / tab / aria-selected) so that
- * screen readers and keyboard users get the expected semantics. Arrow key
- * navigation moves between tabs; Home / End jump to the first / last tab.
+ * Pill-style tab control. Implements the WAI-ARIA tab pattern with arrow-key
+ * navigation (Home/End jump to first/last). Used by Short Takes and Growth.
  *
  * @param {{
  *   tabs: { id: string, label: string }[],

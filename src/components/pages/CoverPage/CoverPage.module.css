@@ -10,10 +10,7 @@
   display: flex;
   flex-direction: column;
 
-  /* `overflow-x: clip` prevents any horizontal escape (the slide itself
-     also enforces `overflow-x: hidden` as a backstop). `.gradients`
-     carries its own `overflow: hidden`, so the gradient art is still
-     contained. */
+  /* Belt-and-braces horizontal containment; `.gradients` has its own clip. */
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -35,7 +32,7 @@
   justify-content: center;
 }
 
-/* Rotated bounding box: 1379.496×1399.127 @ (-651, -374.34) */
+/* Figma rotated bbox 1379.496×1399.127 @ (-651, -374). */
 .gradientAWrap {
   left: calc(var(--cover-offset-x) + var(--cover-w) * -651 / 1440);
   top: -374px;
@@ -55,7 +52,7 @@
   max-width: none;
 }
 
-/* Rotated bounding box: 1308.155×1232.028 @ (-175.68, -759) */
+/* Figma rotated bbox 1308.155×1232.028 @ (-175.68, -759). */
 .gradientBWrap {
   left: calc(var(--cover-offset-x) + var(--cover-w) * -175.68 / 1440);
   top: -759px;
@@ -208,11 +205,9 @@
 .colDivider {
   position: absolute;
 
-  /* Draw above the sticky PageNav footer (z-index var(--z-raised)) so the
-     line continues unbroken through the bottom bar, matching the full-
-     artboard divider in Figma. The line's horizontal position (~59% of
-     content-vw) threads between the centered dot pill and the right-side
-     arrow controls, so no nav controls are visually crossed. */
+  /* Sits above the sticky PageNav so the divider runs unbroken through it.
+     Horizontal position (~59% of content-vw) threads between the dot pill
+     and the right-side arrows, so no nav control is visually crossed. */
   z-index: calc(var(--z-raised) + 1);
   top: 0;
   height: 100vh;

@@ -2,16 +2,12 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import styles from './Dropdown.module.css';
 
 /**
- * Themed dropdown / single-select listbox.
+ * Themed single-select listbox — replaces native `<select>` so the picker
+ * matches the page theme instead of inheriting the iOS/macOS system UI.
  *
- * Replaces the native `<select>` so we can match the page theme (teal-dark
- * surface, cream text, orange selected state) instead of inheriting the
- * system-native picker on iOS / macOS.
- *
- * Implements the WAI-ARIA combobox + listbox pattern with full keyboard
- * support (Arrow keys, Home / End, Enter / Space to choose, Escape to close,
- * type-ahead to jump to an item by first letter). The active option is
- * tracked via `aria-activedescendant` so the trigger keeps focus.
+ * Implements the WAI-ARIA combobox + listbox pattern: arrow keys, Home/End,
+ * Enter/Space to commit, Escape to close, and first-letter type-ahead. The
+ * trigger keeps focus; the active row is exposed via `aria-activedescendant`.
  *
  * @param {{
  *   options: { id: string, label: string }[],

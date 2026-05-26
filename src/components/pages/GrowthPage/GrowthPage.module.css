@@ -8,18 +8,15 @@
   overflow-x: clip;
 }
 
-/* ─── Decorative background gradients (Figma 2296:2737 / 2296:2738) ───
-   Same orange blob shape used on Vision (5% opacity on dark teal). One
-   sits off the upper-right corner, the other off the lower-left. */
+/* Decorative blobs (Figma 2296:2737 / 2296:2738). A: upper-right. B: lower-left. */
 .gradients {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
 
-  /* Blob B is anchored at y=715/1440 with a ~1785/1440 height, which extends
-     well past the page's natural bottom. Without clipping here, that overflow
-     inflates the document scroll height (the page only clips overflow-x). */
+  /* Clip here too — blob B extends past the page bottom and would
+     inflate document scroll height (the page only clips overflow-x). */
   overflow: clip;
 }
 
@@ -31,9 +28,7 @@
   justify-content: center;
 }
 
-/* A — upper-right blob.
-   Figma rotated bbox 1870.587×1918.331 anchored at left=calc(50% + 65.15px),
-   top=-816.9, with the inner image rotated -116°. */
+/* A — Figma rotated bbox 1870.587×1918.331 @ (calc(50%+65), -817), rotate(-116°). */
 .gradientAWrap {
   left: calc(50% + var(--gw) * 65.15 / 1440);
   top: calc(var(--gw) * -816.9 / 1440);
@@ -46,9 +41,7 @@
   transform: rotate(-116deg);
 }
 
-/* B — lower-left blob.
-   Figma rotated bbox 1846.883×1784.908 anchored at left=-900, top=715.01,
-   with the inner image rotated -160°. */
+/* B — Figma rotated bbox 1846.883×1784.908 @ (-900, 715), rotate(-160°). */
 .gradientBWrap {
   left: calc(var(--gw) * -900 / 1440);
   top: calc(var(--gw) * 715.01 / 1440);
@@ -139,10 +132,8 @@
   margin: 0;
 }
 
-/* Mobile-only dropdown (hidden on desktop). Toggled into view by the
-   @media (max-width: 640px) block at the bottom of this file. The themed
-   Dropdown component handles its own visuals — this wrapper only controls
-   show/hide and width. */
+/* Mobile-only dropdown wrapper — toggled visible by the 640px media query
+   below. The themed Dropdown component owns its own visuals. */
 .tabSelectWrap {
   display: none;
   width: 100%;
@@ -323,9 +314,8 @@
   gap: var(--space-6);
 }
 
-/* Figma 2316:3250 — title + tabs + viz are stacked tightly together
-   (flex-col gap-20). Keeping them in one wrapper means .chartPanel's
-   space-between only separates this whole cluster from the source line. */
+/* Figma 2316:3250 — title+tabs+viz grouped (gap 20) so .chartPanel's
+   space-between only separates this cluster from the source line. */
 .chartTop {
   display: flex;
   flex-direction: column;

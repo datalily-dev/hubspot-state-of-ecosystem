@@ -54,11 +54,7 @@
      the page itself — no cream strip behind a teal page, etc. */
   background-color: var(--page-bg-color, var(--color-cream));
 
-  /* Default: only the active slide is visible. Non-active slides sit at
-     opacity 0 so the viewport never shows two background colors at once
-     during steady state. The 'push' transition (mode='slide') re-enables
-     a timed opacity transition; the 'crossfade' transition (mode='fade')
-     drives opacity on the whole track instead and disables this one. */
+  /* Only the active slide is visible at rest; transitions animate this. */
   opacity: 0;
 }
 
@@ -66,11 +62,7 @@
   opacity: 1;
 }
 
-/* Push transition (adjacent hops): track translates 100vw to the next slide
-   while the outgoing slide fades to 0 and the incoming slide fades to 1,
-   all in the same time window. The simultaneous opacity envelope softens
-   the color seam at the slide boundary so the eye never perceives a hard
-   vertical color edge crossing the viewport. */
+/* Adjacent-hop push transition (see SlideDeck.jsx JSDoc). */
 .track[data-mode="slide"] {
   transition: transform var(--slide-ms, 500ms) cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -79,27 +71,16 @@
   transition: opacity var(--slide-ms, 500ms) ease;
 }
 
-/* Crossfade transition (non-adjacent / menu hops): the entire track fades
-   out, the transform snaps to the target index while invisible, then the
-   track fades back in. Per-slide opacity flips instantly under the track-
-   level opacity envelope so it never interferes. */
+/* Non-adjacent-hop crossfade (see SlideDeck.jsx JSDoc). */
 .track[data-mode="fade"] {
   transition: opacity var(--fade-half-ms, 220ms) var(--ease-out);
 }
 
-/* PageNav floats over content at the bottom of the viewport — it does NOT
-   reserve layout space. Implementation:
-     • `position: sticky; bottom: 0` keeps the bar pinned to the slide's
-       viewport bottom as page content scrolls beneath it. Sticky (not
-       fixed) so it scopes to its own slide — non-active slides sit at
-       opacity 0, so exactly one nav is ever visible.
-     • `margin-top: -<bar height>` pulls the footer out of flow so it
-       overlays the bottom of the page content instead of pushing it up
-       or extending the slide's scroll height.
-   The bar background is transparent (only the pill and arrow buttons
-   paint), and `pointer-events: none` on the bar lets clicks pass through
-   the empty regions to content underneath; pill and arrows re-enable
-   `pointer-events: auto` so the controls still receive input. */
+/* PageNav floats over content at the bottom of the slide's scroller.
+   `sticky` (scoped per slide) + negative `margin-top` pulls the bar out of
+   flow so it overlays the page instead of extending its scroll height.
+   `pointer-events: none` lets clicks pass through the transparent gaps;
+   the pill and arrows re-enable `pointer-events: auto` inline. */
 .pageNavFooter {
   position: sticky;
   bottom: 0;
