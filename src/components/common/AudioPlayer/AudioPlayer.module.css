@@ -97,8 +97,8 @@
   flex-shrink: 0;
 }
 
-/* ─── Skip back / skip forward 5s controls ─── */
-/* Positioned absolutely to the right of the pill so the pill (and play
+/* ─── Skip back / skip forward 5s controls ───
+   Positioned absolutely to the right of the pill so the pill (and play
    button) keep their idle position when audio starts — the controls extend
    rightward beyond the pill without re-flowing surrounding layout. */
 .skipGroup {
