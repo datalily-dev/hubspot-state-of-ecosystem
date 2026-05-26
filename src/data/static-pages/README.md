@@ -15,18 +15,36 @@ See [`../README.md`](../README.md) for the full slide-to-file index.
 | `insider-insights.json` | `InsiderInsights`     | Section heading + partner stories list |
 | `partner-carousel.json` | `ByTheNumbers` carousel | Partner slide names (`partnerSlides.js` wires images) |
 
-> **Video assets are not in JSON.** The Navigation page partner-story
-> video is imported directly in
-> `../../components/pages/NavigationPage/NavigationPage.jsx` from
-> `../../assets/foreword/`. Swap the file there to change the video.
-> Foreword and Vision poster/video files stay as imports in their page
-> components.
+> **Binary assets are not in JSON.** Video files, poster images, audio
+> clips, and headshots are `import`-ed at the top of each page component
+> so Vite can fingerprint and bundle them. JSON only carries data the UI
+> needs (labels, durations, alt text). See
+> [the top-level README](../../../README.md#adding-media-images-video-audio)
+> for the full media-wiring guide; the relevant component file for each
+> page is listed in the table above.
 
 Filter modal labels live in [`../filters.json`](../filters.json) under `ui`.
 
 ---
 
 ## How to edit
+
+> The dev server (`npm run dev`) hot-reloads JSON edits — save and your
+> change appears immediately. `navigationToc.js` reloads on save too.
+
+**Adding a new copy line (text only):** open the file from the table
+above, find the array/field you want to extend, add your line. Example —
+adding a new takeaway to Vision (`vision.json`):
+
+```diff
+  "takeaways": [
+    { "title": "Trust", "body": "..." },
++   { "title": "Speed", "body": "Partners who move first win the segment." },
+    { "title": "Context", "body": "..." }
+  ]
+```
+
+No component changes are needed for text-only edits.
 
 ### Cover — `cover.json`
 
@@ -116,18 +134,39 @@ Each story:
 }
 ```
 
-- `id` — unique, kebab-case, stable (used as React key)
+- `id` — unique, kebab-case, stable (used as React key, and used to look
+  up the avatar + audio file in `InsiderInsights.jsx`)
 - `tags` — single string, pipe-separated for visual chips
-- `audio.src` — leave `null` until the audio file is ready;
-  `AudioPlayer` shows the disabled idle state in that case
-- `audio.durationSeconds` — required even when `src` is `null`, so the
-  idle pill shows the correct length
+- `audio.durationSeconds` — required; drives the idle pill label
+- `audio.src` — unused in this codebase; the actual `.m4a` file is wired
+  in `InsiderInsights.jsx` via the `AUDIO` map keyed by `story.id`.
+  Leave the JSON field as `null`.
 
-To add a story: append a new object to `stories[]` with a fresh `id`.
-To reorder: rearrange the array.
+**Adding a story** (full example, including media):
+
+1. Append a new object to `stories[]` with a fresh kebab-case `id`
+   (e.g. `"valantic-acme"`).
+2. Add the headshot at `src/assets/insider-insights/<name>.webp` (320×320).
+3. Add the audio clip at `src/assets/audio/<filename>.m4a`.
+4. Open `src/components/pages/InsiderInsights/InsiderInsights.jsx` and:
+   - Add an `import` for the avatar; add a key in `AVATARS` matching the
+     story `id`.
+   - Add an `import` for the audio; add a key in `AUDIO` matching the
+     story `id`.
+
+If you only have copy (no audio yet), skip steps 3 and the `AUDIO` entry —
+the player will render its disabled idle state automatically.
+
+To reorder stories: rearrange `stories[]`.
 
 ### Partner carousel — `partner-carousel.json`
 
 - `slides[]` — `{ "id", "name" }` in display order
-- Image paths are mapped in `../../components/pages/ByTheNumbers/partnerSlides.js`
-  by `id` — add a WebP import there when adding a new partner slide
+
+**Adding a partner slide:**
+
+1. Add `{ "id": "<id>", "name": "<Brand Name>" }` to `slides[]`.
+2. Drop the WebP into `src/assets/by-the-numbers/<id>-slide.webp`
+   (480×530, q=82 — see the asset-size table in the top-level README).
+3. In `src/components/pages/ByTheNumbers/partnerSlides.js`, add an `import`
+   for the new WebP and a key in `SLIDE_SRC_BY_ID` matching the slide `id`.

@@ -62,9 +62,12 @@ Quote schema (both files):
 }
 ```
 
-`audio.durationSeconds` drives the idle pill label. An `audio.src` URL
-is optional — when omitted (the current state), the player renders its
-disabled idle state. Add `src` once the audio files are finalised.
+`audio.durationSeconds` drives the idle pill label. The actual `.m4a`
+file is **not** stored in JSON — it's wired in
+`src/components/pages/ShortTakes/ShortTakes.jsx` via the `AUDIO` map
+keyed by quote `id`. The avatar is wired the same way via the `AVATARS`
+map. Quotes without an `AUDIO`/`AVATARS` entry render the player's
+disabled idle state and skip the headshot — both fall back gracefully.
 
 ### `by-the-numbers/`
 
@@ -109,6 +112,9 @@ appears only in the Global variant.
 
 ## Adding or editing content
 
+> The dev server (`npm run dev`) hot-reloads JSON edits — no restart
+> needed.
+
 - **Edit copy for a unit already in the library:** open the relevant
   section file, find the entry under `library`, edit it in place. The
   change applies everywhere that unit is referenced.
@@ -123,6 +129,95 @@ appears only in the Global variant.
   `byFilterId` entry to a placeholder string instead of an array. By
   the Numbers does not currently use placeholders since all 17 variants
   have copy.
+
+### Worked example — adding a new partner quote
+
+Say HubSpot wants to add a new quote from "Jane Doe" of Acme Co to the
+`solutions-emea` variant of Short Takes, with a headshot and audio clip.
+
+1. **Drop the assets:**
+   - Headshot: `src/assets/short-takes/jane-doe.webp` (320×320, q=85).
+   - Audio: `src/assets/audio/Acme - Solutions Partner - EMEA.m4a`.
+2. **Add the library entry** in `short-takes/partners.json`:
+
+   ```json
+   "library": {
+     "jane-doe-acme": {
+       "title": "Why EMEA partners win with HubSpot",
+       "quote": "...",
+       "author": {
+         "name": "Jane Doe",
+         "role": "VP Partnerships, Acme",
+         "linkedIn": "https://www.linkedin.com/in/janedoe/"
+       },
+       "audio": { "durationSeconds": 42 }
+     }
+   }
+   ```
+
+3. **Reference the ID** in the variant(s) that should show it:
+
+   ```diff
+     "byFilterId": {
+   -   "solutions-emea": ["camiel-freriks-strategic", "patrick-ganzmann-scalable", "ross-breckenridge-transformed", "daryl-michel-influence"],
+   +   "solutions-emea": ["camiel-freriks-strategic", "patrick-ganzmann-scalable", "jane-doe-acme", "ross-breckenridge-transformed", "daryl-michel-influence"],
+     }
+   ```
+
+4. **Wire the avatar + audio** in
+   `src/components/pages/ShortTakes/ShortTakes.jsx`:
+
+   ```diff
+   + import janeDoe from '../../../assets/short-takes/jane-doe.webp';
+   + import janeDoeAudio from '../../../assets/audio/Acme - Solutions Partner - EMEA.m4a';
+     // …
+     const AVATARS = {
+       // …
+   +   'jane-doe-acme': janeDoe,
+     };
+     const AUDIO = {
+       // …
+   +   'jane-doe-acme': janeDoeAudio,
+     };
+   ```
+
+If you skip step 4, the page still renders — the quote appears with no
+headshot and a disabled audio pill (intentional fallback).
+
+### Worked example — adding a new stat
+
+To add a stat to the Global By the Numbers grid:
+
+1. Add the entry to `by-the-numbers/stats.json` under `library`:
+
+   ```json
+   "library": {
+     "stat-50pct-agentic": {
+       "value": "50%",
+       "description": "of partners are piloting agentic workflows, ",
+       "linkText": "per HubSpot research",
+       "linkHref": "https://example.com/agentic"
+     }
+   }
+   ```
+
+2. Add the ID to the relevant `byFilterId` arrays (order = sizing —
+   index 0/2 = `lg` hero, 1 = `md`, 3+ = `sm`):
+
+   ```diff
+   - "global": ["stat-42b", "stat-cagr", "stat-top10", "stat-300k", "stat-119b-services"],
+   + "global": ["stat-42b", "stat-cagr", "stat-top10", "stat-300k", "stat-50pct-agentic", "stat-119b-services"],
+   ```
+
+3. If the value renders too large/small at its assigned size, add a
+   `VALUE_VARIANT_BY_STAT_ID` entry in `dynamicContent.js`:
+
+   ```diff
+     const VALUE_VARIANT_BY_STAT_ID = {
+       // …
+   +   'stat-50pct-agentic': 'feature-compact',
+     };
+   ```
 
 ## Where else content can change
 

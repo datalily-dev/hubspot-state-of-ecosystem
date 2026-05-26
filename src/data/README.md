@@ -27,10 +27,23 @@ import from here — they should not hold marketing text inline.
 - **`static-pages/`** — Global copy that does not change with filters. One file per page where possible. See [`static-pages/README.md`](static-pages/README.md).
 - **`dynamic-pages/`** — Filter-dependent sections (library + `byFilterId`). See [`dynamic-pages/README.md`](dynamic-pages/README.md).
 
+## What is *not* in JSON
+
+Binary assets (images, video posters, `.mp4`, `.m4a` audio) are imported in
+the page components so Vite can fingerprint and bundle them. JSON only
+declares the data the player/UI needs (e.g. `audio.durationSeconds`).
+
+When you add a new headshot, partner slide, video, or audio clip you must
+also wire it in the page component. The top-level
+[`../../README.md`](../../README.md#adding-media-images-video-audio) has the
+full step-by-step for each media type; each per-folder README below points
+to the right component file as well.
+
 ## Preview changes
 
 ```bash
 npm run dev
 ```
 
-Then open the site and navigate to the slide you changed.
+Then open the site and navigate to the slide you changed. The dev server
+hot-reloads JSON edits — no restart needed.
