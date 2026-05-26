@@ -215,8 +215,8 @@
 /* Bottom-row small cards (232px tall) */
 .size_sm {
   min-height: min(calc(var(--btn-w) * 232 / 1440), 20vh);
-  padding-top: min(calc(var(--btn-w) * 34 / 1440), 2.5vh);
-  padding-bottom: min(calc(var(--btn-w) * 34 / 1440), 2.5vh);
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
 /* Stat value text (HubSpot Serif Medium — Figma 2405:2913) */
@@ -248,20 +248,12 @@
 }
 
 /* Top-right feature stat (e.g. 300K) */
-.value_feature.size_lg {
-  padding-top: min(calc(var(--btn-w) * 104 / 1440), 5.5vh);
-}
-
 .value_feature .cardValue {
   font-size: clamp(3rem, calc(var(--btn-w) * 100 / 1440), 6.25rem);
   line-height: calc(86 / 100);
 }
 
 /* Top-right compact currency stat (e.g. $11.9B) */
-.value_feature-compact.size_lg {
-  padding-top: min(calc(var(--btn-w) * 104 / 1440), 5.5vh);
-}
-
 .value_feature-compact .cardValue {
   font-size: clamp(2.75rem, calc(var(--btn-w) * 92 / 1440), 5.75rem);
   line-height: calc(86 / 92);
@@ -269,7 +261,6 @@
 
 /* Bottom-row long-value stat (e.g. $10K–$500K) */
 .value_compact.size_sm {
-  padding-top: min(calc(var(--btn-w) * 26 / 1440), 2vh);
   align-items: flex-start;
 }
 
@@ -282,7 +273,6 @@
 
 /* Bottom-row two-line stat (1–12 months) */
 .value_multiline.size_sm {
-  padding-top: min(calc(var(--btn-w) * 26 / 1440), 2vh);
   align-items: flex-start;
 }
 
@@ -429,23 +419,40 @@
 
 /* ─── Responsive — collapse to 2 cols, then 1 col on small screens ─── */
 @media (width <= 900px) {
+  /* Dissolve the two row grids into one continuous 2-col flow so cards
+     pair up naturally instead of leaving a gap when a row has an odd
+     number of items (e.g. the 3-card top row at tablet width). */
   .rowTop,
   .rowBottom {
+    display: contents;
+  }
+
+  .container {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-bottom: calc(var(--btn-w) * 10 / 1440);
+    gap: 10px;
+  }
+
+  .titleBlock {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  /* Hide the partner carousel at tablet width too — matches mobile. */
+  .cardImage {
+    display: none;
   }
 
   .card {
-    padding: var(--space-6) var(--space-5);
-    min-height: 220px;
+    padding: 1.75rem 1.5rem;
   }
 
   .size_lg,
   .size_md,
   .size_sm {
-    min-height: 220px;
-    padding-top: var(--space-6);
-    padding-bottom: var(--space-6);
+    min-height: 0;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
   }
 
   .size_lg .cardValue {
@@ -466,11 +473,23 @@
   .size_md .cardValue {
     font-size: clamp(2.5rem, 10vw, 4.5rem);
   }
+
+  /* Drop the divider under the middle hero value at tablet width — matches mobile. */
+  .size_md {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .size_md .cardValue {
+    width: auto;
+    padding: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
 }
 
 @media (width <= 560px) {
-  .rowTop,
-  .rowBottom {
+  .container {
     grid-template-columns: 1fr;
   }
 }
@@ -494,18 +513,9 @@
   }
 
   /* Single-column stack — 10px between every orange stat card. */
-  .rowTop,
-  .rowBottom {
+  .container {
     grid-template-columns: 1fr;
     gap: 10px;
-  }
-
-  .rowTop {
-    margin-bottom: 10px;
-  }
-
-  .rowBottom {
-    margin-bottom: 0;
   }
 
   /* "Remove min-height of orange blocks on mobile only" */
@@ -547,5 +557,10 @@
   .value_compact.size_sm,
   .value_multiline.size_sm {
     align-items: flex-start;
+  }
+
+  /* Clear the bottom nav so the last stat card isn't hidden underneath it. */
+  .body {
+    padding-bottom: var(--space-10);
   }
 }

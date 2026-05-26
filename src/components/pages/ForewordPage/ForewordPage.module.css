@@ -244,3 +244,36 @@
     max-width: none;
   }
 }
+
+/* Mobile (QA) — matches ByTheNumbers/Growth: 20px page edge, 32px headline,
+   tighter container gap, smaller avatar, byline name steps down. */
+@media (width <= 640px) {
+  .article {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: var(--space-12);
+  }
+
+  .container {
+    gap: var(--space-8);
+  }
+
+  .headline {
+    font-size: 2rem; /* 32px */
+    line-height: 1.25;
+  }
+
+  .body {
+    gap: var(--space-5);
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .bylineNameLink {
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.25;
+  }
+}

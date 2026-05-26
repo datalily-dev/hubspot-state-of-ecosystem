@@ -381,7 +381,11 @@
   }
 }
 
-@media (height <= 760px) {
+/* Scoped to `width > 640px` so short laptop viewports get a tighter hero,
+   without overriding the mobile typography set in the `width <= 640px`
+   block above (which would otherwise lose to this rule by source order on
+   narrow + short viewports like 425×730 DevTools windows). */
+@media (height <= 760px) and (width > 640px) {
   .left {
     gap: var(--space-4);
   }

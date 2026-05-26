@@ -4,10 +4,11 @@ import filtersData from '../data/filters.json';
  * Splits a URL hash into its slide anchor (slug) and filter query parts.
  * Format: `#<anchor>?<filterParams>` where either half may be missing.
  * Examples:
- *   "#by-the-numbers?partnerType=solutions&segment=smb" → { anchor: "by-the-numbers", query: "partnerType=solutions&segment=smb" }
- *   "#by-the-numbers"                                    → { anchor: "by-the-numbers", query: "" }
- *   "#partnerType=solutions"                             → { anchor: "", query: "partnerType=solutions" } (legacy)
- *   ""                                                   → { anchor: "", query: "" }
+ *   "#by-the-numbers?partnerType=solutions&segment=smb"
+ *     → { anchor: "by-the-numbers", query: "partnerType=solutions&segment=smb" }
+ *   "#by-the-numbers" → { anchor: "by-the-numbers", query: "" }
+ *   "#partnerType=solutions" → { anchor: "", query: "partnerType=solutions" } (legacy)
+ *   "" → { anchor: "", query: "" }
  *
  * Legacy hashes that contain only filter params (no anchor) are still parsed
  * correctly so existing shared links keep working.

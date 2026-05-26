@@ -87,15 +87,15 @@
   border-bottom: none;
 }
 
-.column > .item:first-child .link {
-  padding-top: 0;
-}
-
 .link {
   display: flex;
   flex-direction: column;
   gap: clamp(var(--space-2), 1vh, var(--space-4));
   padding: clamp(var(--space-3), 2.4vh, var(--space-8)) 0;
+}
+
+.column > .item:first-child .link {
+  padding-top: 0;
 }
 
 .itemLabel {
@@ -149,26 +149,25 @@
   white-space: pre-line;
 }
 
+/* Tablet — pull TOC into the page gutter and stack columns. Was previously
+   split between 900 (padding) and 768 (stack); consolidated so Navigation
+   aligns with the rest of the site's 900px tablet tier. */
 @media (width <= 900px) {
   .body {
     padding-top: var(--space-6);
     padding-left: var(--page-gutter);
     padding-right: var(--page-gutter);
+    padding-bottom: var(--space-10);
   }
 
   .toc {
     max-width: none;
+    grid-template-columns: 1fr;
+    column-gap: 0;
   }
 
   .column {
     max-width: none;
-  }
-}
-
-@media (width <= 768px) {
-  .toc {
-    grid-template-columns: 1fr;
-    column-gap: 0;
   }
 
   .colDivider {
@@ -195,5 +194,27 @@
      so there's a visual separator before the right column's first item. */
   .column > .item:last-child {
     border-bottom: 1px solid rgba(4, 39, 41, 0.18);
+  }
+}
+
+/* Mobile (QA) — 20px page edge, tighter TOC typography, smaller video radius. */
+@media (width <= 640px) {
+  .body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .itemTitle {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.3;
+  }
+
+  .itemDescription {
+    font-size: 1rem; /* 16px */
+    line-height: 1.375;
+  }
+
+  .link {
+    padding: var(--space-3) 0;
   }
 }

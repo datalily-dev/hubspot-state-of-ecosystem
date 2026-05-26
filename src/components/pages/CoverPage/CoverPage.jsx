@@ -113,16 +113,14 @@ export default function CoverPage() {
               <p className={styles.statLabel}>
                 {stat.label}
                 {stat.linkText && (
-                  <>
-                    <a
-                      href={stat.linkHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.statLink}
-                    >
-                      {stat.linkText}
-                    </a>
-                  </>
+                  <a
+                    href={stat.linkHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.statLink}
+                  >
+                    {stat.linkText}
+                  </a>
                 )}
               </p>
             </div>

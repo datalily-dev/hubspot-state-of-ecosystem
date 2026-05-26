@@ -315,6 +315,42 @@
   background: rgba(248, 245, 238, 0.18);
 }
 
+/* Tablet — pull body padding back to the page gutter (drop the Figma
+   180px global margin), let container/quotes/heading stretch full-width,
+   and tighten the header→tabs→quote rhythm. Mirrors GrowthPage's tablet
+   block as the other dynamic filter page. */
+@media (width <= 900px) {
+  .body {
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+  }
+
+  .container,
+  .quotes {
+    max-width: none;
+  }
+
+  .heading {
+    max-width: none;
+  }
+
+  .quote {
+    max-width: none;
+  }
+
+  .header {
+    margin-bottom: var(--space-6);
+  }
+
+  .tabSection {
+    margin-bottom: var(--space-6);
+  }
+
+  .quoteInner {
+    gap: var(--space-5);
+  }
+}
+
 @media (width <= 640px) {
   .quote {
     max-width: none;

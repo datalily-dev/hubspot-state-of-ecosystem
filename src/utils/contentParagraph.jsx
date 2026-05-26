@@ -9,22 +9,24 @@ export function ContentParagraph({ paragraph, as: Tag = 'p', className }) {
   if (paragraph?.segments) {
     return (
       <Tag className={className}>
-        {paragraph.segments.map((seg, i) =>
-          seg.href ? (
-            <a
-              key={i}
-              href={seg.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {seg.text}
-            </a>
-          ) : seg.italic ? (
-            <em key={i}>{seg.text}</em>
-          ) : (
-            <span key={i}>{seg.text}</span>
-          ),
-        )}
+        {paragraph.segments.map((seg, i) => {
+          if (seg.href) {
+            return (
+              <a
+                key={i}
+                href={seg.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {seg.text}
+              </a>
+            );
+          }
+          if (seg.italic) {
+            return <em key={i}>{seg.text}</em>;
+          }
+          return <span key={i}>{seg.text}</span>;
+        })}
       </Tag>
     );
   }
