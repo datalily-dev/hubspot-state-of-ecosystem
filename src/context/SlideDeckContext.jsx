@@ -2,10 +2,18 @@ import { createContext, useContext, useMemo } from 'react';
 
 const SlideDeckContext = createContext(null);
 
-export function SlideDeckProvider({ activeAnchor, slideTheme, children }) {
+export function SlideDeckProvider({
+  activeAnchor,
+  slideTheme,
+  menuMode = null,
+  openMenu,
+  closeMenu,
+  selectFromMenu,
+  children,
+}) {
   const value = useMemo(
-    () => ({ activeAnchor, slideTheme }),
-    [activeAnchor, slideTheme],
+    () => ({ activeAnchor, slideTheme, menuMode, openMenu, closeMenu, selectFromMenu }),
+    [activeAnchor, slideTheme, menuMode, openMenu, closeMenu, selectFromMenu],
   );
   return (
     <SlideDeckContext.Provider value={value}>

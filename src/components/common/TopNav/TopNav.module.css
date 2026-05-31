@@ -147,6 +147,10 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2); /* 8px */
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
   color: var(--color-orange);
   font-size: var(--text-base); /* 16px */
   line-height: 1.375rem;       /* 22px — matches Figma */
@@ -187,12 +191,37 @@
 }
 
 @media (width <= 640px) {
-  .filterIndicator,
-  .menuBtn span {
+  .filterIndicator {
     display: none;
   }
 
   .logoSvg {
     height: 1.75rem;
+  }
+
+  .actions {
+    gap: var(--space-6); /* 12px */
+  }
+
+  .learnMoreBtn {
+    padding: var(--space-2) var(--space-4); /* 8px / 16px */
+  }
+}
+
+
+@media (width <= 360px) {
+  .nav {
+    padding-left: var(--space-3);  /* 12px */
+    padding-right: var(--space-3);
+  }
+
+  .actions {
+    gap: var(--space-3); /* 12px */
+  }
+
+  .learnMoreBtn {
+    height: 2rem;                          /* 32px */
+    padding: var(--space-1) var(--space-3); /* 4px / 12px */
+    font-size: var(--text-sm);             /* 14px */
   }
 }

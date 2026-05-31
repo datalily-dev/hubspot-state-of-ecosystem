@@ -170,3 +170,4 @@ To reorder stories: rearrange `stories[]`.
    (480×530, q=82 — see the asset-size table in the top-level README).
 3. In `src/components/pages/ByTheNumbers/partnerSlides.js`, add an `import`
    for the new WebP and a key in `SLIDE_SRC_BY_ID` matching the slide `id`.
+  

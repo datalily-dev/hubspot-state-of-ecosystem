@@ -13,27 +13,22 @@
   },
   "bodyAfterVideo": [
     "Ecosystems, in particular, take on new weight. They are no longer peripheral networks of partnerships. They become operating systems—the places where intelligence is applied, shaped, and made useful.",
-    "HubSpot sits at a useful intersection of this shift: a platform rich in customer context, paired with a partner ecosystem that carries judgment, specialization, and relationships. The platform holds the data. The partners make it matter.",
-    "And that role is expanding.",
-    "Partners have always been the ones who translate capability into reality —especially for the millions of businesses without massive IT teams or transformation budgets. They close the gap between what software can do and what a business can actually use.",
-    "That gap is widening again.",
     {
       "segments": [
-        { "text": "Estimates now put the ecosystem economy as high as $100 trillion by 2030. The leading AI companies are responding accordingly. Anthropic has committed " },
-        { "text": "$100 million to its partner network", "href": "https://www.anthropic.com/news/claude-partner-network" },
-        { "text": ". " },
-        { "text": "OpenAI is building alliances", "href": "https://fortune.com/2026/02/23/openai-partners-with-mckinsey-bcg-accenture-and-capgemini-to-push-its-frontier-ai-agent-platform/" },
-        { "text": " with firms like Boston Consulting Group and McKinsey & Company." }
-      ]
-    },
+      { "text": "HubSpot sits at the " },
+      { "text": "intersection", "bold": true },
+      { "text": " of this shift: a platform rich in customer context, paired with a partner ecosystem that carries judgment, specialization, and relationships. The platform holds the data. The partners make it matter." }
+    ]},
+      "Partners have always been the ones who translate capability into reality—especially for the millions of businesses without massive IT teams or transformation budgets. They close the gap between what software can do and what a business can actually use.",
+      "Estimates now put the ecosystem economy as high as $100 trillion by 2030. The leading AI companies are responding accordingly. Anthropic has committed $100 million to its partner network. OpenAI is building alliances with firms like Boston Consulting Group and McKinsey & Company.",
     {
       "segments": [
         { "text": "For HubSpot, IDC projects the partner opportunity will " },
-        { "text": "more than double by 2030", "href": "https://www.hubspot.com/technology/ecosystem-resources" },
+        { "text": "more than double by 2030", "href": "https://offers.hubspot.com/hubspot-ecosystem-idc" },
         { "text": ", with the mid-market—the segment most in need of guidance, most willing to invest in it, and least saturated—driving that growth." }
       ]
     },
-    "This report is for the people who will close it."
+    "The gap between what’s available and what’s useful is widening. This report is for the people who will close it."
   ],
   "author": {
     "name": "Zack Kass",

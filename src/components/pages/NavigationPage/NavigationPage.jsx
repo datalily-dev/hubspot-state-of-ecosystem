@@ -2,17 +2,25 @@ import PageShell from '../../common/PageShell/PageShell';
 import VideoHero from '../../common/VideoHero/VideoHero';
 import { NAVIGATION_TOC } from '../../../data/static-pages/navigationToc';
 import navVideoSrc from '../../../assets/foreword/HubSpot-Video-Placeholder.mp4';
+import { useSlideDeck } from '../../../context/SlideDeckContext';
 import styles from './NavigationPage.module.css';
 
 /** Page 2 — Navigation. Static table of contents with a partner-story video
  *  pinned to the top of the right column (Figma 2463:3466). */
 export default function NavigationPage() {
+  const { menuMode, selectFromMenu } = useSlideDeck();
+  // When the user opened this page via the hamburger (menu overlay), a TOC
+  // click needs to dismiss the overlay before the hashchange-driven goTo
+  // fires — otherwise the overlay would unmount mid-animation revealing the
+  // user's previous slide for a frame.
+  const handleSelect = menuMode != null ? selectFromMenu : null;
   const left = NAVIGATION_TOC.slice(0, 4);
   const right = NAVIGATION_TOC.slice(4);
 
   return (
     <PageShell id="navigation" className={styles.page}>
       <div className={styles.body}>
+        <h1 className={styles.heading}>Table of contents</h1>
         <nav className={styles.toc} aria-label="Table of contents">
           <ul className={styles.column}>
             {left.map((entry) => (
@@ -22,6 +30,7 @@ export default function NavigationPage() {
                 href={entry.href}
                 title={entry.title}
                 description={entry.description}
+                onSelect={handleSelect}
               />
             ))}
           </ul>
@@ -47,6 +56,7 @@ export default function NavigationPage() {
                   href={entry.href}
                   title={entry.title}
                   description={entry.description}
+                  onSelect={handleSelect}
                 />
               ))}
             </ul>
@@ -58,10 +68,18 @@ export default function NavigationPage() {
   );
 }
 
-function TocItem({ label, href, title, description }) {
+function TocItem({ label, href, title, description, onSelect }) {
+  const handleClick = onSelect
+    ? () => {
+      // Synchronously dismiss the menu overlay; the browser will then apply
+      // the href and the SlideDeck hashchange listener will animate to it.
+      onSelect();
+    }
+    : undefined;
+
   return (
     <li className={styles.item}>
-      <a href={href} className={styles.link}>
+      <a href={href} className={styles.link} onClick={handleClick}>
         <span className={styles.itemLabel}>{label}</span>
         <div className={styles.itemHeading}>
           <div className={styles.itemTitleWrap}>

@@ -7,8 +7,10 @@
 .body {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  gap: clamp(var(--space-4), 3vh, var(--space-8));
   width: 100%;
 
   /* Figma menu @ top 130px; PageShell already reserves top nav + clearance.
@@ -29,6 +31,18 @@
   );
   padding-right: var(--page-gutter);
   padding-bottom: clamp(var(--space-4), 2vh, var(--space-10));
+}
+
+/* "Table of contents" page title — Figma 2552:1312.
+   HubSpot Sans Book 44/52 @ 1440; scales down on smaller viewports. */
+.heading {
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, calc(var(--content-vw) * 0.0306), 2.75rem);
+  font-weight: 400;
+  line-height: calc(52 / 44);
+  color: var(--color-teal-dark);
+  letter-spacing: 0;
+  margin: 0;
 }
 
 /* ─── TOC two-column grid (Figma: 492px cols, 48px gap, 620px divider) ─── */

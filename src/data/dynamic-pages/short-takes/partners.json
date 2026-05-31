@@ -7,7 +7,7 @@
     "technology":               ["brendan-ittelson", "scott-chancellor", "scott-harrison"],
     "solutions":                ["camiel-freriks-strategic", "michelle-okeeffe-roadmap", "stuart-toledo-community", "adam-bleibtreu-innovate"],
     "solutions-smb":            ["justine-gaignard-overwhelm", "ross-breckenridge-transformed", "hsiang-lee-changed-everything", "jorge-garagarza-aligned", "michelle-miller-trust"],
-    "solutions-upmarket":       ["camiel-freriks-strategic", "brendan-ittelson", "michelle-okeeffe-roadmap", "stuart-toledo-community", "patrick-ganzmann-scalable"],
+    "solutions-upmarket":       ["camiel-freriks-strategic", "michelle-okeeffe-roadmap", "stuart-toledo-community", "patrick-ganzmann-scalable"],
     "solutions-nam":            ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm", "michelle-miller-trust"],
     "solutions-emea":           ["camiel-freriks-strategic", "patrick-ganzmann-scalable", "ross-breckenridge-transformed", "daryl-michel-influence"],
     "solutions-japac":          ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
@@ -18,7 +18,7 @@
     "solutions-smb-latam":      ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"],
     "solutions-upmarket-nam":   ["adam-bleibtreu-innovate", "emily-wingrove-central", "justine-gaignard-overwhelm"],
     "solutions-upmarket-emea":  ["camiel-freriks-strategic", "patrick-ganzmann-scalable", "ross-breckenridge-transformed", "daryl-michel-influence"],
-    "solutions-upmarket-japac": ["michelle-okeeffe-roadmap"],
+    "solutions-upmarket-japac": ["michelle-okeeffe-roadmap", "hsiang-lee-changed-everything"],
     "solutions-upmarket-latam": ["stuart-toledo-community", "jose-betancur-best-option", "jorge-garagarza-aligned"]
   },
 
@@ -40,8 +40,7 @@
         "name": "Scott Chancellor",
         "role": "CEO, Aircall",
         "linkedIn": "https://www.linkedin.com/in/scottchancellor/"
-      },
-      "audio": { "durationSeconds": 36 }
+      }
     },
     "scott-harrison": {
       "title": "HubSpot's ecosystem delivers value at scale",

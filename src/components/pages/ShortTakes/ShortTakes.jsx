@@ -1,5 +1,6 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useFilters } from '../../../context/FilterContext';
+import { useSlideDeck } from '../../../context/SlideDeckContext';
 import { getShortTakes } from '../../../data/dynamicContent';
 import PageShell from '../../common/PageShell/PageShell';
 import Tabs from '../../common/Tabs/Tabs';
@@ -45,6 +46,11 @@ import jorgeGaragarzaAudio from '../../../assets/audio/Zubia - Solutions Partner
 import camielFreriksAudio from '../../../assets/audio/Siloy - Global View - Partner Program.m4a';
 import patrickGanzmannAudio from '../../../assets/audio/Valantic - Solutions Partner - EMEA - Upmarket - Partner Program.m4a';
 import styles from './ShortTakes.module.css';
+
+// Set by ByTheNumbers when the user clicks the partner carousel — opens the
+// "From Partners" tab on this slide. Cleared after read so subsequent visits
+// reset to the default tab.
+const TAB_SIGNAL_KEY = 'shortTakes:initialTab';
 
 /** Headshots keyed by quote id (field + partners). */
 const AVATARS = {
@@ -144,13 +150,15 @@ function QuoteCard({ quote }) {
             </figcaption>
           </figure>
 
-          <div className={styles.audioSlot}>
-            <AudioPlayer
-              src={audioSrc}
-              durationSeconds={audio?.durationSeconds ?? 0}
-              label={`Play audio quote from ${author.name}`}
-            />
-          </div>
+          {audioSrc && (
+            <div className={styles.audioSlot}>
+              <AudioPlayer
+                src={audioSrc}
+                durationSeconds={audio?.durationSeconds ?? 0}
+                label={`Play audio quote from ${author.name}`}
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -170,6 +178,7 @@ function QuoteCard({ quote }) {
  */
 export default function ShortTakes() {
   const { filterId } = useFilters();
+  const { activeAnchor } = useSlideDeck();
   const shortTakes = getShortTakes(filterId);
 
   const tabs = [
@@ -178,6 +187,27 @@ export default function ShortTakes() {
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const panel = shortTakes.tabs[activeTab];
+
+  // Honor a tab signal dropped in sessionStorage by an upstream link (e.g.
+  // the partner carousel on By the Numbers). Read on mount and whenever the
+  // deck makes this slide active. Clear after read so other entry points
+  // reset to the default tab.
+  useEffect(() => {
+    if (activeAnchor !== 'short-takes') return;
+    let signal = null;
+    try {
+      signal = window.sessionStorage.getItem(TAB_SIGNAL_KEY);
+      if (signal) window.sessionStorage.removeItem(TAB_SIGNAL_KEY);
+    } catch {
+      return;
+    }
+    if (signal && tabs.some((t) => t.id === signal)) {
+      setActiveTab(signal);
+    }
+    // tabs is derived from filter content; identity changes with filterId
+    // but the ids ('field' | 'partners') are stable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeAnchor]);
 
   return (
     <PageShell id="short-takes" className={styles.page}>

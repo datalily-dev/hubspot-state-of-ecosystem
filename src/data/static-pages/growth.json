@@ -6,15 +6,15 @@
       "id": "mid-market",
       "tabLabel": "Mid-Market Momentum",
       "eyebrow": "Mid-Market Momentum",
-      "heading": "HubSpot has mid-market momentum",
+      "heading": "HubSpot has mid-market and enterprise momentum",
       "body": [
-        "DC projects the mid-market opportunity alone will exceed $11B by 2030, and the momentum is already visible. With complex setups, customers need partners to help them scale:",
+        "IDC projects the mid-market opportunity alone will exceed $11B by 2030, and the momentum is already visible. With complex setups, customers need partners to help them scale:",
         "HubSpot is also now available on AWS Marketplace, where customers can procure select products via private offers and apply eligible AWS committed cloud spend, removing a procurement barrier that has historically slowed enterprise deals. For services partners, that means faster buying cycles on larger accounts. For ISVs, it signals the kind of enterprise distribution infrastructure that makes building for HubSpot's mid-market customer base a serious product strategy."
       ],
       "bullets": [
-        "$10K+ deals grew 41% year-over-year in Q4 2025",
-        "Market customers spend up to $500K annually on services",
-        "Mid-market accounts use an average of 16+ applications"
+        "$10K+ deals grew +41% y/y in 2025",
+        "Mid-market accounts use an average of 16+ applications",
+        "Mid-market customers spend up to $500K annually on services as reported by partners"
       ],
       "chart": {
         "title": "HubSpot Ecosystem Opportunity by Company Size",
@@ -53,7 +53,17 @@
       "eyebrow": "Agentic Acceleration",
       "heading": "AI-first engagements are the fastest-growing slice of the partner TAM",
       "body": [
-        "AI-first engagements, where deploying, productizing, or operationalizing AI is the primary deliverable, will grow from $6.7B in 2026 to $18.1B by 2030 — a 28.4% annual growth rate that outpaces the overall TAM.",
+        {
+          "segments": [
+            { "text": "AI-first engagements, where deploying, productizing, or operationalizing AI is the primary deliverable, " },
+            { "text": "is expected to", "bold": true },
+            { "text": " from $6.7B in 2026 to " },
+            { "text": "$18.1B", "bold": true },
+            { "text": " by 2030, a " },
+            { "text": "28%", "bold": true },
+            { "text": " annual growth rate that outpaces the overall TAM." }
+          ]
+        },
         "In fact, 92% of partners are already consulting on AI implementations. HubSpot's expanding MCP support, increasingly sophisticated APIs, and growing surface area for agentic development mean partners — whether delivering services or shipping software — have the platform infrastructure to embed AI directly into customer workflows, build proprietary agent frameworks, and package reusable IP that compounds in value over time.",
         "The partners who act now will establish the technical depth and customer relationships that are hardest to replicate."
       ],
@@ -84,7 +94,7 @@
       "cta": {
         "title": "AI Transformation Playbook for Solutions Partners",
         "subtitle": "A repeatable model for leading AI deals.",
-        "href": "https://offers.hubspot.com/ai-transformation-playbook-for-partners#widget_1778589175272",
+        "href": "https://offers.hubspot.com/partner-ai-transformation-playbook",
         "linkText": "Download for Free"
       }
     },
@@ -92,9 +102,9 @@
       "id": "marketing",
       "tabLabel": "Marketing, reimagined",
       "eyebrow": "Marketing, reimagined",
-      "heading": "Marketing is the single largest opportunity in the ecosystem",
+      "heading": "Marketing transformation drives strategic opportunity",
       "body": [
-        "Marketing partnerships represent $9.95B in 2026, growing to $20.1B by 2030. With the launch of Loop Marketing and HubSpot AEO, the nature of partner engagements is shifting from one-time implementations to ongoing outcome optimization. Partners who design, deploy, and optimize agentic demand engines across the full Loop will own the most durable revenue relationships in the ecosystem.",
+        "Services, apps, and agents that reimagine marketing represent $10B, are expected to grow to $20.1 billion by 2030. With the launch of Loop Marketing and HubSpot AEO, the nature of partner engagements is shifting from one-time implementations to ongoing outcome optimization. Partners who design, deploy, and optimize agentic demand engines across the full Loop will own the most durable revenue relationships in the ecosystem.",
         "The Spring 2026 Essential Apps for Marketers collection — including Reddit for Business, TikTok for Business, Canva, and Vidyard — signals where that demand is already concentrating. For ISVs, every essential app is also a signal: this is where customers are already spending, and where purpose-built integrations find their fastest distribution."
       ],
       "bullets": [],
@@ -138,8 +148,8 @@
       },
       "cta": {
         "image": null,
-        "title": "Pricing & Packaging Services Tool",
-        "subtitle": "Placeholder TBD",
+        "title": "Browse Services Pricing & Packaging Tool",
+        "subtitle": "Customize and package new HubSpot services",
         "href": "https://www.hubspot.com/partners",
         "linkText": "Link TBD"
       }

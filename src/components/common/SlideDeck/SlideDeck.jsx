@@ -51,14 +51,14 @@ const WHEEL_THRESHOLD = 8;
 const TOUCH_THRESHOLD = 60;
 
 // Buffer settings — prevents an aggressive scroll from blowing past a page.
-// After hitting the bottom (or top) edge of a slide, residual inertia is
-// ignored for EDGE_DWELL_MS. After that, the user must express intent by
-// accumulating INTENT_THRESHOLD pixels of wheel delta in the same direction
-// before the deck advances. The accumulator resets on a pause longer than
-// INTENT_RESET_MS or on a direction reversal.
-const EDGE_DWELL_MS = 120;
-const INTENT_THRESHOLD = 100;
-const INTENT_RESET_MS = 180;
+// We split scrolling into "gestures": a stream of wheel events with no pause
+// longer than GESTURE_PAUSE_MS. A gesture that *scrolled the slide TO* the
+// edge cannot also advance the deck — the user must release the trackpad /
+// stop spinning the wheel, pause, then start a NEW gesture to advance. Within
+// that new gesture, INTENT_THRESHOLD pixels of |deltaY| must accumulate in
+// the same direction before the deck transitions.
+const GESTURE_PAUSE_MS = 50;
+const INTENT_THRESHOLD = 50;
 
 // A short post-navigation lockout that absorbs residual momentum and prevents
 // unintentional multi-page cascades (especially on non-scrollable slides).
@@ -120,28 +120,51 @@ export default function SlideDeck({
   const isAnimating = useRef(false);
   const touchStartY = useRef(null);
   const touchAccum = useRef(0);
+  // Tracks which edge (if any) the slide was at when the current touch began.
+  // A swipe that scrolled the slide TO the edge cannot also advance the deck;
+  // the user must lift their finger and start a new swipe.
+  const touchStartedAtEdge = useRef(null);
   const prefersReducedMotion = useRef(false);
 
-  // Edge-buffer state. `edgeSide` is 'top' | 'bottom' | null and tracks which
-  // edge of the active slide the user is currently parked at. `edgeSince` is
-  // the timestamp the edge was first reached (for the dwell window).
-  // `intentAccum` is the running |deltaY| sum of in-direction wheel events
-  // captured after the dwell completes; it must cross INTENT_THRESHOLD to
-  // trigger a page change. `intentLastAt` lets us reset the accumulator on
-  // pause.
-  const edgeSide = useRef(null);
-  const edgeSince = useRef(0);
+  // Menu overlay: when the user opens the navigation from the hamburger, the
+  // NavigationPage slide animates in from the right over whatever slide they
+  // were on. `menuMode` drives the overlay state machine; `menuReturnIndex`
+  // remembers the slide to return to when the user taps X (or selects a TOC
+  // item, in which case the overlay just unmounts behind the normal goTo).
+  // 'open' = settled / visible, 'opening' / 'closing' = mid-animation, null
+  // = not in menu mode (deck behaves normally).
+  const [menuMode, setMenuMode] = useState(null);
+  const menuReturnIndex = useRef(null);
+  const menuTimers = useRef([]);
+  const navIndex = anchors.indexOf('navigation');
+
+  // Wheel-gesture state. A "gesture" is a stream of wheel events with no
+  // pause longer than GESTURE_PAUSE_MS. `gestureEdge` records which edge
+  // (if any) the slide was already at when the current gesture *started* —
+  // a gesture that scrolled the slide TO the edge has `gestureEdge=null`
+  // and is never allowed to advance the deck. `intentAccum` is the running
+  // |deltaY| sum within the current gesture; it must cross INTENT_THRESHOLD
+  // for the deck to transition. `wheelLastAt` is the timestamp of the most
+  // recent wheel event, used to detect gesture boundaries.
+  const gestureEdge = useRef(null);
   const intentAccum = useRef(0);
-  const intentLastAt = useRef(0);
+  const wheelLastAt = useRef(0);
+
+  // Set true on every navigation. The next scroll/swipe gesture (continuous
+  // or new) is then *force-locked* to gestureEdge=null and cannot advance
+  // the deck — even if the user scrolled rapidly through the new page
+  // during the post-nav lockout and is already parked at the bottom by the
+  // time we start observing wheel events again. Only their next gesture
+  // (after a pause) can advance.
+  const firstGestureAfterNav = useRef(false);
 
   // Timestamp when the most recent slide navigation fired.
   const lastNavAt = useRef(0);
 
   const resetEdgeIntent = useCallback(() => {
-    edgeSide.current = null;
-    edgeSince.current = 0;
+    gestureEdge.current = null;
     intentAccum.current = 0;
-    intentLastAt.current = 0;
+    wheelLastAt.current = 0;
   }, []);
 
   // Detect reduced-motion preference once on mount, and keep it in sync.
@@ -215,6 +238,7 @@ export default function SlideDeck({
       lastNavAt.current = performance.now();
       isAnimating.current = true;
       resetEdgeIntent();
+      firstGestureAfterNav.current = true;
 
       // Seat the destination slide's scroll position. landAt='bottom' is used
       // by reverse-direction gestures (wheel/touch/ArrowUp at the top edge of
@@ -289,6 +313,113 @@ export default function SlideDeck({
     [anchors, clearFadeTimers, resetEdgeIntent, total],
   );
 
+  const clearMenuTimers = useCallback(() => {
+    menuTimers.current.forEach((id) => window.clearTimeout(id));
+    menuTimers.current = [];
+  }, []);
+
+  useEffect(() => () => {
+    menuTimers.current.forEach((id) => window.clearTimeout(id));
+    menuTimers.current = [];
+  }, []);
+
+  /**
+   * Hamburger entry: slide NavigationPage in from the right over the current
+   * slide. We remember the slide we came from so X can return to it. The
+   * deck's active index is NOT changed during the animation — the overlay
+   * sits above the track. When the overlay settles ('open'), we swap the
+   * underlying active index to navIndex so hash + inert states match, and
+   * the overlay unmounts (the navigation slide is now the active slide
+   * underneath at 0 translate-x).
+   */
+  const openMenu = useCallback(() => {
+    if (navIndex === -1) return;
+    if (menuMode) return;
+    const currentIndex = activeIndexRef.current;
+    // Already on the navigation slide — nothing to do.
+    if (currentIndex === navIndex) return;
+
+    menuReturnIndex.current = currentIndex;
+    clearMenuTimers();
+
+    // Mount overlay off-screen at translateX(100vw), then on next frame
+    // transition to translateX(0). Two rAFs to ensure the initial transform
+    // commits before the transitioned one runs.
+    setMenuMode('opening');
+    const raf1 = window.requestAnimationFrame(() => {
+      const raf2 = window.requestAnimationFrame(() => {
+        setMenuMode('open');
+      });
+      menuTimers.current.push(raf2);
+    });
+    menuTimers.current.push(raf1);
+
+    // Update the hash to #navigation so browser back/forward + shareable URLs
+    // reflect that the menu is showing. We deliberately keep menuMode='open'
+    // (and do NOT swap the underlying activeIndex) for the duration the user
+    // sits on the menu — the overlay stays mounted, the TopNav keeps showing
+    // the X (and keeps "Become a Partner" hidden), and menuReturnIndex stays
+    // valid so X can return to the originating slide.
+    const { query } = splitHash(window.location.hash);
+    const newHash = query ? `#${anchors[navIndex]}?${query}` : `#${anchors[navIndex]}`;
+    const url = `${window.location.pathname}${window.location.search}${newHash}`;
+    window.history.replaceState(null, '', url);
+    // Seat the overlay's nav slide scroll at the top.
+    const seat = window.setTimeout(() => {
+      const overlayScroll = document.querySelector(`.${styles.menuOverlay}`);
+      if (overlayScroll) overlayScroll.scrollTop = 0;
+    }, SLIDE_MS);
+    menuTimers.current.push(seat);
+  }, [anchors, clearMenuTimers, menuMode, navIndex]);
+
+  /**
+   * Called when the user clicks a TOC item while the menu overlay is open.
+   * Snaps the underlying active slide to navigation (so the brief moment
+   * before the next goTo animates doesn't reveal the user's previous page
+   * under the overlay), clears menuMode, and lets the hashchange handler
+   * fire the normal slide/fade transition to the chosen anchor.
+   */
+  const selectFromMenu = useCallback(() => {
+    if (navIndex === -1) return;
+    clearMenuTimers();
+    activeIndexRef.current = navIndex;
+    setActiveIndex(navIndex);
+    menuReturnIndex.current = null;
+    setMenuMode(null);
+  }, [clearMenuTimers, navIndex]);
+
+  /**
+   * X button: slide the NavigationPage overlay back out to the right,
+   * revealing the slide the user came from. Implementation: instantly seat
+   * the underlying active index back to menuReturnIndex (the user can't see
+   * it because the overlay is covering it), then animate the overlay
+   * translateX from 0 -> 100vw, then unmount the overlay.
+   */
+  const closeMenu = useCallback(() => {
+    if (menuMode !== null && menuMode !== 'open') return;
+    const returnIndex = menuReturnIndex.current;
+    if (returnIndex == null) return;
+    clearMenuTimers();
+
+    // Snap the deck back to the return slide underneath the overlay.
+    const { query } = splitHash(window.location.hash);
+    const newHash =
+      query ? `#${anchors[returnIndex]}?${query}` : `#${anchors[returnIndex]}`;
+    const url = `${window.location.pathname}${window.location.search}${newHash}`;
+    window.history.replaceState(null, '', url);
+    activeIndexRef.current = returnIndex;
+    setActiveIndex(returnIndex);
+
+    // Overlay is already at translateX(0); flip to 'closing' to animate out.
+    setMenuMode('closing');
+
+    const finish = window.setTimeout(() => {
+      menuReturnIndex.current = null;
+      setMenuMode(null);
+    }, SLIDE_MS);
+    menuTimers.current.push(finish);
+  }, [anchors, clearMenuTimers, menuMode]);
+
   // Focus the deck on mount so arrow-key navigation works immediately.
   useEffect(() => {
     deckRef.current?.focus({ preventScroll: true });
@@ -345,32 +476,38 @@ export default function SlideDeck({
       const atBottom = isAtBottom(slide);
       const atTop = isAtTop(slide);
       const atRelevantEdge = (goingDown && atBottom) || (!goingDown && atTop);
-
-      // Not parked at an edge — let the slide scroll natively and reset state.
-      if (!atRelevantEdge) {
-        resetEdgeIntent();
-        return;
-      }
-
       const side = goingDown ? 'bottom' : 'top';
 
-      // First contact with this edge — start the dwell timer and absorb the event.
-      if (edgeSide.current !== side) {
-        edgeSide.current = side;
-        edgeSince.current = now;
+      // Detect gesture boundary: a pause longer than GESTURE_PAUSE_MS (or
+      // first wheel event in this slide) closes the previous gesture and
+      // starts a new one. We snapshot which edge (if any) the slide is at
+      // RIGHT NOW — that's what defines whether the new gesture is allowed
+      // to advance the deck.
+      const isNewGesture = now - wheelLastAt.current > GESTURE_PAUSE_MS;
+      wheelLastAt.current = now;
+
+      if (isNewGesture) {
+        if (firstGestureAfterNav.current) {
+          // First gesture after a navigation never advances — even if the
+          // slide is already at an edge (the user may have scrolled there
+          // natively during the post-nav lockout).
+          gestureEdge.current = null;
+          firstGestureAfterNav.current = false;
+        } else {
+          gestureEdge.current = atRelevantEdge ? side : null;
+        }
         intentAccum.current = 0;
-        intentLastAt.current = now;
+      }
+
+      // Not parked at an edge — native scroll; nothing to do here.
+      if (!atRelevantEdge) {
         return;
       }
 
-      // Direction reversal or a long pause — reset the intent accumulator.
-      if (now - intentLastAt.current > INTENT_RESET_MS) {
-        intentAccum.current = 0;
-      }
-      intentLastAt.current = now;
-
-      // Still inside the dwell window — this is residual inertia, ignore it.
-      if (now - edgeSince.current < EDGE_DWELL_MS) {
+      // The current gesture did NOT start at this edge (it scrolled us here),
+      // so it cannot also advance the deck. The user must pause and start a
+      // new deliberate gesture.
+      if (gestureEdge.current !== side) {
         return;
       }
 
@@ -388,7 +525,19 @@ export default function SlideDeck({
   const handleTouchStart = useCallback((event) => {
     touchStartY.current = event.touches[0]?.clientY ?? null;
     touchAccum.current = 0;
-  }, []);
+    const slide = slideRefs.current[activeIndex];
+    if (firstGestureAfterNav.current) {
+      // First swipe after a navigation never advances — see firstGestureAfterNav.
+      touchStartedAtEdge.current = null;
+      firstGestureAfterNav.current = false;
+    } else if (slide) {
+      if (isAtBottom(slide)) touchStartedAtEdge.current = 'bottom';
+      else if (isAtTop(slide)) touchStartedAtEdge.current = 'top';
+      else touchStartedAtEdge.current = null;
+    } else {
+      touchStartedAtEdge.current = null;
+    }
+  }, [activeIndex]);
 
   const handleTouchMove = useCallback((event) => {
     if (touchStartY.current == null) return;
@@ -400,17 +549,23 @@ export default function SlideDeck({
     if (isAnimating.current) {
       touchStartY.current = null;
       touchAccum.current = 0;
+      touchStartedAtEdge.current = null;
       return;
     }
     const slide = slideRefs.current[activeIndex];
     const delta = touchAccum.current;
+    const startedAt = touchStartedAtEdge.current;
     touchStartY.current = null;
     touchAccum.current = 0;
+    touchStartedAtEdge.current = null;
     if (!slide || Math.abs(delta) < TOUCH_THRESHOLD) return;
 
-    if (delta > 0 && isAtBottom(slide)) {
+    // Only advance if the swipe BEGAN at the relevant edge. A swipe that
+    // scrolled the slide TO the bottom (or top) cannot also page through —
+    // the user must lift their finger and start a deliberate second swipe.
+    if (delta > 0 && startedAt === 'bottom' && isAtBottom(slide)) {
       goTo(activeIndex + 1);
-    } else if (delta < 0 && isAtTop(slide)) {
+    } else if (delta < 0 && startedAt === 'top' && isAtTop(slide)) {
       goTo(activeIndex - 1, { landAt: 'bottom' });
     }
   }, [activeIndex, goTo]);
@@ -469,15 +624,31 @@ export default function SlideDeck({
     ...(prefersReducedMotion.current && { transition: 'none' }),
   };
 
+  // When the menu overlay is mounted (opening/open/closing) the user is
+  // looking at the navigation slide, not the deck's active slide — so the
+  // TopNav theme (text color, bg) must follow the nav slide for the duration
+  // of the overlay.
+  const themeSourceIndex = menuMode != null && navIndex !== -1 ? navIndex : activeIndex;
   const slideTheme = {
-    bg: bgColors[activeIndex] || 'var(--color-cream)',
-    variant: variants[activeIndex] || 'light',
+    bg: bgColors[themeSourceIndex] || 'var(--color-cream)',
+    variant: variants[themeSourceIndex] || 'light',
   };
+
+  const contextActiveAnchor =
+    menuMode != null && navIndex !== -1
+      ? anchors[navIndex]
+      : anchors[activeIndex] || anchors[0];
+
+  const navSlide = navIndex !== -1 ? slides[navIndex] : null;
 
   return (
     <SlideDeckProvider
-      activeAnchor={anchors[activeIndex] || anchors[0]}
+      activeAnchor={contextActiveAnchor}
       slideTheme={slideTheme}
+      menuMode={menuMode}
+      openMenu={openMenu}
+      closeMenu={closeMenu}
+      selectFromMenu={selectFromMenu}
     >
       {/* Persistent across slide transitions — sits outside the transformed track. */}
       <TopNav />
@@ -499,6 +670,7 @@ export default function SlideDeck({
           className={styles.track}
           style={trackStyle}
           data-mode={transitionMode || undefined}
+          inert={menuMode != null ? true : undefined}
         >
           {slides.map((child, i) => (
             <div
@@ -524,6 +696,28 @@ export default function SlideDeck({
             </div>
         ))}
         </div>
+
+        {/* Menu overlay — a second NavigationPage that slides in from the right
+            when the user taps the hamburger. Mounted only while menuMode is
+            active; the underlying deck is snapped into the right state before
+            the overlay unmounts so the user sees no jump. See openMenu / 
+            closeMenu in this file. */}
+        {menuMode != null && navSlide && (
+          <div
+            className={styles.menuOverlay}
+            data-state={menuMode}
+            data-menu-overlay="true"
+            style={{
+              '--page-bg-color': bgColors[navIndex] || 'var(--color-cream)',
+              '--slide-ms': `${SLIDE_MS}ms`,
+            }}
+          >
+            {cloneElement(navSlide)}
+            {/* No PageNav in the menu overlay — the user is in a transient
+                "menu" view, not flipping through report pages. The X in the
+                TopNav is the only exit. */}
+          </div>
+        )}
       </div>
     </SlideDeckProvider>
   );
