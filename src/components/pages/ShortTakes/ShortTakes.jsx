@@ -144,13 +144,15 @@ function QuoteCard({ quote }) {
             </figcaption>
           </figure>
 
-          <div className={styles.audioSlot}>
-            <AudioPlayer
-              src={audioSrc}
-              durationSeconds={audio?.durationSeconds ?? 0}
-              label={`Play audio quote from ${author.name}`}
-            />
-          </div>
+          {audioSrc && (
+            <div className={styles.audioSlot}>
+              <AudioPlayer
+                src={audioSrc}
+                durationSeconds={audio?.durationSeconds ?? 0}
+                label={`Play audio quote from ${author.name}`}
+              />
+            </div>
+          )}
         </div>
       </div>
 

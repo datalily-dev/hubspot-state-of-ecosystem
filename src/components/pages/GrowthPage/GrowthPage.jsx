@@ -5,6 +5,7 @@ import Tabs from '../../common/Tabs/Tabs';
 import Dropdown from '../../common/Dropdown/Dropdown';
 import ChartPanel from './ChartPanel';
 import growthContent from '../../../data/static-pages/growth.json';
+import { ContentParagraph } from '../../../utils/contentParagraph';
 import gradientA from '../../../assets/growth/gradient-a.svg';
 import gradientB from '../../../assets/growth/gradient-b.svg';
 import styles from './GrowthPage.module.css';
@@ -150,7 +151,12 @@ export default function GrowthPage() {
                 className={`${styles.copy} ${styles.animSlideIn}`}
                 style={{ '--anim-delay': '120ms' }}
               >
-                {firstBody && <p className={styles.paragraph}>{firstBody}</p>}
+                {firstBody && (
+                  <ContentParagraph
+                    paragraph={firstBody}
+                    className={styles.paragraph}
+                  />
+                )}
 
                 {active.bullets && active.bullets.length > 0 && (
                   <ul className={styles.bullets}>
@@ -163,9 +169,11 @@ export default function GrowthPage() {
                 )}
 
                 {restBody.map((paragraph, i) => (
-                  <p key={i} className={styles.paragraph}>
-                    {paragraph}
-                  </p>
+                  <ContentParagraph
+                    key={i}
+                    paragraph={paragraph}
+                    className={styles.paragraph}
+                  />
                 ))}
               </div>
 

@@ -3,7 +3,7 @@ export const NAVIGATION_TOC = [
   {
     label: 'Foreword',
     href: '#foreword',
-    title: 'A letter from Zack Kass, Global AI Advisor',
+    title: 'A letter from Zack Kass, Global AI Advisor and Former Head of GTM, Open AI',
     description: 'On how partners can deliver AI that benefits people—and businesses—from all walks of life.',
   },
   {

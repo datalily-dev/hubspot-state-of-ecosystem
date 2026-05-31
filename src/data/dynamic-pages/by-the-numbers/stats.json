@@ -39,7 +39,7 @@
     "stat-300k": {
       "icon": "sparkle",
       "value": "299K",
-      "description": "customers using HubSpot's Agentic Customer Platform"
+      "description": "customers on HubSpot's Agentic Customer Platform"
     },
     "stat-63": {
       "value": "63%",
@@ -137,7 +137,7 @@
     "stat-41-deals": {
       "icon": "arrow",
       "value": "+41%",
-      "description": "growth in $10K+ deals in Q4 '25 YoY"
+      "description": "+41% y/y growth in $10K+ deals, 2025"
     },
     "stat-5x-seats": {
       "value": "5x",
