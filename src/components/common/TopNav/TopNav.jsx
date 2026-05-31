@@ -131,7 +131,6 @@ export default function TopNav() {
             aria-label="Go to navigation menu"
           >
             <BarsIcon className={styles.menuIcon} aria-hidden="true" focusable="false" />
-            <span>Menu</span>
           </a>
         )}
 

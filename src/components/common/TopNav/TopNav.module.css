@@ -187,8 +187,7 @@
 }
 
 @media (width <= 640px) {
-  .filterIndicator,
-  .menuBtn span {
+  .filterIndicator {
     display: none;
   }
 
