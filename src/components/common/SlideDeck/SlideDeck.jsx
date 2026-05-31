@@ -51,14 +51,14 @@ const WHEEL_THRESHOLD = 8;
 const TOUCH_THRESHOLD = 60;
 
 // Buffer settings — prevents an aggressive scroll from blowing past a page.
-// After hitting the bottom (or top) edge of a slide, residual inertia is
-// ignored for EDGE_DWELL_MS. After that, the user must express intent by
-// accumulating INTENT_THRESHOLD pixels of wheel delta in the same direction
-// before the deck advances. The accumulator resets on a pause longer than
-// INTENT_RESET_MS or on a direction reversal.
-const EDGE_DWELL_MS = 120;
-const INTENT_THRESHOLD = 100;
-const INTENT_RESET_MS = 180;
+// We split scrolling into "gestures": a stream of wheel events with no pause
+// longer than GESTURE_PAUSE_MS. A gesture that *scrolled the slide TO* the
+// edge cannot also advance the deck — the user must release the trackpad /
+// stop spinning the wheel, pause, then start a NEW gesture to advance. Within
+// that new gesture, INTENT_THRESHOLD pixels of |deltaY| must accumulate in
+// the same direction before the deck transitions.
+const GESTURE_PAUSE_MS = 50;
+const INTENT_THRESHOLD = 50;
 
 // A short post-navigation lockout that absorbs residual momentum and prevents
 // unintentional multi-page cascades (especially on non-scrollable slides).
@@ -120,6 +120,10 @@ export default function SlideDeck({
   const isAnimating = useRef(false);
   const touchStartY = useRef(null);
   const touchAccum = useRef(0);
+  // Tracks which edge (if any) the slide was at when the current touch began.
+  // A swipe that scrolled the slide TO the edge cannot also advance the deck;
+  // the user must lift their finger and start a new swipe.
+  const touchStartedAtEdge = useRef(null);
   const prefersReducedMotion = useRef(false);
 
   // Menu overlay: when the user opens the navigation from the hamburger, the
@@ -134,26 +138,33 @@ export default function SlideDeck({
   const menuTimers = useRef([]);
   const navIndex = anchors.indexOf('navigation');
 
-  // Edge-buffer state. `edgeSide` is 'top' | 'bottom' | null and tracks which
-  // edge of the active slide the user is currently parked at. `edgeSince` is
-  // the timestamp the edge was first reached (for the dwell window).
-  // `intentAccum` is the running |deltaY| sum of in-direction wheel events
-  // captured after the dwell completes; it must cross INTENT_THRESHOLD to
-  // trigger a page change. `intentLastAt` lets us reset the accumulator on
-  // pause.
-  const edgeSide = useRef(null);
-  const edgeSince = useRef(0);
+  // Wheel-gesture state. A "gesture" is a stream of wheel events with no
+  // pause longer than GESTURE_PAUSE_MS. `gestureEdge` records which edge
+  // (if any) the slide was already at when the current gesture *started* —
+  // a gesture that scrolled the slide TO the edge has `gestureEdge=null`
+  // and is never allowed to advance the deck. `intentAccum` is the running
+  // |deltaY| sum within the current gesture; it must cross INTENT_THRESHOLD
+  // for the deck to transition. `wheelLastAt` is the timestamp of the most
+  // recent wheel event, used to detect gesture boundaries.
+  const gestureEdge = useRef(null);
   const intentAccum = useRef(0);
-  const intentLastAt = useRef(0);
+  const wheelLastAt = useRef(0);
+
+  // Set true on every navigation. The next scroll/swipe gesture (continuous
+  // or new) is then *force-locked* to gestureEdge=null and cannot advance
+  // the deck — even if the user scrolled rapidly through the new page
+  // during the post-nav lockout and is already parked at the bottom by the
+  // time we start observing wheel events again. Only their next gesture
+  // (after a pause) can advance.
+  const firstGestureAfterNav = useRef(false);
 
   // Timestamp when the most recent slide navigation fired.
   const lastNavAt = useRef(0);
 
   const resetEdgeIntent = useCallback(() => {
-    edgeSide.current = null;
-    edgeSince.current = 0;
+    gestureEdge.current = null;
     intentAccum.current = 0;
-    intentLastAt.current = 0;
+    wheelLastAt.current = 0;
   }, []);
 
   // Detect reduced-motion preference once on mount, and keep it in sync.
@@ -227,6 +238,7 @@ export default function SlideDeck({
       lastNavAt.current = performance.now();
       isAnimating.current = true;
       resetEdgeIntent();
+      firstGestureAfterNav.current = true;
 
       // Seat the destination slide's scroll position. landAt='bottom' is used
       // by reverse-direction gestures (wheel/touch/ArrowUp at the top edge of
@@ -464,32 +476,38 @@ export default function SlideDeck({
       const atBottom = isAtBottom(slide);
       const atTop = isAtTop(slide);
       const atRelevantEdge = (goingDown && atBottom) || (!goingDown && atTop);
-
-      // Not parked at an edge — let the slide scroll natively and reset state.
-      if (!atRelevantEdge) {
-        resetEdgeIntent();
-        return;
-      }
-
       const side = goingDown ? 'bottom' : 'top';
 
-      // First contact with this edge — start the dwell timer and absorb the event.
-      if (edgeSide.current !== side) {
-        edgeSide.current = side;
-        edgeSince.current = now;
+      // Detect gesture boundary: a pause longer than GESTURE_PAUSE_MS (or
+      // first wheel event in this slide) closes the previous gesture and
+      // starts a new one. We snapshot which edge (if any) the slide is at
+      // RIGHT NOW — that's what defines whether the new gesture is allowed
+      // to advance the deck.
+      const isNewGesture = now - wheelLastAt.current > GESTURE_PAUSE_MS;
+      wheelLastAt.current = now;
+
+      if (isNewGesture) {
+        if (firstGestureAfterNav.current) {
+          // First gesture after a navigation never advances — even if the
+          // slide is already at an edge (the user may have scrolled there
+          // natively during the post-nav lockout).
+          gestureEdge.current = null;
+          firstGestureAfterNav.current = false;
+        } else {
+          gestureEdge.current = atRelevantEdge ? side : null;
+        }
         intentAccum.current = 0;
-        intentLastAt.current = now;
+      }
+
+      // Not parked at an edge — native scroll; nothing to do here.
+      if (!atRelevantEdge) {
         return;
       }
 
-      // Direction reversal or a long pause — reset the intent accumulator.
-      if (now - intentLastAt.current > INTENT_RESET_MS) {
-        intentAccum.current = 0;
-      }
-      intentLastAt.current = now;
-
-      // Still inside the dwell window — this is residual inertia, ignore it.
-      if (now - edgeSince.current < EDGE_DWELL_MS) {
+      // The current gesture did NOT start at this edge (it scrolled us here),
+      // so it cannot also advance the deck. The user must pause and start a
+      // new deliberate gesture.
+      if (gestureEdge.current !== side) {
         return;
       }
 
@@ -507,7 +525,19 @@ export default function SlideDeck({
   const handleTouchStart = useCallback((event) => {
     touchStartY.current = event.touches[0]?.clientY ?? null;
     touchAccum.current = 0;
-  }, []);
+    const slide = slideRefs.current[activeIndex];
+    if (firstGestureAfterNav.current) {
+      // First swipe after a navigation never advances — see firstGestureAfterNav.
+      touchStartedAtEdge.current = null;
+      firstGestureAfterNav.current = false;
+    } else if (slide) {
+      if (isAtBottom(slide)) touchStartedAtEdge.current = 'bottom';
+      else if (isAtTop(slide)) touchStartedAtEdge.current = 'top';
+      else touchStartedAtEdge.current = null;
+    } else {
+      touchStartedAtEdge.current = null;
+    }
+  }, [activeIndex]);
 
   const handleTouchMove = useCallback((event) => {
     if (touchStartY.current == null) return;
@@ -519,17 +549,23 @@ export default function SlideDeck({
     if (isAnimating.current) {
       touchStartY.current = null;
       touchAccum.current = 0;
+      touchStartedAtEdge.current = null;
       return;
     }
     const slide = slideRefs.current[activeIndex];
     const delta = touchAccum.current;
+    const startedAt = touchStartedAtEdge.current;
     touchStartY.current = null;
     touchAccum.current = 0;
+    touchStartedAtEdge.current = null;
     if (!slide || Math.abs(delta) < TOUCH_THRESHOLD) return;
 
-    if (delta > 0 && isAtBottom(slide)) {
+    // Only advance if the swipe BEGAN at the relevant edge. A swipe that
+    // scrolled the slide TO the bottom (or top) cannot also page through —
+    // the user must lift their finger and start a deliberate second swipe.
+    if (delta > 0 && startedAt === 'bottom' && isAtBottom(slide)) {
       goTo(activeIndex + 1);
-    } else if (delta < 0 && isAtTop(slide)) {
+    } else if (delta < 0 && startedAt === 'top' && isAtTop(slide)) {
       goTo(activeIndex - 1, { landAt: 'bottom' });
     }
   }, [activeIndex, goTo]);
