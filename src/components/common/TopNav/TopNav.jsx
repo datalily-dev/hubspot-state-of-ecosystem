@@ -6,10 +6,13 @@ import { useFilters } from '../../../context/FilterContext';
 import { useSlideDeck } from '../../../context/SlideDeckContext';
 import styles from './TopNav.module.css';
 
-// Pixels of scroll-from-top before the nav's background fades in. Small enough
-// that any real scroll triggers the transition, large enough that
-// sub-pixel jitter / overscroll bounce doesn't flicker it.
-const SCROLL_REVEAL_PX = 4;
+// Sentinel height (px) at the top of each slide's scroll container. When the
+// sentinel leaves the viewport the nav goes opaque. Small enough to feel
+// instant, large enough that sub-pixel jitter / overscroll bounce can't
+// flip it. IntersectionObserver fires after layout settles and doesn't
+// depend on scroll events bubbling — fixes the Android Slack in-app webview
+// timing race that scroll listeners hit.
+const SENTINEL_HEIGHT_PX = 4;
 
 // Per-slide overrides. Only deviations from the default config need an entry.
 // Defaults: showMenu, showLearnMore, and showFilterIndicator are true.
@@ -50,32 +53,30 @@ export default function TopNav() {
   // (keeps the hero clean, then keeps nav text legible over page content).
   const [scrolled, setScrolled] = useState(false);
 
-  // Listen on the active slide's scroller directly — each slide is its own
-  // scroll container, and iOS Safari doesn't reliably bubble those scroll
-  // events to `window`. Re-evaluating on slide change is required because
-  // reverse-direction navigation seats the new slide at its bottom (see
-  // SlideDeck `landAt: 'bottom'`), not at scrollTop 0.
+  // IntersectionObserver on a sentinel injected at the top of each slide's
+  // scroll container: when it intersects, we're at the top → transparent;
+  // when it leaves, we're scrolled → opaque. This avoids relying on scroll
+  // events firing in time, which fails in some embedded webviews 
+  // (where the listener attaches before layout settles.
   useEffect(() => {
     const section = document.getElementById(activeAnchor);
     const scroller = section?.parentElement ?? null;
     if (!scroller) return undefined;
 
-    const evaluate = () => {
-      setScrolled(scroller.scrollTop > SCROLL_REVEAL_PX);
-    };
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = `width:100%;height:${SENTINEL_HEIGHT_PX}px;margin-bottom:-${SENTINEL_HEIGHT_PX}px;pointer-events:none;`;
+    scroller.prepend(sentinel);
 
-    // rAF defers until after SlideDeck's `seatScroll` has run.
-    const rafId = window.requestAnimationFrame(evaluate);
-
-    scroller.addEventListener('scroll', evaluate, { passive: true });
-    // Resize can shift scroll position relative to the viewport without
-    // emitting a scroll event (e.g. mobile URL bar collapse).
-    window.addEventListener('resize', evaluate, { passive: true });
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { root: scroller, threshold: 0 },
+    );
+    observer.observe(sentinel);
 
     return () => {
-      window.cancelAnimationFrame(rafId);
-      scroller.removeEventListener('scroll', evaluate);
-      window.removeEventListener('resize', evaluate);
+      observer.disconnect();
+      sentinel.remove();
     };
   }, [activeAnchor]);
 
