@@ -44,7 +44,23 @@ const DEFAULT_PARTNER_LINK = 'https://www.hubspot.com/partners';
  */
 export default function TopNav() {
   const { confirmedFilters, filterSummary, hasActiveFilters, resetFilters } = useFilters();
-  const { activeAnchor, slideTheme } = useSlideDeck();
+  const {
+    activeAnchor,
+    slideTheme,
+    menuMode,
+    openMenu,
+    closeMenu,
+    selectFromMenu,
+  } = useSlideDeck();
+  const isMenuOpen = menuMode != null;
+
+  // When the user clicks the logo (or any nav-out target) while the menu
+  // overlay is open, dismiss the overlay first so the deck animates to the
+  // destination cleanly. `selectFromMenu` snaps the underlying deck to the
+  // navigation slide and clears menuMode; the browser's default anchor
+  // navigation then fires hashchange and the deck animates from navigation
+  // to the chosen anchor.
+  const handleNavOut = isMenuOpen ? () => selectFromMenu?.() : undefined;
 
   const learnMoreHref =
     PARTNER_LINKS[confirmedFilters.partnerType] ?? DEFAULT_PARTNER_LINK;
@@ -59,31 +75,81 @@ export default function TopNav() {
   // events firing in time, which fails in some embedded webviews 
   // (where the listener attaches before layout settles.
   useEffect(() => {
-    const section = document.getElementById(activeAnchor);
-    const scroller = section?.parentElement ?? null;
-    if (!scroller) return undefined;
+    // When the menu overlay is open it is its own scroll container,
+    // rendered above the deck and with the same `<section id="navigation">`
+    // markup as the underlying slide. Observe the overlay directly so the
+    // nav background fades in once the menu content scrolls past the top,
+    // matching the behavior on every other page. Falls back to the active
+    // slide's scroller for normal (non-menu) pages.
+    //
+    // For the deck path, prefer querying `[data-active="true"]` on the slide
+    // wrapper directly: on initial load with a deep-link hash (e.g.
+    // `#foreword`), the page component is lazy-loaded so `getElementById
+    // (activeAnchor)` may return null for a tick — the slide wrapper itself
+    // is always in the DOM. If neither is present yet, retry on the next
+    // frame until the slide mounts so the sentinel is never skipped.
+    // Reset to "at top" whenever the scroller changes (menu opens/closes)
+    // so a stale `true` value isn't carried over.
+    setScrolled(false);
 
-    const sentinel = document.createElement('div');
-    sentinel.setAttribute('aria-hidden', 'true');
-    sentinel.style.cssText = `width:100%;height:${SENTINEL_HEIGHT_PX}px;margin-bottom:-${SENTINEL_HEIGHT_PX}px;pointer-events:none;`;
-    scroller.prepend(sentinel);
+    let observer = null;
+    let sentinel = null;
+    let rafId = 0;
+    let cancelled = false;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setScrolled(!entry.isIntersecting),
-      { root: scroller, threshold: 0 },
-    );
-    observer.observe(sentinel);
+    const findScroller = () => {
+      if (isMenuOpen) {
+        return document.querySelector('[data-menu-overlay="true"]');
+      }
+      const slide = document.querySelector(
+        '[data-active="true"]',
+      );
+      if (slide) return slide;
+      const section = document.getElementById(activeAnchor);
+      return section?.parentElement ?? null;
+    };
+
+    const attach = () => {
+      if (cancelled) return;
+      const scroller = findScroller();
+      if (!scroller) {
+        rafId = window.requestAnimationFrame(attach);
+        return;
+      }
+
+      sentinel = document.createElement('div');
+      sentinel.setAttribute('aria-hidden', 'true');
+      sentinel.style.cssText = `width:100%;height:${SENTINEL_HEIGHT_PX}px;margin-bottom:-${SENTINEL_HEIGHT_PX}px;pointer-events:none;`;
+      scroller.prepend(sentinel);
+
+      observer = new IntersectionObserver(
+        ([entry]) => setScrolled(!entry.isIntersecting),
+        { root: scroller, threshold: 0 },
+      );
+      observer.observe(sentinel);
+    };
+
+    attach();
 
     return () => {
-      observer.disconnect();
-      sentinel.remove();
+      cancelled = true;
+      if (rafId) window.cancelAnimationFrame(rafId);
+      if (observer) observer.disconnect();
+      if (sentinel) sentinel.remove();
     };
-  }, [activeAnchor]);
+  }, [activeAnchor, isMenuOpen]);
 
-  const config = {
-    ...DEFAULT_CONFIG,
-    ...(PER_SLIDE_CONFIG[activeAnchor] ?? {}),
-  };
+  const config = isMenuOpen
+    // In the menu overlay we want the same chrome as a normal page (filter
+    // indicator + "Become a Partner" CTA), but the hamburger is swapped for
+    // an X that closes the overlay. The X is rendered in the same slot as
+    // the menu button below (gated on isMenuOpen), so showMenu is forced
+    // false here.
+    ? { ...DEFAULT_CONFIG, showMenu: false }
+    : {
+      ...DEFAULT_CONFIG,
+      ...(PER_SLIDE_CONFIG[activeAnchor] ?? {}),
+    };
 
   const themeStyle = {
     color:
@@ -100,7 +166,12 @@ export default function TopNav() {
       data-active-page={activeAnchor}
       data-scrolled={scrolled ? 'true' : 'false'}
     >
-      <a href="#cover" className={styles.logo} aria-label="HubSpot home">
+      <a
+        href="#cover"
+        className={styles.logo}
+        aria-label="HubSpot home"
+        onClick={handleNavOut}
+      >
         <HubSpotLogo className={styles.logoSvg} aria-hidden="true" focusable="false" />
       </a>
 
@@ -125,13 +196,25 @@ export default function TopNav() {
         )}
 
         {config.showMenu && (
-          <a
-            href="#navigation"
+          <button
+            type="button"
+            onClick={openMenu}
             className={styles.menuBtn}
-            aria-label="Go to navigation menu"
+            aria-label="Open navigation menu"
           >
             <BarsIcon className={styles.menuIcon} aria-hidden="true" focusable="false" />
-          </a>
+          </button>
+        )}
+
+        {isMenuOpen && (
+          <button
+            type="button"
+            onClick={closeMenu}
+            className={styles.menuBtn}
+            aria-label="Close navigation menu"
+          >
+            <XMarkIcon className={styles.menuIcon} aria-hidden="true" focusable="false" />
+          </button>
         )}
 
         {config.showLearnMore && (

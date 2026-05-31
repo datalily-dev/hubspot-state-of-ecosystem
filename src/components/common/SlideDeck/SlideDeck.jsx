@@ -122,6 +122,18 @@ export default function SlideDeck({
   const touchAccum = useRef(0);
   const prefersReducedMotion = useRef(false);
 
+  // Menu overlay: when the user opens the navigation from the hamburger, the
+  // NavigationPage slide animates in from the right over whatever slide they
+  // were on. `menuMode` drives the overlay state machine; `menuReturnIndex`
+  // remembers the slide to return to when the user taps X (or selects a TOC
+  // item, in which case the overlay just unmounts behind the normal goTo).
+  // 'open' = settled / visible, 'opening' / 'closing' = mid-animation, null
+  // = not in menu mode (deck behaves normally).
+  const [menuMode, setMenuMode] = useState(null);
+  const menuReturnIndex = useRef(null);
+  const menuTimers = useRef([]);
+  const navIndex = anchors.indexOf('navigation');
+
   // Edge-buffer state. `edgeSide` is 'top' | 'bottom' | null and tracks which
   // edge of the active slide the user is currently parked at. `edgeSince` is
   // the timestamp the edge was first reached (for the dwell window).
@@ -288,6 +300,113 @@ export default function SlideDeck({
     },
     [anchors, clearFadeTimers, resetEdgeIntent, total],
   );
+
+  const clearMenuTimers = useCallback(() => {
+    menuTimers.current.forEach((id) => window.clearTimeout(id));
+    menuTimers.current = [];
+  }, []);
+
+  useEffect(() => () => {
+    menuTimers.current.forEach((id) => window.clearTimeout(id));
+    menuTimers.current = [];
+  }, []);
+
+  /**
+   * Hamburger entry: slide NavigationPage in from the right over the current
+   * slide. We remember the slide we came from so X can return to it. The
+   * deck's active index is NOT changed during the animation — the overlay
+   * sits above the track. When the overlay settles ('open'), we swap the
+   * underlying active index to navIndex so hash + inert states match, and
+   * the overlay unmounts (the navigation slide is now the active slide
+   * underneath at 0 translate-x).
+   */
+  const openMenu = useCallback(() => {
+    if (navIndex === -1) return;
+    if (menuMode) return;
+    const currentIndex = activeIndexRef.current;
+    // Already on the navigation slide — nothing to do.
+    if (currentIndex === navIndex) return;
+
+    menuReturnIndex.current = currentIndex;
+    clearMenuTimers();
+
+    // Mount overlay off-screen at translateX(100vw), then on next frame
+    // transition to translateX(0). Two rAFs to ensure the initial transform
+    // commits before the transitioned one runs.
+    setMenuMode('opening');
+    const raf1 = window.requestAnimationFrame(() => {
+      const raf2 = window.requestAnimationFrame(() => {
+        setMenuMode('open');
+      });
+      menuTimers.current.push(raf2);
+    });
+    menuTimers.current.push(raf1);
+
+    // Update the hash to #navigation so browser back/forward + shareable URLs
+    // reflect that the menu is showing. We deliberately keep menuMode='open'
+    // (and do NOT swap the underlying activeIndex) for the duration the user
+    // sits on the menu — the overlay stays mounted, the TopNav keeps showing
+    // the X (and keeps "Become a Partner" hidden), and menuReturnIndex stays
+    // valid so X can return to the originating slide.
+    const { query } = splitHash(window.location.hash);
+    const newHash = query ? `#${anchors[navIndex]}?${query}` : `#${anchors[navIndex]}`;
+    const url = `${window.location.pathname}${window.location.search}${newHash}`;
+    window.history.replaceState(null, '', url);
+    // Seat the overlay's nav slide scroll at the top.
+    const seat = window.setTimeout(() => {
+      const overlayScroll = document.querySelector(`.${styles.menuOverlay}`);
+      if (overlayScroll) overlayScroll.scrollTop = 0;
+    }, SLIDE_MS);
+    menuTimers.current.push(seat);
+  }, [anchors, clearMenuTimers, menuMode, navIndex]);
+
+  /**
+   * Called when the user clicks a TOC item while the menu overlay is open.
+   * Snaps the underlying active slide to navigation (so the brief moment
+   * before the next goTo animates doesn't reveal the user's previous page
+   * under the overlay), clears menuMode, and lets the hashchange handler
+   * fire the normal slide/fade transition to the chosen anchor.
+   */
+  const selectFromMenu = useCallback(() => {
+    if (navIndex === -1) return;
+    clearMenuTimers();
+    activeIndexRef.current = navIndex;
+    setActiveIndex(navIndex);
+    menuReturnIndex.current = null;
+    setMenuMode(null);
+  }, [clearMenuTimers, navIndex]);
+
+  /**
+   * X button: slide the NavigationPage overlay back out to the right,
+   * revealing the slide the user came from. Implementation: instantly seat
+   * the underlying active index back to menuReturnIndex (the user can't see
+   * it because the overlay is covering it), then animate the overlay
+   * translateX from 0 -> 100vw, then unmount the overlay.
+   */
+  const closeMenu = useCallback(() => {
+    if (menuMode !== null && menuMode !== 'open') return;
+    const returnIndex = menuReturnIndex.current;
+    if (returnIndex == null) return;
+    clearMenuTimers();
+
+    // Snap the deck back to the return slide underneath the overlay.
+    const { query } = splitHash(window.location.hash);
+    const newHash =
+      query ? `#${anchors[returnIndex]}?${query}` : `#${anchors[returnIndex]}`;
+    const url = `${window.location.pathname}${window.location.search}${newHash}`;
+    window.history.replaceState(null, '', url);
+    activeIndexRef.current = returnIndex;
+    setActiveIndex(returnIndex);
+
+    // Overlay is already at translateX(0); flip to 'closing' to animate out.
+    setMenuMode('closing');
+
+    const finish = window.setTimeout(() => {
+      menuReturnIndex.current = null;
+      setMenuMode(null);
+    }, SLIDE_MS);
+    menuTimers.current.push(finish);
+  }, [anchors, clearMenuTimers, menuMode]);
 
   // Focus the deck on mount so arrow-key navigation works immediately.
   useEffect(() => {
@@ -469,15 +588,31 @@ export default function SlideDeck({
     ...(prefersReducedMotion.current && { transition: 'none' }),
   };
 
+  // When the menu overlay is mounted (opening/open/closing) the user is
+  // looking at the navigation slide, not the deck's active slide — so the
+  // TopNav theme (text color, bg) must follow the nav slide for the duration
+  // of the overlay.
+  const themeSourceIndex = menuMode != null && navIndex !== -1 ? navIndex : activeIndex;
   const slideTheme = {
-    bg: bgColors[activeIndex] || 'var(--color-cream)',
-    variant: variants[activeIndex] || 'light',
+    bg: bgColors[themeSourceIndex] || 'var(--color-cream)',
+    variant: variants[themeSourceIndex] || 'light',
   };
+
+  const contextActiveAnchor =
+    menuMode != null && navIndex !== -1
+      ? anchors[navIndex]
+      : anchors[activeIndex] || anchors[0];
+
+  const navSlide = navIndex !== -1 ? slides[navIndex] : null;
 
   return (
     <SlideDeckProvider
-      activeAnchor={anchors[activeIndex] || anchors[0]}
+      activeAnchor={contextActiveAnchor}
       slideTheme={slideTheme}
+      menuMode={menuMode}
+      openMenu={openMenu}
+      closeMenu={closeMenu}
+      selectFromMenu={selectFromMenu}
     >
       {/* Persistent across slide transitions — sits outside the transformed track. */}
       <TopNav />
@@ -499,6 +634,7 @@ export default function SlideDeck({
           className={styles.track}
           style={trackStyle}
           data-mode={transitionMode || undefined}
+          inert={menuMode != null ? true : undefined}
         >
           {slides.map((child, i) => (
             <div
@@ -524,6 +660,28 @@ export default function SlideDeck({
             </div>
         ))}
         </div>
+
+        {/* Menu overlay — a second NavigationPage that slides in from the right
+            when the user taps the hamburger. Mounted only while menuMode is
+            active; the underlying deck is snapped into the right state before
+            the overlay unmounts so the user sees no jump. See openMenu / 
+            closeMenu in this file. */}
+        {menuMode != null && navSlide && (
+          <div
+            className={styles.menuOverlay}
+            data-state={menuMode}
+            data-menu-overlay="true"
+            style={{
+              '--page-bg-color': bgColors[navIndex] || 'var(--color-cream)',
+              '--slide-ms': `${SLIDE_MS}ms`,
+            }}
+          >
+            {cloneElement(navSlide)}
+            {/* No PageNav in the menu overlay — the user is in a transient
+                "menu" view, not flipping through report pages. The X in the
+                TopNav is the only exit. */}
+          </div>
+        )}
       </div>
     </SlideDeckProvider>
   );
