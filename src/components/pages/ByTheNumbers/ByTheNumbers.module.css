@@ -322,6 +322,40 @@
   border-radius: 20px;
 }
 
+/* Clickable variant — entire carousel jumps to Short Takes "From Partners". */
+.cardImageButton {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+
+.cardImageButton:hover,
+.cardImageButton:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(20, 20, 20, 0.18);
+}
+
+.cardImageButton:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardImageButton {
+    transition: none;
+  }
+
+  .cardImageButton:hover,
+  .cardImageButton:focus-visible {
+    transform: none;
+  }
+}
+
 .slidePanel {
   position: absolute;
   inset: 0;

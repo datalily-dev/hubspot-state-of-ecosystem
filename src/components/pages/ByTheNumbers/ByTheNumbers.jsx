@@ -3,10 +3,15 @@ import PageShell from '../../common/PageShell/PageShell';
 import { useFilters } from '../../../context/FilterContext';
 import { useSlideDeck } from '../../../context/SlideDeckContext';
 import { getByTheNumbers } from '../../../data/dynamicContent';
+import { splitHash } from '../../../utils/url';
 import gradientA from '../../../assets/by-the-numbers/gradient-a.svg';
 import gradientB from '../../../assets/by-the-numbers/gradient-b.svg';
 import { PARTNER_SLIDES } from './partnerSlides';
 import styles from './ByTheNumbers.module.css';
+
+// sessionStorage key consumed by ShortTakes to open the "From Partners" tab
+// when the user enters the slide via this carousel. Cleared on read.
+const SHORT_TAKES_TAB_SIGNAL_KEY = 'shortTakes:initialTab';
 
 const SLIDE_INTERVAL_MS = 4000;
 
@@ -27,13 +32,32 @@ function PartnerCarousel({ eyebrow, label, entranceClassName = '', entranceStyle
     return () => window.clearInterval(id);
   }, [count]);
 
+  // Click → jump to Short Takes and open the "From Partners" tab. Preserves
+  // the active filter query that lives after the anchor in the hash.
+  const handleClick = () => {
+    try {
+      window.sessionStorage.setItem(SHORT_TAKES_TAB_SIGNAL_KEY, 'partners');
+    } catch {
+      // sessionStorage unavailable (private mode, etc.) — fall through; the
+      // hash change still navigates, the tab simply stays on its default.
+    }
+    const { query } = splitHash(window.location.hash);
+    const newHash = query ? '#short-takes?' + query : '#short-takes';
+    if (window.location.hash === newHash) {
+      // Same anchor — fire hashchange manually so SlideDeck reacts.
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    } else {
+      window.location.hash = newHash;
+    }
+  };
+
   return (
-    <div
-      className={`${styles.card} ${styles.cardImage} ${entranceClassName}`}
+    <button
+      type="button"
+      className={`${styles.card} ${styles.cardImage} ${styles.cardImageButton} ${entranceClassName}`}
       style={entranceStyle}
-      role="img"
-      aria-label={label}
-      aria-live="polite"
+      onClick={handleClick}
+      aria-label={`${label} — open From Partners`}
     >
       {PARTNER_SLIDES.map((slide, i) => {
         const isActive = i === index;
@@ -63,7 +87,7 @@ function PartnerCarousel({ eyebrow, label, entranceClassName = '', entranceStyle
           </div>
         );
       })}
-    </div>
+    </button>
   );
 }
 
