@@ -11,8 +11,8 @@ const SKIP_SECONDS = 5;
 const STOP_ICON = (
   <svg
     viewBox="0 0 24 24"
-    width="14"
-    height="14"
+    width="18"
+    height="18"
     aria-hidden="true"
     focusable="false"
   >
@@ -23,8 +23,8 @@ const STOP_ICON = (
 const PLAY_ICON = (
   <svg
     viewBox="0 0 24 24"
-    width="14"
-    height="14"
+    width="18"
+    height="18"
     aria-hidden="true"
     focusable="false"
   >
