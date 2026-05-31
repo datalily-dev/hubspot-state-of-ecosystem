@@ -14,7 +14,6 @@ const SCROLL_REVEAL_PX = 4;
 // Per-slide overrides. Only deviations from the default config need an entry.
 // Defaults: showMenu, showLearnMore, and showFilterIndicator are true.
 const PER_SLIDE_CONFIG = {
-  cover: { showFilterIndicator: false },
   navigation: { showMenu: false },
 };
 
