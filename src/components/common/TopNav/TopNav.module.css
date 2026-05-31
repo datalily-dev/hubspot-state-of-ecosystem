@@ -195,4 +195,30 @@
   .logoSvg {
     height: 1.75rem;
   }
+
+  .actions {
+    gap: var(--space-6); /* 12px */
+  }
+
+  .learnMoreBtn {
+    padding: var(--space-2) var(--space-4); /* 8px / 16px */
+  }
+}
+
+
+@media (width <= 360px) {
+  .nav {
+    padding-left: var(--space-3);  /* 12px */
+    padding-right: var(--space-3);
+  }
+
+  .actions {
+    gap: var(--space-3); /* 12px */
+  }
+
+  .learnMoreBtn {
+    height: 2rem;                          /* 32px */
+    padding: var(--space-1) var(--space-3); /* 4px / 12px */
+    font-size: var(--text-sm);             /* 14px */
+  }
 }
